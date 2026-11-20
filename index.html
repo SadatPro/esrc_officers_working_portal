@@ -4,6 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>ESRC DIU · Officers Working Portal</title>
+  <link rel="icon" type="image/png" href="esrc_logo.png" />
+  <link rel="apple-touch-icon" href="esrc_logo.png" />
 
   <!-- Google Font: Roboto Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -396,10 +398,50 @@ create policy "ESRC Users Access"
         TASKS: 'esrc_hig_tasks_v5',
         APPLICATIONS: 'esrc_hig_apps_v5',
         RESOURCES: 'esrc_hig_resources_v5',
-        MEMBERS: 'esrc_hig_members_v5'
+        MEMBERS: 'esrc_hig_members_v5',
+        MESSAGES: 'esrc_hig_messages_v5'
       };
 
-      const DEFAULT_USERS = [].concat(ADMIN_VAULT, OFFICER_ROSTER);
+            const DEFAULT_MESSAGES = [
+        {
+          id: 'msg_001',
+          fromId: 'adm_1',
+          fromName: 'Sadat Mahmud',
+          fromRole: 'President · ESRC DIU',
+          fromAvatar: 'SM',
+          toId: 'off_1',
+          toName: 'Nusrat Jahan',
+          toCode: 'OFF-01',
+          toTitle: 'General Officer',
+          toAvatar: 'NJ',
+          subject: 'Lab Inventory & Microcontroller Stock Verification',
+          body: 'Assalamu Alaikum Nusrat. Please coordinate with the executive committee to audit all STM32, ESP32, and Arduino dev boards before Wednesday evening. Note any missing jumper cables or damaged sensor modules in the registry.',
+          priority: 'urgent',
+          at: Date.now() - 3600000 * 5,
+          read: false,
+          readAt: null
+        },
+        {
+          id: 'msg_002',
+          fromId: 'adm_1',
+          fromName: 'Sadat Mahmud',
+          fromRole: 'President · ESRC DIU',
+          fromAvatar: 'SM',
+          toId: 'off_2',
+          toName: 'Tanvir Ahmed',
+          toCode: 'OFF-02',
+          toTitle: 'General Officer',
+          toAvatar: 'TA',
+          subject: 'Upcoming Embedded Robotics Workshop Handout',
+          body: 'Hi Tanvir, your draft curriculum for the upcoming Embedded Robotics workshop looks solid. Please double check the pinout diagrams on slide 14 before we send the final PDF to the printer.',
+          priority: 'normal',
+          at: Date.now() - 3600000 * 26,
+          read: true,
+          readAt: Date.now() - 3600000 * 22
+        }
+      ];
+
+const DEFAULT_USERS = [].concat(ADMIN_VAULT, OFFICER_ROSTER);
       const DEFAULT_MEMBERS = [{"id": "mem_001", "name": "Faiyaz Khan Sami", "studentId": "221-15-4910", "email": "sami15-4910@diu.edu.bd", "contact": "01531306673", "enrollmentYear": "Spring-2022", "batch": "61", "designation": "President x", "extra": "", "payment": "Completed", "status": "alumni", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_002", "name": "Sadat Mahmud", "studentId": "0242220005101099", "email": "mahmud22205101099@diu.edu.bd", "contact": "01309250507", "enrollmentYear": "Spring-2023", "batch": "63", "designation": "President C", "extra": "C", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_003", "name": "Zakia Sultana Nisa", "studentId": "221-15-5172", "email": "nisa15-5172@diu.edu.bd", "contact": "01753800238", "enrollmentYear": "Spring-2023", "batch": "61", "designation": "V. P.", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_004", "name": "Al-Amin", "studentId": "221-15-6032", "email": "amin15-6032@diu.edu.bd", "contact": "01965512175", "enrollmentYear": "Spring-2022", "batch": "61", "designation": "V. P.", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_005", "name": "Md. Fahim Ferdous", "studentId": "0242220005101784", "email": "ferdous22205101784@diu.edu.bd", "contact": "01860868772", "enrollmentYear": "Fall-2022", "batch": "63", "designation": "A. G. S.", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_006", "name": "Mostaque Shahriar Tonmoy", "studentId": "221-15-6052", "email": "tonmoy15-6052@diu.edu.bd", "contact": "01747012792", "enrollmentYear": "Fall-2024", "batch": "61", "designation": "A. G. S.", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_007", "name": "Mahmudul Hasan Piash", "studentId": "221-15-4911", "email": "piash15-5606@diu.edu.bd", "contact": "01303714497", "enrollmentYear": "Spring-2022", "batch": "61", "designation": "J. S.", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_008", "name": "Moin Ahmed Nahin", "studentId": "221-51-068", "email": "nahin51-068@diu.edu.bd", "contact": "01590044240", "enrollmentYear": "Spring-2024", "batch": "05", "designation": "Treasurer", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_009", "name": "Mehedi Hasan", "studentId": "232-15-497", "email": "hasan2305101497@diu.edu.bd", "contact": "01964301859", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Organizing Secretary", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_010", "name": "Emon Shahriare", "studentId": "232-15-725", "email": "shahriare2305101725@diu.edu.bd", "contact": "018111-84107", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "M. & C. S.", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_011", "name": "Ayesha Siddika", "studentId": "241-15-050", "email": "ayesha241-15-050@diu.edu.bd", "contact": "01700820155", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "Press Secretary", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_012", "name": "Wasifa Zaman", "studentId": "241-15-519", "email": "wasifa241-15-519@diu.edu.bd", "contact": "01976466616", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "Woman Secretary", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_013", "name": "Md. Sayed Islam Rifad", "studentId": "241-15-038", "email": "islam241-15-038@diu.edu.bd", "contact": "01771788176", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "Office Secretary", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_014", "name": "Fahmida Akter Juthi", "studentId": "0242220005101926", "email": "juthi22205101926@diu.edu.bd", "contact": "01313927684", "enrollmentYear": "Spring-2024", "batch": "63", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_015", "name": "Nur Muhammad Nibir", "studentId": "0242220005101833", "email": "nibir22205101833@diu.edu.bd", "contact": "01709264445", "enrollmentYear": "Fall-2024", "batch": "63", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_016", "name": "Md. Asif Jahan", "studentId": "0242320005101748", "email": "jahan2305101748@diu.edu.bd", "contact": "01630972700", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_017", "name": "Modhushodon Roy", "studentId": "0242320005101687", "email": "roy2305101687@diu.edu.bd", "contact": "01306758867", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_018", "name": "Maria Rahman Momo", "studentId": "241-15-359", "email": "rahman241-15-359@diu.edu.bd", "contact": "01915868186", "enrollmentYear": "Fall-2024", "batch": "66", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_019", "name": "Ferdusi Rahman", "studentId": "0242220005101646", "email": "rahman22205101646@diu.edu.bd", "contact": "01301618583", "enrollmentYear": "Fall-2024", "batch": "63", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_020", "name": "Md. Al Saif Srabon", "studentId": "0242410005101532", "email": "saif241-15-532@diu.edu.bd", "contact": "01883724040", "enrollmentYear": "Fall-2024", "batch": "66", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_021", "name": "Ferdusi Rahman", "studentId": "0242220005101646", "email": "rahman22205101646@diu.edu.bd", "contact": "01301618583", "enrollmentYear": "Fall-2024", "batch": "63", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_022", "name": "Himadri Shekhar Pias", "studentId": "241-15-349", "email": "shekhar241-15-349@diu.edu.bd", "contact": "01736576460", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_023", "name": "Md. Redoy Siddik", "studentId": "241-15-204", "email": "redoy241-15-204@diu.edu.bd", "contact": "01551608435", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_024", "name": "Any Akther", "studentId": "241-15-181", "email": "any241-15-181@diu.edu.bd", "contact": "01608115567", "enrollmentYear": "Fall-2024", "batch": "66", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_025", "name": "Maria Rashid", "studentId": "232-15-160", "email": "maria2305101160@diu.edu.bd", "contact": "", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_026", "name": "Sumaiya Yesmin", "studentId": "232-15-141", "email": "yesmin2305101141@diu.edu.bd", "contact": "01724837714", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_027", "name": "Md. Fahim Muntasir", "studentId": "232-15-063", "email": "muntasir2305101063@diu.edu.bd", "contact": "01581773123", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_028", "name": "Meher Niger", "studentId": "232-15-075", "email": "niger2305101075@diu.edu.bd", "contact": "01745439669", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_029", "name": "Md Alif Rabbi", "studentId": "232-15-601", "email": "rabbi2305101601@diu.edu.bd", "contact": "01780640675", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_030", "name": "Sayma Islam", "studentId": "232-15-511", "email": "sayma2305101511@diu.edu.bd", "contact": "01300313542", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_031", "name": "Abubakkar Siddik", "studentId": "232-15-271", "email": "siddik2305101271@diu.edu.bd", "contact": "01810464950", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_032", "name": "Muhsina Tasnim", "studentId": "221-15-5763", "email": "tasnim15-5763@diu.edu.bd", "contact": "01781241977", "enrollmentYear": "Spring-2024", "batch": "62", "designation": "S202449", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_033", "name": "Sadia Sumona Shanta", "studentId": "0242220005101936", "email": "shanta22205101936@diu.edu.bd", "contact": "01764278281", "enrollmentYear": "Spring-2024", "batch": "63", "designation": "S202402", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_034", "name": "Md. Shanawaz Fahim Hridoy", "studentId": "0242310005101739", "email": "hridoy2305101739@diu.edu.bd", "contact": "01860771414", "enrollmentYear": "Spring-2024", "batch": "64", "designation": "S202444", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_035", "name": "Abu Sayem", "studentId": "0242310005101678", "email": "sayem2305101678@diu.edu.bd", "contact": "01703750582", "enrollmentYear": "Spring-2024", "batch": "64", "designation": "S202433", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_036", "name": "All Moukrajul", "studentId": "241-15-691", "email": "all241-15-691@diu.edu.bd", "contact": "01307568285", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202430", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_037", "name": "MAHJABIN SULTANA", "studentId": "241-15-899", "email": "sultana241-15-899@diu.edu.bd", "contact": "01745562756", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202419", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_038", "name": "Pritom Kumar Shaha", "studentId": "241-15-277", "email": "kumar241-15-277@diu.edu.bd", "contact": "01326053574", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202404", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_039", "name": "Sanjida Akter Trisha", "studentId": "232-15-451", "email": "trisha2305101451@diu.edu.bd", "contact": "01718730380", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_040", "name": "Md. Imran Hassain", "studentId": "241-15-304", "email": "imran241-15-304@diu.edu.bd", "contact": "01917449182", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202415", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_041", "name": "Nabila Hassain", "studentId": "241-15-860", "email": "nabila241-15-860@diu.edu.bd", "contact": "01646066695", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202416", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_042", "name": "Jerin Tasnim Samiha", "studentId": "241-15-503", "email": "tasnim241-15-503@diu.edu.bd", "contact": "01319070107", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202417", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_043", "name": "Sumiya Akther Onannya", "studentId": "241-15-225", "email": "akther241-15-225@diu.edu.bd", "contact": "01883949498", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202405", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_044", "name": "Khaleque Md. Fahim Ashhab", "studentId": "241-15-548", "email": "fahim241-15-548@diu.edu.bd", "contact": "01650279027", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202410", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_045", "name": "Md Saad Hossain", "studentId": "241-15-541", "email": "saad241-15-541@diu.edu.bd", "contact": "01861969561", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202432", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_046", "name": "Syed Ahmad Galib", "studentId": "232-15-272", "email": "galib2305101272@diu.edu.bd", "contact": "01920376677", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_047", "name": "Akash Chondro Mohonto", "studentId": "241-15-507", "email": "chondro241-15-507@diu.edu.bd", "contact": "01827459740", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202427", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_048", "name": "Shakin Ahammed Emon", "studentId": "241-15-111", "email": "ahammed241-15-111@diu.edu.bd", "contact": "01887583501", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202409", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_049", "name": "Esrat Anam Kamy", "studentId": "241-15-445", "email": "anam241-15-445@diu.edu.bd", "contact": "01970455551", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202407", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_050", "name": "Abdullah Jobayer Jarif", "studentId": "241-15-216", "email": "jobayer241-15-216@diu.edu.bd", "contact": "0175814404", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202437", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_051", "name": "Shuvojit Majumder", "studentId": "232-15-246", "email": "shuvojit2305101246@diu.edu.bd", "contact": "01757199038", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_052", "name": "Md. Imran Nazir", "studentId": "241-15-352", "email": "imran241-15-352@diu.edu.bd", "contact": "01329810098", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202431", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_053", "name": "Md. chand Mondol", "studentId": "241-15-157", "email": "chand241-15-157@diu.edu.bd", "contact": "017333839100", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202429", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_054", "name": "Md. Sadik Fahim", "studentId": "241-15-465", "email": "hasan241-15-465@diu.edu.bd", "contact": "01572988084", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202426", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_055", "name": "Md. Tousiq Imdad Mehedi", "studentId": "241-15-196", "email": "imdad241-15-196@diu.edu.bd", "contact": "01715037874", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202448", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_056", "name": "Rokeya Ahsan Jerin", "studentId": "212-15-4197", "email": "rokeya15-4197@diu.edu.bd", "contact": "01907487304", "enrollmentYear": "Spring-2022", "batch": "59", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_057", "name": "Afia Morsheda Neladry", "studentId": "222-15-6329", "email": "neladry15-6329@s.diu.edu.bd", "contact": "01926725424", "enrollmentYear": "Spring-2023", "batch": "62", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_058", "name": "Adnan Uddin Khan", "studentId": "0242220005101819", "email": "adnan22205101819@diu.edu.bd", "contact": "01874244333", "enrollmentYear": "Fall-2024", "batch": "63", "designation": "S202435", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_059", "name": "Jerin Nur Khan Achol", "studentId": "0242220005101940", "email": "achol22205101940@diu.edu.bd", "contact": "01910071333", "enrollmentYear": "Fall-2024", "batch": "63", "designation": "S202450", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_060", "name": "Mst. Sumaiya Akter Sithi", "studentId": "0242220005101915", "email": "sithi22205101915@diu.edu.bd", "contact": "01728889456", "enrollmentYear": "Fall-2024", "batch": "63", "designation": "S202436", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_061", "name": "Ayatullah Al-Saba", "studentId": "0242310005101658", "email": "al-saba2305101658@diu.edu.bd", "contact": "01771834660", "enrollmentYear": "Fall-2024", "batch": "64", "designation": "S202483", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_062", "name": "Kazi Abir Hassan", "studentId": "0242310005101213", "email": "hasan23105101213@diu.edu.bd", "contact": "01959968410", "enrollmentYear": "Fall-2024", "batch": "64", "designation": "S202482", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_063", "name": "Samanta Islam Zerin", "studentId": "0242220005101835", "email": "zerin22205101835@diu.edu.bd", "contact": "01985869342", "enrollmentYear": "Spring-2022", "batch": "63", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_064", "name": "Shuvojit Majumder", "studentId": "232-15-246", "email": "shuvojit2305101246@diu.edu.bd", "contact": "01757199038", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_065", "name": "Sanjida Akter Trisha", "studentId": "232-15-451", "email": "trisha2305101451@diu.edu.bd", "contact": "01718730380", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_066", "name": "Md. Emon Hossain", "studentId": "241-15-818", "email": "hossain2305101818@diu.edu.bd", "contact": "01893672505", "enrollmentYear": "Fall-2024", "batch": "66", "designation": "S202475", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_067", "name": "Shifat Mahmud Tonmoy", "studentId": "221-15-6058", "email": "tonmoy15-6058@diu.edu.bd", "contact": "01687959536", "enrollmentYear": "Fall-2024", "batch": "61", "designation": "S202473", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_068", "name": "Fatin Anzum", "studentId": "242-15-306", "email": "fatin242-15-306@diu.edu.bd", "contact": "01757010075", "enrollmentYear": "Fall-2024", "batch": "67", "designation": "5202458", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_069", "name": "Md. Didarul Islam", "studentId": "221-15-4679", "email": "didarul15-4679@diu.edu.bd", "contact": "01829526016", "enrollmentYear": "Fall-2024", "batch": "61", "designation": "S202472", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_070", "name": "Md. Al Amin Sikder", "studentId": "221-15-5839", "email": "sikder15-5839@diu.edu.bd", "contact": "01739447640", "enrollmentYear": "Fall-2024", "batch": "61", "designation": "S202471", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_071", "name": "Abid Khan", "studentId": "221-15-4894", "email": "khan15-4894@diu.edu.bd", "contact": "018259293963", "enrollmentYear": "Fall-2024", "batch": "61", "designation": "S202470", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_072", "name": "Nazifa Tabassum Anima", "studentId": "221-15-5488", "email": "anima15-5488@diu.edu.bd", "contact": "01700822702", "enrollmentYear": "Fall-2024", "batch": "61", "designation": "S202469", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_073", "name": "Ahsanul Haque Borat", "studentId": "241-15-346", "email": "haque241-15-346@diu.edu.bd", "contact": "01568188945", "enrollmentYear": "Fall-2024", "batch": "66_R", "designation": "024-001-0001", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_074", "name": "Noushin Tabassum", "studentId": "241-15-298", "email": "noushin241-15-298@diu.edu.bd", "contact": "01782037378", "enrollmentYear": "Fall-2024", "batch": "66_R", "designation": "024-001-0002", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_075", "name": "Md Sujon Mia", "studentId": "241-15-717", "email": "suzon241-15-717@diu.edu.bd", "contact": "01736497614", "enrollmentYear": "Fall-2024", "batch": "66_O", "designation": "024-001-0004", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_076", "name": "Kh. Rizve Reza", "studentId": "241-15-142", "email": "rizve241-15-142@diu.edu.bd", "contact": "01703902395", "enrollmentYear": "Fall-2024", "batch": "66_A", "designation": "024-001-0005", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_077", "name": "Naima Rahman Tuhi", "studentId": "242-15-567", "email": "tuhi242-15-567@diu.edu.bd", "contact": "01301641046", "enrollmentYear": "Fall-2024", "batch": "67_S", "designation": "024-001-0006", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_078", "name": "Rakibul Islam Hamim", "studentId": "241-15-169", "email": "islam241-15-169@diu.edu.bd", "contact": "01540097182", "enrollmentYear": "Fall-2024", "batch": "66_J", "designation": "024-001-0007", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_079", "name": "Mohammed Muntasir Rahman Joy", "studentId": "242-15-740", "email": "joy242-15-740@diu.edu.bd", "contact": "01773007835", "enrollmentYear": "Fall-2024", "batch": "67_J", "designation": "024-001-0008", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_080", "name": "Tanjim Jannat Mary", "studentId": "242-15-029", "email": "mary242-15-029@diu.edu.bd", "contact": "01890435903", "enrollmentYear": "Fall-2024", "batch": "67_F", "designation": "024-001-0009", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_081", "name": "Md. Abu Lais", "studentId": "242-15-632", "email": "lais242-15-632@diu.edu.bd", "contact": "01612346277", "enrollmentYear": "Fall-2024", "batch": "67_A", "designation": "024-001-0010", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_082", "name": "Md. Marfi Sarker", "studentId": "241-15-065", "email": "marfisarker2@gmail.com", "contact": "01647456909", "enrollmentYear": "Fall-2024", "batch": "66_R", "designation": "024-001-0011", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_083", "name": "Md. Mithun Ahomed", "studentId": "232-15-526", "email": "ahomed2305101526@diu.edu.bd", "contact": "01744589197", "enrollmentYear": "Fall-2024", "batch": "65_M", "designation": "024-001-0012", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_084", "name": "Pritam Sarkar", "studentId": "242-15-702", "email": "pritam242-15-702@diu.edu.bd", "contact": "01822248922", "enrollmentYear": "Fall-2024", "batch": "67_L", "designation": "024-001-0013", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_085", "name": "Abu Said Omi", "studentId": "242-15-757", "email": "said242-15-757@diu.edu.bd", "contact": "01612238763", "enrollmentYear": "Fall-2024", "batch": "67_L", "designation": "024-001-0014", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_086", "name": "Md. Labib Hasan", "studentId": "241-15-025", "email": "labib241-15-025@diu.edu.bd", "contact": "01403078616", "enrollmentYear": "Fall-2024", "batch": "66_O", "designation": "024-001-0015", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_087", "name": "Md. Nur Rafsan Jani Al Rubayath", "studentId": "241-15-772", "email": "al241-15-772@diu.edu.bd", "contact": "01846651947", "enrollmentYear": "Fall-2024", "batch": "66_O", "designation": "024-001-0016", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_088", "name": "Miss. Nasima Khatun", "studentId": "241-15-340", "email": "nasima241-15-340@diu.edu.bd", "contact": "01759545401", "enrollmentYear": "Fall-2024", "batch": "66_I", "designation": "024-001-0017", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_089", "name": "S.M. Tajwar Siddique", "studentId": "242-15-313", "email": "siddique242-15-313@diu.edu.bd", "contact": "01301292901", "enrollmentYear": "Fall-2024", "batch": "67_G", "designation": "024-001-0018", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_090", "name": "Mobasshara Mostafiz Ohi", "studentId": "241-15-396", "email": "mostafiz241-15-396@diu.edu.bd", "contact": "01304492614", "enrollmentYear": "Fall-2024", "batch": "66_R", "designation": "024-001-0019", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_091", "name": "Ahmed Shahir Samin", "studentId": "242-15-176", "email": "samin242-15-176@diu.edu.bd", "contact": "01516502515", "enrollmentYear": "Fall-2024", "batch": "67_G", "designation": "024-001-0020", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_092", "name": "Humayra Kabir", "studentId": "242-15-023", "email": "humayra242-15-023@diu.edu.bd", "contact": "01973276171", "enrollmentYear": "Fall-2024", "batch": "67_L", "designation": "024-001-0021", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_093", "name": "Meherin Hera Chowdhury", "studentId": "0242220005101191", "email": "akter22205101191@diu.edu.bd", "contact": "01914142864", "enrollmentYear": "Spring-2022", "batch": "63", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_094", "name": "Afia Morsheda Neladry", "studentId": "222-15-6329", "email": "neladry15-6329@s.diu.edu.bd", "contact": "01926725424", "enrollmentYear": "Spring-2023", "batch": "62", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_095", "name": "Jannati Humayna Akter Himu", "studentId": "241-15-738", "email": "akter241-15-738@diu.edu.bd", "contact": "01762762963", "enrollmentYear": "Fall-2024", "batch": "66_A", "designation": "5202497", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_096", "name": "MD Nayem Abrar Rupom", "studentId": "241-15-155", "email": "abrar241-15-155@diu.edu.bd", "contact": "01627793804", "enrollmentYear": "Fall-2024", "batch": "66_E", "designation": "5202503", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_097", "name": "Sharif Rafid Ur Rahman", "studentId": "242-15-480", "email": "sharifrafidurrahman@gmail.com", "contact": "01944150909", "enrollmentYear": "Fall-2024", "batch": "67_R", "designation": "5202499", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_098", "name": "Saber Mahmud Sarker", "studentId": "241-15-03", "email": "mahmud241-15-063@diu.edu.bd", "contact": "01850929959", "enrollmentYear": "Fall-2024", "batch": "66_O", "designation": "5202500", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_099", "name": "Shaheer Tasfeen Najmee", "studentId": "232-15-092", "email": "najmee2305101092@diu.edu.bd", "contact": "01707436931", "enrollmentYear": "Fall-2024", "batch": "65_C", "designation": "5202498", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_100", "name": "Shadman Hussain Shahib", "studentId": "242-35-430", "email": "shahib242-35-430@diu.edu.bd", "contact": "01576954998", "enrollmentYear": "Fall-2024", "batch": "43_L", "designation": "5202502", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_101", "name": "Tanvirul Islam", "studentId": "242-35-056", "email": "tanvirul242-35-056@diu.edu.bd", "contact": "01330699619", "enrollmentYear": "Fall-2024", "batch": "43_D", "designation": "5202505", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_102", "name": "Meraj Uddin Biswas", "studentId": "232-35-037", "email": "meraj2305341037@diu.edu.bd", "contact": "01881331834", "enrollmentYear": "Fall-2024", "batch": "41_G", "designation": "5202504", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_103", "name": "Jubayer Hasan Siam", "studentId": "232-35-542", "email": "siam2305341542@diu.edu.bd", "contact": "01918365224", "enrollmentYear": "Fall-2024", "batch": "41_H", "designation": "5202542", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_104", "name": "Rabeya Noor", "studentId": "241-15-163", "email": "rabeya241-15-163@diu.edu.bd", "contact": "01406324964", "enrollmentYear": "Fall-2024", "batch": "66_C", "designation": "5202506", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_105", "name": "Smita Tethi Hembrom", "studentId": "242-15-321", "email": "hembrom242-15-321@diu.edu.bd", "contact": "01317586275", "enrollmentYear": "Fall-2024", "batch": "67", "designation": "5202507", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_106", "name": "Ayesha Siddika Nury", "studentId": "221-15-5978", "email": "nury15-5978@diu.edu.bd", "contact": "01302148397", "enrollmentYear": "Fall-2024", "batch": "61", "designation": "5202495", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_107", "name": "Tasfia Jahra", "studentId": "221-15-5392", "email": "jahra15-5392@diu.edu.bd", "contact": "01815620537", "enrollmentYear": "Fall-2024", "batch": "61", "designation": "5202496", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_108", "name": "Md. Mirajul Islam Anik", "studentId": "242310005101125", "email": "anik23105101125@diu.edu.bd", "contact": "01747200359", "enrollmentYear": "Fall-2024", "batch": "64", "designation": "5202510", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_109", "name": "Md. Munnaf Hossain Tuhin", "studentId": "242320005101575", "email": "tuhin2305101575@diu.edu.bd", "contact": "01707942875", "enrollmentYear": "Fall-2024", "batch": "65", "designation": "5202485", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_110", "name": "Akash Chandra Bhowmik", "studentId": "242420005101837", "email": "bhowmik242-15-837@diu.edu.bd", "contact": "01625876553", "enrollmentYear": "Fall-2024", "batch": "67", "designation": "5202514", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_111", "name": "S M All Nahian Fardus", "studentId": "242420005101622", "email": "fardus242-15-622@diu.edu.bd", "contact": "01868630172", "enrollmentYear": "Fall-2024", "batch": "67", "designation": "5202513", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_112", "name": "Sajidul Kabir Rasif", "studentId": "242420005101547", "email": "rasif242-15-547@diu.edu.bd", "contact": "01634431744", "enrollmentYear": "Fall-2024", "batch": "67", "designation": "5202510", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_113", "name": "Tasnim Ahmed Enan", "studentId": "242420005101820", "email": "ahmed242-15-820@diu.edu.bd", "contact": "01802058955", "enrollmentYear": "Fall-2024", "batch": "67", "designation": "5202511", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_114", "name": "Sonia Akter", "studentId": "242420005101608", "email": "sonifrc@gmail.com", "contact": "01977323473", "enrollmentYear": "Fall-2024", "batch": "67", "designation": "5202509", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_115", "name": "Shohan Shikder Rifat", "studentId": "242420005101490", "email": "rifat242-15-490@diu.edu.bd", "contact": "01991930220", "enrollmentYear": "Fall-2024", "batch": "67", "designation": "5202512", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_116", "name": "Mst Azra Jerin", "studentId": "242220005101786", "email": "jerin22205101786@diu.edu.bd", "contact": "01757389678", "enrollmentYear": "Fall-2024", "batch": "63", "designation": "5202536", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_117", "name": "Shahriar Nafis Ovi", "studentId": "242220005101824", "email": "nafis22205101824@diu.edu.bd", "contact": "01787125363", "enrollmentYear": "Fall-2024", "batch": "63", "designation": "5202535", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_118", "name": "Jannat Akter Duli", "studentId": "242310005101917", "email": "duli2305101917@diu.edu.bd", "contact": "01903571130", "enrollmentYear": "Fall-2024", "batch": "64", "designation": "5202520", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_119", "name": "Nusrat Alam Sruty", "studentId": "232-10-389", "email": "sruty2302161389@diu.edu.bd", "contact": "01952064155", "enrollmentYear": "Fall-2024", "batch": "65", "designation": "5202525", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_120", "name": "Md. Abu Rahat", "studentId": "232-10-382", "email": "rahat2302161382@diu.edu.bd", "contact": "01610068465", "enrollmentYear": "Fall-2024", "batch": "65", "designation": "5202524", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_121", "name": "Takiur Rahaman", "studentId": "232-15-793", "email": "sarkar2305101793@diu.edu.bd", "contact": "01832723040", "enrollmentYear": "Fall-2024", "batch": "65", "designation": "5202518", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_122", "name": "Abu Taher Asif", "studentId": "232-15-756", "email": "asif2305101756@diu.edu.bd", "contact": "01821088579", "enrollmentYear": "Fall-2024", "batch": "65", "designation": "5202516", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_123", "name": "Md. Al Masum", "studentId": "241-15-210", "email": "al241-15-210@diu.edu.bd", "contact": "01781995984", "enrollmentYear": "Fall-2024", "batch": "66", "designation": "5202528", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_124", "name": "Meherab Hossen", "studentId": "242310005101718", "email": "hossen2305101718@diu.edu.bd", "contact": "01521738202", "enrollmentYear": "Fall-2024", "batch": "64", "designation": "5202523", "extra": "", "payment": "In progress", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_125", "name": "Swadhin Chandra Dey", "studentId": "241-15-270", "email": "chandra241-15-270@diu.edu.bd", "contact": "01906769827", "enrollmentYear": "Fall-2024", "batch": "66", "designation": "5202540", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_126", "name": "Imamul Hasan", "studentId": "221-15-6027", "email": "hasan15-6027@diu.edu.bd", "contact": "01916728028", "enrollmentYear": "Fall-2024", "batch": "61", "designation": "5202529", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_127", "name": "Mymuna Tasnim Maisha", "studentId": "242420005341360", "email": "maisha242-35-360@diu.edu.bd", "contact": "01772505190", "enrollmentYear": "Fall-2024", "batch": "43", "designation": "5202530", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_128", "name": "Abrar Hameem Ifat", "studentId": "232-15-961", "email": "ifat2305101961@diu.edu.bd", "contact": "01821821841", "enrollmentYear": "Fall-2024", "batch": "65", "designation": "5202526", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_129", "name": "Sazzad Islam", "studentId": "232-15-835", "email": "islam2305101835@diu.edu.bd", "contact": "01738264842", "enrollmentYear": "Fall-2024", "batch": "65", "designation": "5202529", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_130", "name": "Md. Farhan Abrar Ibne Bari", "studentId": "242310005341404", "email": "bari2305341404@diu.edu.bd", "contact": "01612999252", "enrollmentYear": "Fall-2024", "batch": "40", "designation": "5202529", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_131", "name": "Al Sami", "studentId": "242-15-881", "email": "al242-15-881@diu.edu.bd", "contact": "01516502591", "enrollmentYear": "Fall-2024", "batch": "67", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_132", "name": "Abdullah Al Jaber", "studentId": "252-15-548", "email": "252-15-548@diu.edu.bd", "contact": "01516598961", "enrollmentYear": "Summer-2025", "batch": "69", "designation": "5202542", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_133", "name": "Md. Meraj Sarker", "studentId": "212-15-4213", "email": "meraj15-4213@diu.edu.bd", "contact": "01752525130", "enrollmentYear": "Spring-2022", "batch": "59", "designation": "President (July 24 - July 25)", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_134", "name": "Faysal Bin Khaled Nissan", "studentId": "212-15-4138", "email": "nissan15-4138@diu.edu.bd", "contact": "01961100661", "enrollmentYear": "Spring-2022", "batch": "59", "designation": "G.S. (July 24 - July 25)", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_135", "name": "Md Mahamudul Islam Shakib", "studentId": "212-15-4206", "email": "shakib15-4206@diu.edu.bd", "contact": "01707446979", "enrollmentYear": "Spring-2022", "batch": "59", "designation": "A. G. S. (July 24 - July 25)", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_136", "name": "Akash Sen", "studentId": "212-15-4097", "email": "akash15-4097@diu.edu.bd", "contact": "01705123553", "enrollmentYear": "Spring-2022", "batch": "59", "designation": "M & C S (July 24 - July 25)", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_137", "name": "Hosneara Sultana Akhi", "studentId": "212-15-4200", "email": "hosneara15-4200@diu.edu.bd", "contact": "01938621526", "enrollmentYear": "Spring-2022", "batch": "59", "designation": "Treasurer (July 24 - July 25)", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_138", "name": "Sohi Bilkis Binte Yer", "studentId": "0242220005101917", "email": "yer22205101917@diu.edu.bd", "contact": "01796406310", "enrollmentYear": "Spring-2024", "batch": "63", "designation": "Women Secretary", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_139", "name": "Mahtab Khan", "studentId": "0242220005101608", "email": "khan22205101608@diu.edu.bd", "contact": "01964971125", "enrollmentYear": "Fall-2022", "batch": "63", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_140", "name": "Rokeya Ahsan Jerin", "studentId": "212-15-4197", "email": "rokeya15-4197@diu.edu.bd", "contact": "01907487304", "enrollmentYear": "Spring-2022", "batch": "59", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_141", "name": "Mst Zaba Anika", "studentId": "241-15-839", "email": "zaba241-15-839@diu.edu.bd", "contact": "01972238329", "enrollmentYear": "", "batch": "", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_142", "name": "Ayatullah Al-Saba", "studentId": "0242310005101658", "email": "al-saba2305101658@diu.edu.bd", "contact": "01610-665617", "enrollmentYear": "", "batch": "", "designation": "Member", "extra": "", "payment": "PENDING", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_143", "name": "Abir Hasan Mahin", "studentId": "0242310005101213", "email": "hasan23105101213@diu.edu.bd", "contact": "01959-968410", "enrollmentYear": "", "batch": "", "designation": "Member", "extra": "", "payment": "PENDING", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_144", "name": "Sumit Roy Ayon", "studentId": "241-15-049", "email": "roy241-15-049@diu.edu.bd", "contact": "01734-869075", "enrollmentYear": "", "batch": "", "designation": "Member", "extra": "", "payment": "PENDING", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_145", "name": "Md Majba Babu", "studentId": "261-15-040", "email": "261-15-040@diu.edu.bd", "contact": "01323-493513", "enrollmentYear": "", "batch": "", "designation": "Member", "extra": "", "payment": "PENDING", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_146", "name": "Israt Kaniza Himu", "studentId": "241-15-845", "email": "kaniza241-15-845@diu.edu.bd", "contact": "01892-918919", "enrollmentYear": "", "batch": "", "designation": "Member", "extra": "", "payment": "PENDING", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_147", "name": "Abdullah Rayhan", "studentId": "241-15-183", "email": "abdullahrayhan2003@gmail.com", "contact": "01869-251411", "enrollmentYear": "", "batch": "", "designation": "Member", "extra": "", "payment": "PENDING", "status": "active", "joinedAt": "2024-01-01", "notes": ""}];
 
 
@@ -586,6 +628,10 @@ create policy "ESRC Users Access"
         applications: loadJSON(STORAGE_KEYS.APPLICATIONS, DEFAULT_APPLICATIONS),
         resources: loadJSON(STORAGE_KEYS.RESOURCES, DEFAULT_RESOURCES),
         members: loadJSON(STORAGE_KEYS.MEMBERS, DEFAULT_MEMBERS),
+        messages: loadJSON(STORAGE_KEYS.MESSAGES, DEFAULT_MESSAGES),
+        messageQuery: '',
+        messageFilter: 'all',
+        messageOfficerFilter: 'all',
         memberQuery: '',
         memberBatchFilter: 'All',
         memberYearFilter: 'All',
@@ -607,7 +653,8 @@ create policy "ESRC Users Access"
         tasks: STORAGE_KEYS.TASKS,
         applications: STORAGE_KEYS.APPLICATIONS,
         resources: STORAGE_KEYS.RESOURCES,
-        members: STORAGE_KEYS.MEMBERS
+        members: STORAGE_KEYS.MEMBERS,
+        messages: STORAGE_KEYS.MESSAGES
       };
 
       function getAdminDirectory() {
@@ -774,7 +821,7 @@ create policy "ESRC Users Access"
           if (rows.length === 0) {
             // Seed initial records into empty cloud table
             const seedRows = [];
-            ['notices', 'tasks', 'applications', 'resources', 'members'].forEach(kind => {
+            ['notices', 'tasks', 'applications', 'resources', 'members', 'messages'].forEach(kind => {
               (state[kind] || []).forEach(item => {
                 seedRows.push({
                   id: item.id,
@@ -788,7 +835,7 @@ create policy "ESRC Users Access"
               await sbClient.from(SUPABASE_CONFIG.TABLE).upsert(seedRows);
             }
           } else {
-            const grouped = { notices: [], tasks: [], applications: [], resources: [], members: [] };
+            const grouped = { notices: [], tasks: [], applications: [], resources: [], members: [], messages: [] };
             rows.forEach(r => {
               if (grouped[r.kind] && r.payload) {
                 grouped[r.kind].push(r.payload);
@@ -801,6 +848,10 @@ create policy "ESRC Users Access"
             if (grouped.members && grouped.members.length > 0) {
               state.members = grouped.members.sort((a, b) => (a.id || '').localeCompare(b.id || '', undefined, { numeric: true }));
               saveJSON(STORAGE_KEYS.MEMBERS, state.members);
+            }
+            if (grouped.messages) {
+              state.messages = grouped.messages.sort((a, b) => (b.at || 0) - (a.at || 0));
+              saveJSON(STORAGE_KEYS.MESSAGES, state.messages);
             }
           }
 
@@ -996,22 +1047,11 @@ create policy "ESRC Users Access"
       });
 
       /* =========================================================================
-       * 6. SVG LOGOS & ICONS
+       * 6. OFFICIAL LOGOS & ICONS
        * ========================================================================= */
       function esrcLogoSvg(cls = 'w-10 h-10') {
         return `
-          <svg class="${cls}" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <linearGradient id="esrcG" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
-                <stop stop-color="#1D4ED8"/>
-                <stop offset="1" stop-color="#10B981"/>
-              </linearGradient>
-            </defs>
-            <rect width="64" height="64" rx="16" fill="url(#esrcG)"/>
-            <rect x="17" y="17" width="30" height="30" rx="6" stroke="white" stroke-width="2.6" fill="rgba(255,255,255,0.12)"/>
-            <path d="M25 27H39M25 32H35M25 37H39" stroke="white" stroke-width="2.4" stroke-linecap="round"/>
-            <path d="M24 11V17M32 11V17M40 11V17M24 47V53M32 47V53M40 47V53M11 24H17M11 32H17M11 40H17M47 24H53M47 32H53M47 40H53" stroke="white" stroke-opacity="0.85" stroke-width="2.2" stroke-linecap="round"/>
-          </svg>
+          <img src="esrc_logo.png" alt="ESRC DIU Logo" class="${cls} object-contain" onerror="this.onerror=null; this.outerHTML='<svg class=\\'${cls}\\' viewBox=\\'0 0 64 64\\' fill=\\'none\\' xmlns=\\'http://www.w3.org/2000/svg\\'><defs><linearGradient id=\\'esrcG\\' x1=\\'0\\' y1=\\'0\\' x2=\\'64\\' y2=\\'64\\' gradientUnits=\\'userSpaceOnUse\\'><stop stop-color=\\'#1D4ED8\\'/><stop offset=\\'1\\' stop-color=\\'#10B981\\'/></linearGradient></defs><rect width=\\'64\\' height=\\'64\\' rx=\\'16\\' fill=\\'url(#esrcG)\\'/><rect x=\\'17\\' y=\\'17\\' width=\\'30\\' height=\\'30\\' rx=\\'6\\' stroke=\\'white\\' stroke-width=\\'2.6\\' fill=\\'rgba(255,255,255,0.12)\\'/><path d=\\'M25 27H39M25 32H35M25 37H39\\' stroke=\\'white\\' stroke-width=\\'2.4\\' stroke-linecap=\\'round\\'/><path d=\\'M24 11V17M32 11V17M40 11V17M24 47V53M32 47V53M40 47V53M11 24H17M11 32H17M11 40H17M47 24H53M47 32H53M47 40H53\\' stroke=\\'white\\' stroke-opacity=\\'0.85\\' stroke-width=\\'2.2\\' stroke-linecap=\\'round\\'/></svg>';" />
         `;
       }
 
@@ -1021,6 +1061,8 @@ create policy "ESRC Users Access"
         applications: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>',
         notices: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>',
         tools: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>',
+        messages: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>',
+        send: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>',
         members: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>',
         alumni: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5"/></svg>',
         download: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>',
@@ -1091,7 +1133,7 @@ create policy "ESRC Users Access"
               <!-- Official Letterhead -->
               <div class="flex items-center justify-between border-b-2 border-slate-900 pb-4 mb-5">
                 <div class="flex items-center gap-3.5">
-                  ${esrcLogoSvg('w-12 h-12 shrink-0')}
+                  ${esrcLogoSvg('w-14 h-14 shrink-0')}
                   <div>
                     <div class="text-[10px] font-bold tracking-widest uppercase text-blue-700">Daffodil International University</div>
                     <div class="text-base font-bold tracking-tight text-slate-900">Embedded System Research Center (ESRC)</div>
@@ -1200,7 +1242,7 @@ create policy "ESRC Users Access"
               <!-- Official Letterhead -->
               <div class="flex items-center justify-between border-b-2 border-slate-900 pb-4 mb-5">
                 <div class="flex items-center gap-3.5">
-                  ${esrcLogoSvg('w-12 h-12 shrink-0')}
+                  ${esrcLogoSvg('w-14 h-14 shrink-0')}
                   <div>
                     <div class="text-[10px] font-bold tracking-widest uppercase text-emerald-700">Daffodil International University</div>
                     <div class="text-base font-bold tracking-tight text-slate-900">Embedded System Research Center (ESRC)</div>
@@ -1348,7 +1390,7 @@ create policy "ESRC Users Access"
               <!-- HIG Frosted Login Card -->
               <div id="login-card" class="hig-glass bg-white/85 dark:bg-[#151922]/85 border border-black/[0.08] dark:border-white/[0.09] rounded-3xl shadow-hig-lg p-7 sm:p-8">
                 <div class="flex items-center gap-4 mb-6">
-                  ${esrcLogoSvg('w-12 h-12 shrink-0 shadow-md rounded-2xl')}
+                  ${esrcLogoSvg('w-14 h-14 shrink-0')}
                   <div>
                     <h1 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white leading-tight">ESRC DIU Portal</h1>
                     <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Cloud-Synced Operations &amp; Approval Suite</p>
@@ -1731,6 +1773,34 @@ create policy "ESRC Users Access"
 
         return `
           <div class="space-y-8 animate-fade-in">
+            ${(() => {
+              if (isAdmin()) return '';
+              const myUnreadMsgs = (state.messages || []).filter(m => (m.toId === state.user.id || m.toCode === state.user.code) && !m.read);
+              if (!myUnreadMsgs.length) return '';
+              const latest = myUnreadMsgs[0];
+              return `
+                <div class="p-4 sm:p-5 rounded-3xl bg-gradient-to-r from-blue-600/15 via-indigo-600/10 to-purple-600/15 border border-blue-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-hig-sm animate-fade-in">
+                  <div class="flex items-center gap-3.5 min-w-0">
+                    <span class="w-10 h-10 rounded-2xl bg-blue-600 text-white flex items-center justify-center shrink-0 shadow-md animate-pulse">${ICONS.messages}</span>
+                    <div class="min-w-0">
+                      <div class="flex items-center gap-2">
+                        <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${latest.priority === 'urgent' ? 'bg-red-500/20 text-red-600 dark:text-red-400 font-extrabold' : 'bg-blue-500/20 text-blue-600 dark:text-blue-400'}">
+                          ${latest.priority === 'urgent' ? '⚠️ URGENT DIRECTIVE' : 'PERSONAL DIRECTIVE'}
+                        </span>
+                        <span class="text-[10px] text-slate-400">${formatRelativeTime(latest.at)}</span>
+                      </div>
+                      <div class="text-xs font-bold text-slate-900 dark:text-white truncate mt-1">${escapeHtml(latest.subject)}</div>
+                      <div class="text-[11px] text-slate-500 dark:text-slate-400 truncate">From ${escapeHtml(latest.fromName)} (${escapeHtml(latest.fromRole)})</div>
+                    </div>
+                  </div>
+                  <button data-nav="messages" class="nav-btn inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition shrink-0">
+                    <span>Open Inbox (${myUnreadMsgs.length})</span>
+                    <span>→</span>
+                  </button>
+                </div>
+              `;
+            })()}
+
             <!-- Hero Welcome Banner -->
             <section class="hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/[0.07] dark:border-white/[0.08] rounded-3xl p-6 sm:p-8 shadow-hig-sm flex flex-col lg:flex-row lg:items-center justify-between gap-6">
               <div>
@@ -1812,6 +1882,11 @@ create policy "ESRC Users Access"
                       <div class="text-xs font-bold text-slate-900 dark:text-white truncate mt-1">${escapeHtml(o.name)}</div>
                       <div class="text-[10px] text-slate-400 truncate">${escapeHtml(formatRelativeTime(o.last_login_at))}</div>
                     </div>
+                    ${isAdmin() ? `
+                      <button type="button" class="btn-quick-msg ml-auto p-1.5 rounded-xl text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-blue-500/10 transition" data-officer-id="${escapeHtml(o.id)}" data-officer-name="${escapeHtml(o.name)}" data-officer-code="${escapeHtml(o.code)}" title="Send Personal Message to ${escapeHtml(o.name)}">
+                        ${ICONS.messages}
+                      </button>
+                    ` : ''}
                   </div>
                 `).join('')}
               </div>
@@ -2577,6 +2652,13 @@ create policy "ESRC Users Access"
           { id: 'applications', label: 'Applications', icon: ICONS.applications, count: state.applications.filter(a => a.status === 'pending').length },
           { id: 'members', label: 'Members', icon: ICONS.members, count: state.members.filter(m => m.status !== 'alumni').length },
           { id: 'alumni', label: 'Alumni', icon: ICONS.alumni, count: state.members.filter(m => m.status === 'alumni').length },
+          { id: 'messages', label: 'Messages', icon: ICONS.messages, count: (() => {
+            if (isAdmin()) {
+              return (state.messages || []).filter(m => !m.read).length;
+            } else {
+              return (state.messages || []).filter(m => (m.toId === state.user.id || m.toCode === state.user.code) && !m.read).length;
+            }
+          })() },
           { id: 'notices', label: 'Notices', icon: ICONS.notices },
           { id: 'tools', label: 'Tools', icon: ICONS.tools },
           { id: 'resources', label: 'Resources', icon: ICONS.resources }
@@ -2585,7 +2667,7 @@ create policy "ESRC Users Access"
         const sidebarInner = `
           <div class="flex flex-col h-full p-4">
             <div class="flex items-center gap-3 px-2 py-2 mb-6">
-              ${esrcLogoSvg('w-9 h-9 shrink-0 shadow-sm rounded-xl')}
+              ${esrcLogoSvg('w-10 h-10 shrink-0')}
               <div class="min-w-0">
                 <div class="text-xs font-bold tracking-tight text-slate-900 dark:text-white truncate">ESRC DIU</div>
                 <div class="text-[10px] text-slate-400 truncate">Officers Portal</div>
@@ -2633,6 +2715,7 @@ create policy "ESRC Users Access"
           : state.view === 'applications' ? renderApplicationsView()
           : state.view === 'members' ? renderMembersView()
           : state.view === 'alumni' ? renderAlumniView()
+          : state.view === 'messages' ? renderMessagesView()
           : state.view === 'notices' ? renderNoticesView()
           : state.view === 'tools' ? renderToolsView()
           : state.view === 'resources' ? renderResourcesView()
@@ -2660,8 +2743,9 @@ create policy "ESRC Users Access"
             <!-- Main Column -->
             <div class="flex-1 flex flex-col min-w-0">
               <header class="sticky top-0 z-30 hig-glass bg-white/75 dark:bg-[#11151E]/80 border-b border-black/[0.07] dark:border-white/[0.07] px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-3">
-                <div class="flex items-center gap-3 min-w-0">
+                <div class="flex items-center gap-2.5 min-w-0">
                   <button id="btn-menu" class="lg:hidden p-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 transition" aria-label="Menu">${ICONS.menu}</button>
+                  <div class="lg:hidden shrink-0">${esrcLogoSvg('w-6 h-6 shrink-0')}</div>
                   <div class="min-w-0">
                     <div class="text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-white truncate">${escapeHtml(navItems.find(n => n.id === state.view)?.label || 'Overview')}</div>
                   </div>
@@ -2860,6 +2944,83 @@ create policy "ESRC Users Access"
         });
 
         
+        
+        // Messages View Bindings
+        const btnNewMsg = document.getElementById('btn-new-message');
+        if (btnNewMsg) {
+          btnNewMsg.onclick = () => openSendMessageModal();
+        }
+
+        // Quick message buttons on Home officer cards
+        document.querySelectorAll('.btn-quick-msg').forEach(b => {
+          b.onclick = (e) => {
+            e.stopPropagation();
+            const officerId = b.getAttribute('data-officer-id');
+            openSendMessageModal(officerId);
+          };
+        });
+
+        // Search and Filters
+        const msgSearch = document.getElementById('msg-search');
+        if (msgSearch) {
+          msgSearch.oninput = (e) => {
+            state.messageQuery = e.target.value;
+            renderApp();
+            const inp = document.getElementById('msg-search');
+            if (inp) {
+              inp.focus();
+              inp.setSelectionRange(inp.value.length, inp.value.length);
+            }
+          };
+        }
+
+        const clearMsgSearch = document.getElementById('clear-msg-search');
+        if (clearMsgSearch) {
+          clearMsgSearch.onclick = () => {
+            state.messageQuery = '';
+            renderApp();
+          };
+        }
+
+        const msgOfficerFilter = document.getElementById('msg-officer-filter');
+        if (msgOfficerFilter) {
+          msgOfficerFilter.onchange = (e) => {
+            state.messageOfficerFilter = e.target.value;
+            renderApp();
+          };
+        }
+
+        const msgPriorityFilter = document.getElementById('msg-priority-filter');
+        if (msgPriorityFilter) {
+          msgPriorityFilter.onchange = (e) => {
+            state.messagePriorityFilter = e.target.value;
+            renderApp();
+          };
+        }
+
+        const msgStatusFilter = document.getElementById('msg-status-filter');
+        if (msgStatusFilter) {
+          msgStatusFilter.onchange = (e) => {
+            state.messageStatusFilter = e.target.value;
+            renderApp();
+          };
+        }
+
+        // View and Delete message buttons
+        document.querySelectorAll('.view-msg-btn').forEach(b => {
+          b.onclick = () => {
+            const id = b.getAttribute('data-id');
+            openViewMessageModal(id);
+          };
+        });
+
+        document.querySelectorAll('.del-msg-btn').forEach(b => {
+          b.onclick = () => {
+            const id = b.getAttribute('data-id');
+            deleteMessage(id);
+          };
+        });
+
         // Members View Bindings
         const btnNewMember = document.getElementById('btn-new-member');
         if (btnNewMember) btnNewMember.onclick = () => openMemberModal(null, 'active');
@@ -4016,6 +4177,445 @@ create policy "ESRC Users Access"
             </div>
           </div>
         `;
+      }
+
+      
+      /* =========================================================================
+       * 12. PERSONAL OFFICER MESSAGING ENGINE
+       * ========================================================================= */
+      function renderMessagesView() {
+        const isAdm = isAdmin();
+        const officers = getOfficerDirectory();
+        const q = (state.messageQuery || '').toLowerCase().trim();
+        const pFilter = state.messagePriorityFilter || 'all';
+        const sFilter = state.messageStatusFilter || 'all';
+        const oFilter = state.messageOfficerFilter || 'all';
+
+        // Filter messages for current user
+        let msgs = (state.messages || []).filter(m => {
+          if (!isAdm) {
+            // General officers only see messages sent to them
+            if (m.toId !== state.user.id && m.toCode !== state.user.code) return false;
+          }
+          if (q) {
+            const haystack = `${m.subject} ${m.body} ${m.toName} ${m.toCode} ${m.fromName}`.toLowerCase();
+            if (!haystack.includes(q)) return false;
+          }
+          if (pFilter !== 'all' && m.priority !== pFilter) return false;
+          if (sFilter === 'unread' && m.read) return false;
+          if (sFilter === 'read' && !m.read) return false;
+          if (isAdm && oFilter !== 'all' && m.toId !== oFilter && m.toCode !== oFilter) return false;
+          return true;
+        });
+
+        // Analytics
+        const totalSentOrRecv = isAdm
+          ? (state.messages || []).length
+          : (state.messages || []).filter(m => m.toId === state.user.id || m.toCode === state.user.code).length;
+        const unreadCount = isAdm
+          ? (state.messages || []).filter(m => !m.read).length
+          : (state.messages || []).filter(m => (m.toId === state.user.id || m.toCode === state.user.code) && !m.read).length;
+        const urgentCount = isAdm
+          ? (state.messages || []).filter(m => m.priority === 'urgent').length
+          : (state.messages || []).filter(m => (m.toId === state.user.id || m.toCode === state.user.code) && m.priority === 'urgent').length;
+
+        return `
+          <div class="space-y-6 animate-fade-in">
+            <!-- Header Section -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <div class="flex items-center gap-2.5">
+                  <h2 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">
+                    ${isAdm ? 'Officer Direct Communications' : 'Personal Directives & Messages'}
+                  </h2>
+                  <span class="text-xs px-2.5 py-0.5 rounded-full font-bold font-mono ${
+                    unreadCount > 0 ? 'bg-amber-500/10 text-amber-600 dark:text-amber-400' : 'bg-blue-500/10 text-blue-600 dark:text-blue-400'
+                  }">
+                    ${unreadCount} Unread
+                  </span>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">
+                  ${isAdm
+                    ? 'Confidential directives, instructions, and 1-on-1 personal communications from President to individual officers.'
+                    : 'Confidential 1-on-1 communications and administrative directives from Executive Leadership.'}
+                </p>
+              </div>
+              <div class="flex flex-wrap items-center gap-2.5">
+                ${isAdm ? `
+                  <button type="button" id="btn-new-message" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition">
+                    ${ICONS.plus}<span>Send Personal Message</span>
+                  </button>
+                ` : ''}
+              </div>
+            </div>
+
+            <!-- KPI Metric Tiles -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+              <div class="p-4 rounded-2xl hig-glass bg-white/70 dark:bg-[#151922]/70 border border-black/[0.06] dark:border-white/[0.07]">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  ${isAdm ? 'Total Sent Messages' : 'Total Directives'}
+                </div>
+                <div class="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1 font-mono">${totalSentOrRecv}</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">Recorded in Registry</div>
+              </div>
+              <div class="p-4 rounded-2xl hig-glass bg-white/70 dark:bg-[#151922]/70 border border-black/[0.06] dark:border-white/[0.07]">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">
+                  ${isAdm ? 'Pending Read Receipts' : 'Unread Directives'}
+                </div>
+                <div class="text-2xl font-bold ${unreadCount > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'} mt-1 font-mono">${unreadCount}</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">${unreadCount > 0 ? 'Awaiting acknowledgment' : 'All up to date'}</div>
+              </div>
+              <div class="p-4 rounded-2xl hig-glass bg-white/70 dark:bg-[#151922]/70 border border-black/[0.06] dark:border-white/[0.07]">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Urgent Directives</div>
+                <div class="text-2xl font-bold text-red-600 dark:text-red-400 mt-1 font-mono">${urgentCount}</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">Priority Notifications</div>
+              </div>
+            </div>
+
+            <!-- Search & Filters Toolbar -->
+            <div class="p-4 rounded-2xl hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/[0.07] dark:border-white/[0.08] shadow-hig-sm space-y-3">
+              <div class="flex flex-col md:flex-row gap-2.5">
+                <div class="relative flex-1">
+                  <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400">🔍</span>
+                  <input type="text" id="msg-search" value="${escapeHtml(state.messageQuery || '')}" placeholder="Search message subject, directive content, or officer..." class="w-full pl-9 pr-8 py-2.5 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-900 dark:text-white" />
+                  ${state.messageQuery ? `<button type="button" id="clear-msg-search" class="absolute inset-y-0 right-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-white text-xs">✕</button>` : ''}
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                  ${isAdm ? `
+                    <select id="msg-officer-filter" class="px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-slate-700 dark:text-slate-300">
+                      <option value="all" ${oFilter === 'all' ? 'selected' : ''}>All Officers</option>
+                      ${officers.map(o => `<option value="${escapeHtml(o.id)}" ${oFilter === o.id ? 'selected' : ''}>[${escapeHtml(o.code)}] ${escapeHtml(o.name)}</option>`).join('')}
+                    </select>
+                  ` : ''}
+                  <select id="msg-priority-filter" class="px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-slate-700 dark:text-slate-300">
+                    <option value="all" ${pFilter === 'all' ? 'selected' : ''}>All Priorities</option>
+                    <option value="urgent" ${pFilter === 'urgent' ? 'selected' : ''}>⚠️ Urgent Directives</option>
+                    <option value="normal" ${pFilter === 'normal' ? 'selected' : ''}>Normal Messages</option>
+                  </select>
+                  <select id="msg-status-filter" class="px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-slate-700 dark:text-slate-300">
+                    <option value="all" ${sFilter === 'all' ? 'selected' : ''}>All Statuses</option>
+                    <option value="unread" ${sFilter === 'unread' ? 'selected' : ''}>Unread Only</option>
+                    <option value="read" ${sFilter === 'read' ? 'selected' : ''}>Read Only</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <!-- Messages List -->
+            <div class="space-y-3">
+              ${msgs.length ? msgs.map(m => {
+                const isUnread = !m.read;
+                const isUrgent = m.priority === 'urgent';
+                const avatar = isAdm ? (m.toAvatar || m.toCode || 'OF') : (m.fromAvatar || 'SM');
+                return `
+                  <div class="hig-card hig-glass rounded-2xl p-4 sm:p-5 border transition ${
+                    isUnread
+                      ? 'bg-blue-500/[0.03] dark:bg-blue-500/[0.05] border-blue-500/30 dark:border-blue-500/40 shadow-hig-sm'
+                      : 'bg-white/80 dark:bg-[#151922]/80 border-black/[0.07] dark:border-white/[0.08]'
+                  }">
+                    <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3">
+                      <div class="flex items-start gap-3.5 min-w-0">
+                        <span class="w-10 h-10 rounded-xl bg-gradient-to-br ${
+                          isUrgent ? 'from-rose-600 to-red-600' : 'from-blue-600 to-indigo-600'
+                        } text-white font-bold text-xs flex items-center justify-center shrink-0 shadow-sm mt-0.5">
+                          ${escapeHtml(avatar)}
+                        </span>
+                        <div class="min-w-0 flex-1">
+                          <div class="flex flex-wrap items-center gap-2 mb-1">
+                            <span class="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                              isUrgent ? 'bg-red-500/15 text-red-600 dark:text-red-400 font-extrabold border border-red-500/30' : 'bg-blue-500/10 text-blue-600 dark:text-blue-400'
+                            }">
+                              ${isUrgent ? '⚠️ Urgent Directive' : 'Personal Directive'}
+                            </span>
+                            <span class="text-[10px] font-semibold text-slate-700 dark:text-slate-300">
+                              ${isAdm ? `To: <strong>${escapeHtml(m.toName)}</strong> (${escapeHtml(m.toCode)})` : `From: <strong>${escapeHtml(m.fromName)}</strong> (${escapeHtml(m.fromRole)})`}
+                            </span>
+                            <span class="text-[10px] text-slate-400">· ${formatRelativeTime(m.at)}</span>
+                            ${isUnread ? `
+                              <span class="inline-flex items-center gap-1 text-[9px] font-bold uppercase px-2 py-0.5 rounded-full bg-blue-500 text-white">
+                                <span class="w-1.5 h-1.5 rounded-full bg-white animate-pulse"></span>
+                                New
+                              </span>
+                            ` : ''}
+                          </div>
+                          <h4 class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate">
+                            ${escapeHtml(m.subject)}
+                          </h4>
+                          <p class="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2 leading-relaxed">
+                            ${escapeHtml(m.body)}
+                          </p>
+                          <div class="flex flex-wrap items-center gap-3 mt-3 pt-2.5 border-t border-black/[0.05] dark:border-white/[0.05] text-[10px]">
+                            <span class="text-slate-400">Sent: ${formatDate(m.at)}</span>
+                            ${isAdm ? `
+                              <span class="${m.read ? 'text-emerald-600 dark:text-emerald-400 font-medium' : 'text-amber-600 dark:text-amber-400'}">
+                                ${m.read ? `✓✓ Read by officer (${formatRelativeTime(m.readAt)})` : '✓ Delivered (Pending Read)'}
+                              </span>
+                            ` : `
+                              <span class="${m.read ? 'text-slate-400' : 'text-blue-600 dark:text-blue-400 font-semibold'}">
+                                ${m.read ? '✓ Read' : '● Unread Directive'}
+                              </span>
+                            `}
+                          </div>
+                        </div>
+                      </div>
+                      <div class="flex items-center gap-1.5 shrink-0 self-end sm:self-center">
+                        <button type="button" class="view-msg-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition" data-id="${m.id}">
+                          ${!m.read && !isAdm ? 'Read Directive' : 'View Message'}
+                        </button>
+                        ${isAdm ? `
+                          <button type="button" class="del-msg-btn p-1.5 rounded-xl text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-500/10 transition" data-id="${m.id}" title="Delete Message">
+                            🗑️
+                          </button>
+                        ` : ''}
+                      </div>
+                    </div>
+                  </div>
+                `;
+              }).join('') : `
+                <div class="p-12 text-center rounded-2xl hig-glass bg-white/60 dark:bg-[#151922]/60 border border-dashed border-black/15 dark:border-white/15">
+                  <div class="text-3xl mb-2">💬</div>
+                  <div class="text-xs font-bold text-slate-900 dark:text-white">No messages found</div>
+                  <p class="text-[11px] text-slate-400 mt-1 max-w-sm mx-auto">
+                    ${isAdm ? 'Click "+ Send Personal Message" above or the message button on any officer card to deliver a direct communication.' : 'You have no personal directives matching your current filter.'}
+                  </p>
+                </div>
+              `}
+            </div>
+          </div>
+        `;
+      }
+
+      function openSendMessageModal(preselectedOfficerId = null) {
+        if (!isAdmin()) {
+          showToast('Only Executive Admin can issue personal directives', 'error');
+          return;
+        }
+        const officers = getOfficerDirectory();
+        if (!officers.length) {
+          showToast('No active officers found in directory', 'error');
+          return;
+        }
+
+        const bodyHtml = `
+          <form id="form-send-msg" class="space-y-4">
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                Recipient Officer <span class="text-red-500">*</span>
+              </label>
+              <select id="msg-to-officer" required class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/40">
+                <option value="">-- Select Officer --</option>
+                ${officers.map(o => `
+                  <option value="${escapeHtml(o.id)}" data-code="${escapeHtml(o.code)}" data-name="${escapeHtml(o.name)}" data-avatar="${escapeHtml(o.avatar)}" ${preselectedOfficerId === o.id || preselectedOfficerId === o.code ? 'selected' : ''}>
+                    [${escapeHtml(o.code)}] ${escapeHtml(o.name)} · ${escapeHtml(o.title || 'General Officer')}
+                  </option>
+                `).join('')}
+              </select>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                  Priority Directive
+                </label>
+                <select id="msg-priority" class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/40">
+                  <option value="normal">Normal Communication</option>
+                  <option value="urgent">⚠️ Urgent Directive (High Priority)</option>
+                </select>
+              </div>
+              <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                  Sender Identity
+                </label>
+                <input type="text" disabled value="${escapeHtml(state.user.name)} (${escapeHtml(state.user.title || 'President · ESRC DIU')})" class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-black/[0.02] dark:bg-white/[0.02] border border-black/10 dark:border-white/10 text-slate-500 cursor-not-allowed" />
+              </div>
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                Directive Subject / Topic <span class="text-red-500">*</span>
+              </label>
+              <input type="text" id="msg-subject" required placeholder="e.g. Lab Inventory Audit, Component Requisition, Event Setup..." class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/40" />
+            </div>
+
+            <div>
+              <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-1.5">
+                Directive Content / Instructions <span class="text-red-500">*</span>
+              </label>
+              <textarea id="msg-body" rows="6" required placeholder="Write the confidential directive or personal message to this officer..." class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500/40 leading-relaxed font-mono"></textarea>
+            </div>
+
+            <div class="flex items-center justify-end gap-2.5 pt-3 border-t border-black/[0.06] dark:border-white/[0.07]">
+              <button type="button" id="msg-cancel" class="px-4 py-2 rounded-xl text-xs font-semibold border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition">
+                Cancel
+              </button>
+              <button type="submit" class="inline-flex items-center gap-1.5 px-5 py-2 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition">
+                ${ICONS.send}<span>Deliver Message</span>
+              </button>
+            </div>
+          </form>
+        `;
+
+        openModal('Send Personal Message to Officer', 'Direct confidential communication delivered to the officer\'s personal portal inbox.', bodyHtml, () => {
+          const cancelBtn = document.getElementById('msg-cancel');
+          if (cancelBtn) cancelBtn.onclick = closeModal;
+
+          const form = document.getElementById('form-send-msg');
+          if (form) {
+            form.onsubmit = (e) => {
+              e.preventDefault();
+              const sel = document.getElementById('msg-to-officer');
+              const toId = sel.value;
+              if (!toId) {
+                showToast('Please select a recipient officer', 'error');
+                return;
+              }
+              const opt = sel.options[sel.selectedIndex];
+              const toName = opt.getAttribute('data-name');
+              const toCode = opt.getAttribute('data-code');
+              const toAvatar = opt.getAttribute('data-avatar');
+              const priority = document.getElementById('msg-priority').value;
+              const subject = document.getElementById('msg-subject').value.trim();
+              const body = document.getElementById('msg-body').value.trim();
+
+              if (!subject || !body) {
+                showToast('Subject and message content are required', 'error');
+                return;
+              }
+
+              const newMsg = {
+                id: 'msg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 4),
+                fromId: state.user.id,
+                fromName: state.user.name,
+                fromRole: state.user.title || 'President · ESRC DIU',
+                fromAvatar: state.user.avatar || 'SM',
+                toId: toId,
+                toName: toName,
+                toCode: toCode,
+                toTitle: 'General Officer',
+                toAvatar: toAvatar || toCode,
+                subject: subject,
+                body: body,
+                priority: priority,
+                at: Date.now(),
+                read: false,
+                readAt: null
+              };
+
+              state.messages.unshift(newMsg);
+              saveJSON(STORAGE_KEYS.MESSAGES, state.messages);
+              pushRecordToSupabase('messages', newMsg);
+              closeModal();
+              showToast(`Personal message delivered to ${toName} (${toCode})!`, 'success');
+              renderApp();
+            };
+          }
+        }, 'max-w-lg');
+      }
+
+      function openViewMessageModal(msgId) {
+        const m = (state.messages || []).find(x => x.id === msgId);
+        if (!m) return;
+
+        // If recipient officer reads unread message, mark read
+        if (!isAdmin() && (m.toId === state.user.id || m.toCode === state.user.code) && !m.read) {
+          m.read = true;
+          m.readAt = Date.now();
+          saveJSON(STORAGE_KEYS.MESSAGES, state.messages);
+          pushRecordToSupabase('messages', m);
+        }
+
+        const isUrgent = m.priority === 'urgent';
+        const isAdm = isAdmin();
+
+        const bodyHtml = `
+          <div class="space-y-4">
+            <!-- Header Badges -->
+            <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-2xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.07]">
+              <div class="flex items-center gap-2">
+                <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${
+                  isUrgent ? 'bg-red-500/20 text-red-600 dark:text-red-400 font-extrabold border border-red-500/30' : 'bg-blue-500/20 text-blue-600 dark:text-blue-400'
+                }">
+                  ${isUrgent ? '⚠️ Urgent Directive' : 'Personal Directive'}
+                </span>
+                <span class="text-[11px] text-slate-500 dark:text-slate-400">${formatDate(m.at)} (${formatRelativeTime(m.at)})</span>
+              </div>
+              <div class="text-[10px] font-semibold">
+                ${m.read
+                  ? `<span class="text-emerald-600 dark:text-emerald-400">✓✓ Read ${formatRelativeTime(m.readAt)}</span>`
+                  : `<span class="text-amber-600 dark:text-amber-400">✓ Delivered · Pending Read</span>`}
+              </div>
+            </div>
+
+            <!-- Sender & Recipient Metadata -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div class="p-3 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.05] dark:border-white/[0.05]">
+                <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400">From (Sender)</div>
+                <div class="text-xs font-bold text-slate-900 dark:text-white mt-0.5">${escapeHtml(m.fromName)}</div>
+                <div class="text-[11px] text-blue-600 dark:text-blue-400">${escapeHtml(m.fromRole)}</div>
+              </div>
+              <div class="p-3 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.05] dark:border-white/[0.05]">
+                <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400">To (Recipient Officer)</div>
+                <div class="text-xs font-bold text-slate-900 dark:text-white mt-0.5">${escapeHtml(m.toName)}</div>
+                <div class="text-[11px] text-slate-500 dark:text-slate-400">${escapeHtml(m.toCode)} · ${escapeHtml(m.toTitle || 'General Officer')}</div>
+              </div>
+            </div>
+
+            <!-- Subject -->
+            <div>
+              <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400 mb-1">Subject</div>
+              <h3 class="text-sm font-bold text-slate-900 dark:text-white p-3 rounded-xl bg-black/[0.02] dark:bg-white/[0.02] border border-black/[0.05] dark:border-white/[0.05]">
+                ${escapeHtml(m.subject)}
+              </h3>
+            </div>
+
+            <!-- Full Message Body -->
+            <div>
+              <div class="text-[10px] uppercase font-bold tracking-wider text-slate-400 mb-1">Message Content</div>
+              <div class="p-4 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.07] dark:border-white/[0.08] text-xs text-slate-800 dark:text-slate-200 leading-relaxed font-mono whitespace-pre-wrap">
+${escapeHtml(m.body)}
+              </div>
+            </div>
+
+            <!-- Footer Actions -->
+            <div class="flex items-center justify-between gap-2.5 pt-3 border-t border-black/[0.06] dark:border-white/[0.07]">
+              <div>
+                ${isAdm ? `
+                  <button type="button" id="btn-modal-del-msg" class="text-xs font-semibold text-red-600 dark:text-red-400 hover:underline">
+                    Delete Message
+                  </button>
+                ` : ''}
+              </div>
+              <button type="button" id="btn-modal-close-msg" class="px-5 py-2 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition">
+                Done / Close
+              </button>
+            </div>
+          </div>
+        `;
+
+        openModal('Officer Directive', `Directive Ref: ${m.id}`, bodyHtml, () => {
+          const closeBtn = document.getElementById('btn-modal-close-msg');
+          if (closeBtn) closeBtn.onclick = () => { closeModal(); renderApp(); };
+
+          const delBtn = document.getElementById('btn-modal-del-msg');
+          if (delBtn) {
+            delBtn.onclick = () => {
+              closeModal();
+              deleteMessage(m.id);
+            };
+          }
+        }, 'max-w-lg');
+      }
+
+      function deleteMessage(msgId) {
+        const m = (state.messages || []).find(x => x.id === msgId);
+        if (!m) return;
+        openConfirmModal('Delete Message', `Are you sure you want to permanently delete directive "${m.subject}"?`, async () => {
+          state.messages = state.messages.filter(x => x.id !== msgId);
+          saveJSON(STORAGE_KEYS.MESSAGES, state.messages);
+          await deleteRecordFromSupabase('messages', msgId);
+          showToast('Message deleted', 'info');
+          renderApp();
+        });
       }
 
       /* =========================================================================
