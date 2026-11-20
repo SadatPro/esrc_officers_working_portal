@@ -13,7 +13,10 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Supabase JS v2 UMD Client -->
+    <!-- Supabase JS v2 UMD Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <!-- SheetJS for Native Excel (.xlsx) Export -->
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
   <script>
     tailwind.config = {
@@ -392,10 +395,13 @@ create policy "ESRC Users Access"
         NOTICES: 'esrc_hig_notices_v5',
         TASKS: 'esrc_hig_tasks_v5',
         APPLICATIONS: 'esrc_hig_apps_v5',
-        RESOURCES: 'esrc_hig_resources_v5'
+        RESOURCES: 'esrc_hig_resources_v5',
+        MEMBERS: 'esrc_hig_members_v5'
       };
 
       const DEFAULT_USERS = [].concat(ADMIN_VAULT, OFFICER_ROSTER);
+      const DEFAULT_MEMBERS = [{"id": "mem_001", "name": "Faiyaz Khan Sami", "studentId": "221-15-4910", "email": "sami15-4910@diu.edu.bd", "contact": "01531306673", "enrollmentYear": "Spring-2022", "batch": "61", "designation": "President x", "extra": "", "payment": "Completed", "status": "alumni", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_002", "name": "Sadat Mahmud", "studentId": "0242220005101099", "email": "mahmud22205101099@diu.edu.bd", "contact": "01309250507", "enrollmentYear": "Spring-2023", "batch": "63", "designation": "President C", "extra": "C", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_003", "name": "Zakia Sultana Nisa", "studentId": "221-15-5172", "email": "nisa15-5172@diu.edu.bd", "contact": "01753800238", "enrollmentYear": "Spring-2023", "batch": "61", "designation": "V. P.", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_004", "name": "Al-Amin", "studentId": "221-15-6032", "email": "amin15-6032@diu.edu.bd", "contact": "01965512175", "enrollmentYear": "Spring-2022", "batch": "61", "designation": "V. P.", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_005", "name": "Md. Fahim Ferdous", "studentId": "0242220005101784", "email": "ferdous22205101784@diu.edu.bd", "contact": "01860868772", "enrollmentYear": "Fall-2022", "batch": "63", "designation": "A. G. S.", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_006", "name": "Mostaque Shahriar Tonmoy", "studentId": "221-15-6052", "email": "tonmoy15-6052@diu.edu.bd", "contact": "01747012792", "enrollmentYear": "Fall-2024", "batch": "61", "designation": "A. G. S.", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_007", "name": "Mahmudul Hasan Piash", "studentId": "221-15-4911", "email": "piash15-5606@diu.edu.bd", "contact": "01303714497", "enrollmentYear": "Spring-2022", "batch": "61", "designation": "J. S.", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_008", "name": "Moin Ahmed Nahin", "studentId": "221-51-068", "email": "nahin51-068@diu.edu.bd", "contact": "01590044240", "enrollmentYear": "Spring-2024", "batch": "05", "designation": "Treasurer", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_009", "name": "Mehedi Hasan", "studentId": "232-15-497", "email": "hasan2305101497@diu.edu.bd", "contact": "01964301859", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Organizing Secretary", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_010", "name": "Emon Shahriare", "studentId": "232-15-725", "email": "shahriare2305101725@diu.edu.bd", "contact": "018111-84107", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "M. & C. S.", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_011", "name": "Ayesha Siddika", "studentId": "241-15-050", "email": "ayesha241-15-050@diu.edu.bd", "contact": "01700820155", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "Press Secretary", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_012", "name": "Wasifa Zaman", "studentId": "241-15-519", "email": "wasifa241-15-519@diu.edu.bd", "contact": "01976466616", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "Woman Secretary", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_013", "name": "Md. Sayed Islam Rifad", "studentId": "241-15-038", "email": "islam241-15-038@diu.edu.bd", "contact": "01771788176", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "Office Secretary", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_014", "name": "Fahmida Akter Juthi", "studentId": "0242220005101926", "email": "juthi22205101926@diu.edu.bd", "contact": "01313927684", "enrollmentYear": "Spring-2024", "batch": "63", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_015", "name": "Nur Muhammad Nibir", "studentId": "0242220005101833", "email": "nibir22205101833@diu.edu.bd", "contact": "01709264445", "enrollmentYear": "Fall-2024", "batch": "63", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_016", "name": "Md. Asif Jahan", "studentId": "0242320005101748", "email": "jahan2305101748@diu.edu.bd", "contact": "01630972700", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_017", "name": "Modhushodon Roy", "studentId": "0242320005101687", "email": "roy2305101687@diu.edu.bd", "contact": "01306758867", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_018", "name": "Maria Rahman Momo", "studentId": "241-15-359", "email": "rahman241-15-359@diu.edu.bd", "contact": "01915868186", "enrollmentYear": "Fall-2024", "batch": "66", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_019", "name": "Ferdusi Rahman", "studentId": "0242220005101646", "email": "rahman22205101646@diu.edu.bd", "contact": "01301618583", "enrollmentYear": "Fall-2024", "batch": "63", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_020", "name": "Md. Al Saif Srabon", "studentId": "0242410005101532", "email": "saif241-15-532@diu.edu.bd", "contact": "01883724040", "enrollmentYear": "Fall-2024", "batch": "66", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_021", "name": "Ferdusi Rahman", "studentId": "0242220005101646", "email": "rahman22205101646@diu.edu.bd", "contact": "01301618583", "enrollmentYear": "Fall-2024", "batch": "63", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_022", "name": "Himadri Shekhar Pias", "studentId": "241-15-349", "email": "shekhar241-15-349@diu.edu.bd", "contact": "01736576460", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_023", "name": "Md. Redoy Siddik", "studentId": "241-15-204", "email": "redoy241-15-204@diu.edu.bd", "contact": "01551608435", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_024", "name": "Any Akther", "studentId": "241-15-181", "email": "any241-15-181@diu.edu.bd", "contact": "01608115567", "enrollmentYear": "Fall-2024", "batch": "66", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_025", "name": "Maria Rashid", "studentId": "232-15-160", "email": "maria2305101160@diu.edu.bd", "contact": "", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_026", "name": "Sumaiya Yesmin", "studentId": "232-15-141", "email": "yesmin2305101141@diu.edu.bd", "contact": "01724837714", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_027", "name": "Md. Fahim Muntasir", "studentId": "232-15-063", "email": "muntasir2305101063@diu.edu.bd", "contact": "01581773123", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_028", "name": "Meher Niger", "studentId": "232-15-075", "email": "niger2305101075@diu.edu.bd", "contact": "01745439669", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_029", "name": "Md Alif Rabbi", "studentId": "232-15-601", "email": "rabbi2305101601@diu.edu.bd", "contact": "01780640675", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_030", "name": "Sayma Islam", "studentId": "232-15-511", "email": "sayma2305101511@diu.edu.bd", "contact": "01300313542", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_031", "name": "Abubakkar Siddik", "studentId": "232-15-271", "email": "siddik2305101271@diu.edu.bd", "contact": "01810464950", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_032", "name": "Muhsina Tasnim", "studentId": "221-15-5763", "email": "tasnim15-5763@diu.edu.bd", "contact": "01781241977", "enrollmentYear": "Spring-2024", "batch": "62", "designation": "S202449", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_033", "name": "Sadia Sumona Shanta", "studentId": "0242220005101936", "email": "shanta22205101936@diu.edu.bd", "contact": "01764278281", "enrollmentYear": "Spring-2024", "batch": "63", "designation": "S202402", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_034", "name": "Md. Shanawaz Fahim Hridoy", "studentId": "0242310005101739", "email": "hridoy2305101739@diu.edu.bd", "contact": "01860771414", "enrollmentYear": "Spring-2024", "batch": "64", "designation": "S202444", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_035", "name": "Abu Sayem", "studentId": "0242310005101678", "email": "sayem2305101678@diu.edu.bd", "contact": "01703750582", "enrollmentYear": "Spring-2024", "batch": "64", "designation": "S202433", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_036", "name": "All Moukrajul", "studentId": "241-15-691", "email": "all241-15-691@diu.edu.bd", "contact": "01307568285", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202430", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_037", "name": "MAHJABIN SULTANA", "studentId": "241-15-899", "email": "sultana241-15-899@diu.edu.bd", "contact": "01745562756", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202419", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_038", "name": "Pritom Kumar Shaha", "studentId": "241-15-277", "email": "kumar241-15-277@diu.edu.bd", "contact": "01326053574", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202404", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_039", "name": "Sanjida Akter Trisha", "studentId": "232-15-451", "email": "trisha2305101451@diu.edu.bd", "contact": "01718730380", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_040", "name": "Md. Imran Hassain", "studentId": "241-15-304", "email": "imran241-15-304@diu.edu.bd", "contact": "01917449182", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202415", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_041", "name": "Nabila Hassain", "studentId": "241-15-860", "email": "nabila241-15-860@diu.edu.bd", "contact": "01646066695", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202416", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_042", "name": "Jerin Tasnim Samiha", "studentId": "241-15-503", "email": "tasnim241-15-503@diu.edu.bd", "contact": "01319070107", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202417", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_043", "name": "Sumiya Akther Onannya", "studentId": "241-15-225", "email": "akther241-15-225@diu.edu.bd", "contact": "01883949498", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202405", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_044", "name": "Khaleque Md. Fahim Ashhab", "studentId": "241-15-548", "email": "fahim241-15-548@diu.edu.bd", "contact": "01650279027", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202410", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_045", "name": "Md Saad Hossain", "studentId": "241-15-541", "email": "saad241-15-541@diu.edu.bd", "contact": "01861969561", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202432", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_046", "name": "Syed Ahmad Galib", "studentId": "232-15-272", "email": "galib2305101272@diu.edu.bd", "contact": "01920376677", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_047", "name": "Akash Chondro Mohonto", "studentId": "241-15-507", "email": "chondro241-15-507@diu.edu.bd", "contact": "01827459740", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202427", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_048", "name": "Shakin Ahammed Emon", "studentId": "241-15-111", "email": "ahammed241-15-111@diu.edu.bd", "contact": "01887583501", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202409", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_049", "name": "Esrat Anam Kamy", "studentId": "241-15-445", "email": "anam241-15-445@diu.edu.bd", "contact": "01970455551", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202407", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_050", "name": "Abdullah Jobayer Jarif", "studentId": "241-15-216", "email": "jobayer241-15-216@diu.edu.bd", "contact": "0175814404", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202437", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_051", "name": "Shuvojit Majumder", "studentId": "232-15-246", "email": "shuvojit2305101246@diu.edu.bd", "contact": "01757199038", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_052", "name": "Md. Imran Nazir", "studentId": "241-15-352", "email": "imran241-15-352@diu.edu.bd", "contact": "01329810098", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202431", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_053", "name": "Md. chand Mondol", "studentId": "241-15-157", "email": "chand241-15-157@diu.edu.bd", "contact": "017333839100", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202429", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_054", "name": "Md. Sadik Fahim", "studentId": "241-15-465", "email": "hasan241-15-465@diu.edu.bd", "contact": "01572988084", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202426", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_055", "name": "Md. Tousiq Imdad Mehedi", "studentId": "241-15-196", "email": "imdad241-15-196@diu.edu.bd", "contact": "01715037874", "enrollmentYear": "Spring-2024", "batch": "66", "designation": "S202448", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_056", "name": "Rokeya Ahsan Jerin", "studentId": "212-15-4197", "email": "rokeya15-4197@diu.edu.bd", "contact": "01907487304", "enrollmentYear": "Spring-2022", "batch": "59", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_057", "name": "Afia Morsheda Neladry", "studentId": "222-15-6329", "email": "neladry15-6329@s.diu.edu.bd", "contact": "01926725424", "enrollmentYear": "Spring-2023", "batch": "62", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_058", "name": "Adnan Uddin Khan", "studentId": "0242220005101819", "email": "adnan22205101819@diu.edu.bd", "contact": "01874244333", "enrollmentYear": "Fall-2024", "batch": "63", "designation": "S202435", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_059", "name": "Jerin Nur Khan Achol", "studentId": "0242220005101940", "email": "achol22205101940@diu.edu.bd", "contact": "01910071333", "enrollmentYear": "Fall-2024", "batch": "63", "designation": "S202450", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_060", "name": "Mst. Sumaiya Akter Sithi", "studentId": "0242220005101915", "email": "sithi22205101915@diu.edu.bd", "contact": "01728889456", "enrollmentYear": "Fall-2024", "batch": "63", "designation": "S202436", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_061", "name": "Ayatullah Al-Saba", "studentId": "0242310005101658", "email": "al-saba2305101658@diu.edu.bd", "contact": "01771834660", "enrollmentYear": "Fall-2024", "batch": "64", "designation": "S202483", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_062", "name": "Kazi Abir Hassan", "studentId": "0242310005101213", "email": "hasan23105101213@diu.edu.bd", "contact": "01959968410", "enrollmentYear": "Fall-2024", "batch": "64", "designation": "S202482", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_063", "name": "Samanta Islam Zerin", "studentId": "0242220005101835", "email": "zerin22205101835@diu.edu.bd", "contact": "01985869342", "enrollmentYear": "Spring-2022", "batch": "63", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_064", "name": "Shuvojit Majumder", "studentId": "232-15-246", "email": "shuvojit2305101246@diu.edu.bd", "contact": "01757199038", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_065", "name": "Sanjida Akter Trisha", "studentId": "232-15-451", "email": "trisha2305101451@diu.edu.bd", "contact": "01718730380", "enrollmentYear": "Fall-2023", "batch": "65", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_066", "name": "Md. Emon Hossain", "studentId": "241-15-818", "email": "hossain2305101818@diu.edu.bd", "contact": "01893672505", "enrollmentYear": "Fall-2024", "batch": "66", "designation": "S202475", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_067", "name": "Shifat Mahmud Tonmoy", "studentId": "221-15-6058", "email": "tonmoy15-6058@diu.edu.bd", "contact": "01687959536", "enrollmentYear": "Fall-2024", "batch": "61", "designation": "S202473", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_068", "name": "Fatin Anzum", "studentId": "242-15-306", "email": "fatin242-15-306@diu.edu.bd", "contact": "01757010075", "enrollmentYear": "Fall-2024", "batch": "67", "designation": "5202458", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_069", "name": "Md. Didarul Islam", "studentId": "221-15-4679", "email": "didarul15-4679@diu.edu.bd", "contact": "01829526016", "enrollmentYear": "Fall-2024", "batch": "61", "designation": "S202472", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_070", "name": "Md. Al Amin Sikder", "studentId": "221-15-5839", "email": "sikder15-5839@diu.edu.bd", "contact": "01739447640", "enrollmentYear": "Fall-2024", "batch": "61", "designation": "S202471", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_071", "name": "Abid Khan", "studentId": "221-15-4894", "email": "khan15-4894@diu.edu.bd", "contact": "018259293963", "enrollmentYear": "Fall-2024", "batch": "61", "designation": "S202470", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_072", "name": "Nazifa Tabassum Anima", "studentId": "221-15-5488", "email": "anima15-5488@diu.edu.bd", "contact": "01700822702", "enrollmentYear": "Fall-2024", "batch": "61", "designation": "S202469", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_073", "name": "Ahsanul Haque Borat", "studentId": "241-15-346", "email": "haque241-15-346@diu.edu.bd", "contact": "01568188945", "enrollmentYear": "Fall-2024", "batch": "66_R", "designation": "024-001-0001", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_074", "name": "Noushin Tabassum", "studentId": "241-15-298", "email": "noushin241-15-298@diu.edu.bd", "contact": "01782037378", "enrollmentYear": "Fall-2024", "batch": "66_R", "designation": "024-001-0002", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_075", "name": "Md Sujon Mia", "studentId": "241-15-717", "email": "suzon241-15-717@diu.edu.bd", "contact": "01736497614", "enrollmentYear": "Fall-2024", "batch": "66_O", "designation": "024-001-0004", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_076", "name": "Kh. Rizve Reza", "studentId": "241-15-142", "email": "rizve241-15-142@diu.edu.bd", "contact": "01703902395", "enrollmentYear": "Fall-2024", "batch": "66_A", "designation": "024-001-0005", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_077", "name": "Naima Rahman Tuhi", "studentId": "242-15-567", "email": "tuhi242-15-567@diu.edu.bd", "contact": "01301641046", "enrollmentYear": "Fall-2024", "batch": "67_S", "designation": "024-001-0006", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_078", "name": "Rakibul Islam Hamim", "studentId": "241-15-169", "email": "islam241-15-169@diu.edu.bd", "contact": "01540097182", "enrollmentYear": "Fall-2024", "batch": "66_J", "designation": "024-001-0007", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_079", "name": "Mohammed Muntasir Rahman Joy", "studentId": "242-15-740", "email": "joy242-15-740@diu.edu.bd", "contact": "01773007835", "enrollmentYear": "Fall-2024", "batch": "67_J", "designation": "024-001-0008", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_080", "name": "Tanjim Jannat Mary", "studentId": "242-15-029", "email": "mary242-15-029@diu.edu.bd", "contact": "01890435903", "enrollmentYear": "Fall-2024", "batch": "67_F", "designation": "024-001-0009", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_081", "name": "Md. Abu Lais", "studentId": "242-15-632", "email": "lais242-15-632@diu.edu.bd", "contact": "01612346277", "enrollmentYear": "Fall-2024", "batch": "67_A", "designation": "024-001-0010", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_082", "name": "Md. Marfi Sarker", "studentId": "241-15-065", "email": "marfisarker2@gmail.com", "contact": "01647456909", "enrollmentYear": "Fall-2024", "batch": "66_R", "designation": "024-001-0011", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_083", "name": "Md. Mithun Ahomed", "studentId": "232-15-526", "email": "ahomed2305101526@diu.edu.bd", "contact": "01744589197", "enrollmentYear": "Fall-2024", "batch": "65_M", "designation": "024-001-0012", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_084", "name": "Pritam Sarkar", "studentId": "242-15-702", "email": "pritam242-15-702@diu.edu.bd", "contact": "01822248922", "enrollmentYear": "Fall-2024", "batch": "67_L", "designation": "024-001-0013", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_085", "name": "Abu Said Omi", "studentId": "242-15-757", "email": "said242-15-757@diu.edu.bd", "contact": "01612238763", "enrollmentYear": "Fall-2024", "batch": "67_L", "designation": "024-001-0014", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_086", "name": "Md. Labib Hasan", "studentId": "241-15-025", "email": "labib241-15-025@diu.edu.bd", "contact": "01403078616", "enrollmentYear": "Fall-2024", "batch": "66_O", "designation": "024-001-0015", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_087", "name": "Md. Nur Rafsan Jani Al Rubayath", "studentId": "241-15-772", "email": "al241-15-772@diu.edu.bd", "contact": "01846651947", "enrollmentYear": "Fall-2024", "batch": "66_O", "designation": "024-001-0016", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_088", "name": "Miss. Nasima Khatun", "studentId": "241-15-340", "email": "nasima241-15-340@diu.edu.bd", "contact": "01759545401", "enrollmentYear": "Fall-2024", "batch": "66_I", "designation": "024-001-0017", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_089", "name": "S.M. Tajwar Siddique", "studentId": "242-15-313", "email": "siddique242-15-313@diu.edu.bd", "contact": "01301292901", "enrollmentYear": "Fall-2024", "batch": "67_G", "designation": "024-001-0018", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_090", "name": "Mobasshara Mostafiz Ohi", "studentId": "241-15-396", "email": "mostafiz241-15-396@diu.edu.bd", "contact": "01304492614", "enrollmentYear": "Fall-2024", "batch": "66_R", "designation": "024-001-0019", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_091", "name": "Ahmed Shahir Samin", "studentId": "242-15-176", "email": "samin242-15-176@diu.edu.bd", "contact": "01516502515", "enrollmentYear": "Fall-2024", "batch": "67_G", "designation": "024-001-0020", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_092", "name": "Humayra Kabir", "studentId": "242-15-023", "email": "humayra242-15-023@diu.edu.bd", "contact": "01973276171", "enrollmentYear": "Fall-2024", "batch": "67_L", "designation": "024-001-0021", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_093", "name": "Meherin Hera Chowdhury", "studentId": "0242220005101191", "email": "akter22205101191@diu.edu.bd", "contact": "01914142864", "enrollmentYear": "Spring-2022", "batch": "63", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_094", "name": "Afia Morsheda Neladry", "studentId": "222-15-6329", "email": "neladry15-6329@s.diu.edu.bd", "contact": "01926725424", "enrollmentYear": "Spring-2023", "batch": "62", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_095", "name": "Jannati Humayna Akter Himu", "studentId": "241-15-738", "email": "akter241-15-738@diu.edu.bd", "contact": "01762762963", "enrollmentYear": "Fall-2024", "batch": "66_A", "designation": "5202497", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_096", "name": "MD Nayem Abrar Rupom", "studentId": "241-15-155", "email": "abrar241-15-155@diu.edu.bd", "contact": "01627793804", "enrollmentYear": "Fall-2024", "batch": "66_E", "designation": "5202503", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_097", "name": "Sharif Rafid Ur Rahman", "studentId": "242-15-480", "email": "sharifrafidurrahman@gmail.com", "contact": "01944150909", "enrollmentYear": "Fall-2024", "batch": "67_R", "designation": "5202499", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_098", "name": "Saber Mahmud Sarker", "studentId": "241-15-03", "email": "mahmud241-15-063@diu.edu.bd", "contact": "01850929959", "enrollmentYear": "Fall-2024", "batch": "66_O", "designation": "5202500", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_099", "name": "Shaheer Tasfeen Najmee", "studentId": "232-15-092", "email": "najmee2305101092@diu.edu.bd", "contact": "01707436931", "enrollmentYear": "Fall-2024", "batch": "65_C", "designation": "5202498", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_100", "name": "Shadman Hussain Shahib", "studentId": "242-35-430", "email": "shahib242-35-430@diu.edu.bd", "contact": "01576954998", "enrollmentYear": "Fall-2024", "batch": "43_L", "designation": "5202502", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_101", "name": "Tanvirul Islam", "studentId": "242-35-056", "email": "tanvirul242-35-056@diu.edu.bd", "contact": "01330699619", "enrollmentYear": "Fall-2024", "batch": "43_D", "designation": "5202505", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_102", "name": "Meraj Uddin Biswas", "studentId": "232-35-037", "email": "meraj2305341037@diu.edu.bd", "contact": "01881331834", "enrollmentYear": "Fall-2024", "batch": "41_G", "designation": "5202504", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_103", "name": "Jubayer Hasan Siam", "studentId": "232-35-542", "email": "siam2305341542@diu.edu.bd", "contact": "01918365224", "enrollmentYear": "Fall-2024", "batch": "41_H", "designation": "5202542", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_104", "name": "Rabeya Noor", "studentId": "241-15-163", "email": "rabeya241-15-163@diu.edu.bd", "contact": "01406324964", "enrollmentYear": "Fall-2024", "batch": "66_C", "designation": "5202506", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_105", "name": "Smita Tethi Hembrom", "studentId": "242-15-321", "email": "hembrom242-15-321@diu.edu.bd", "contact": "01317586275", "enrollmentYear": "Fall-2024", "batch": "67", "designation": "5202507", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_106", "name": "Ayesha Siddika Nury", "studentId": "221-15-5978", "email": "nury15-5978@diu.edu.bd", "contact": "01302148397", "enrollmentYear": "Fall-2024", "batch": "61", "designation": "5202495", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_107", "name": "Tasfia Jahra", "studentId": "221-15-5392", "email": "jahra15-5392@diu.edu.bd", "contact": "01815620537", "enrollmentYear": "Fall-2024", "batch": "61", "designation": "5202496", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_108", "name": "Md. Mirajul Islam Anik", "studentId": "242310005101125", "email": "anik23105101125@diu.edu.bd", "contact": "01747200359", "enrollmentYear": "Fall-2024", "batch": "64", "designation": "5202510", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_109", "name": "Md. Munnaf Hossain Tuhin", "studentId": "242320005101575", "email": "tuhin2305101575@diu.edu.bd", "contact": "01707942875", "enrollmentYear": "Fall-2024", "batch": "65", "designation": "5202485", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_110", "name": "Akash Chandra Bhowmik", "studentId": "242420005101837", "email": "bhowmik242-15-837@diu.edu.bd", "contact": "01625876553", "enrollmentYear": "Fall-2024", "batch": "67", "designation": "5202514", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_111", "name": "S M All Nahian Fardus", "studentId": "242420005101622", "email": "fardus242-15-622@diu.edu.bd", "contact": "01868630172", "enrollmentYear": "Fall-2024", "batch": "67", "designation": "5202513", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_112", "name": "Sajidul Kabir Rasif", "studentId": "242420005101547", "email": "rasif242-15-547@diu.edu.bd", "contact": "01634431744", "enrollmentYear": "Fall-2024", "batch": "67", "designation": "5202510", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_113", "name": "Tasnim Ahmed Enan", "studentId": "242420005101820", "email": "ahmed242-15-820@diu.edu.bd", "contact": "01802058955", "enrollmentYear": "Fall-2024", "batch": "67", "designation": "5202511", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_114", "name": "Sonia Akter", "studentId": "242420005101608", "email": "sonifrc@gmail.com", "contact": "01977323473", "enrollmentYear": "Fall-2024", "batch": "67", "designation": "5202509", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_115", "name": "Shohan Shikder Rifat", "studentId": "242420005101490", "email": "rifat242-15-490@diu.edu.bd", "contact": "01991930220", "enrollmentYear": "Fall-2024", "batch": "67", "designation": "5202512", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_116", "name": "Mst Azra Jerin", "studentId": "242220005101786", "email": "jerin22205101786@diu.edu.bd", "contact": "01757389678", "enrollmentYear": "Fall-2024", "batch": "63", "designation": "5202536", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_117", "name": "Shahriar Nafis Ovi", "studentId": "242220005101824", "email": "nafis22205101824@diu.edu.bd", "contact": "01787125363", "enrollmentYear": "Fall-2024", "batch": "63", "designation": "5202535", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_118", "name": "Jannat Akter Duli", "studentId": "242310005101917", "email": "duli2305101917@diu.edu.bd", "contact": "01903571130", "enrollmentYear": "Fall-2024", "batch": "64", "designation": "5202520", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_119", "name": "Nusrat Alam Sruty", "studentId": "232-10-389", "email": "sruty2302161389@diu.edu.bd", "contact": "01952064155", "enrollmentYear": "Fall-2024", "batch": "65", "designation": "5202525", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_120", "name": "Md. Abu Rahat", "studentId": "232-10-382", "email": "rahat2302161382@diu.edu.bd", "contact": "01610068465", "enrollmentYear": "Fall-2024", "batch": "65", "designation": "5202524", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_121", "name": "Takiur Rahaman", "studentId": "232-15-793", "email": "sarkar2305101793@diu.edu.bd", "contact": "01832723040", "enrollmentYear": "Fall-2024", "batch": "65", "designation": "5202518", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_122", "name": "Abu Taher Asif", "studentId": "232-15-756", "email": "asif2305101756@diu.edu.bd", "contact": "01821088579", "enrollmentYear": "Fall-2024", "batch": "65", "designation": "5202516", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_123", "name": "Md. Al Masum", "studentId": "241-15-210", "email": "al241-15-210@diu.edu.bd", "contact": "01781995984", "enrollmentYear": "Fall-2024", "batch": "66", "designation": "5202528", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_124", "name": "Meherab Hossen", "studentId": "242310005101718", "email": "hossen2305101718@diu.edu.bd", "contact": "01521738202", "enrollmentYear": "Fall-2024", "batch": "64", "designation": "5202523", "extra": "", "payment": "In progress", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_125", "name": "Swadhin Chandra Dey", "studentId": "241-15-270", "email": "chandra241-15-270@diu.edu.bd", "contact": "01906769827", "enrollmentYear": "Fall-2024", "batch": "66", "designation": "5202540", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_126", "name": "Imamul Hasan", "studentId": "221-15-6027", "email": "hasan15-6027@diu.edu.bd", "contact": "01916728028", "enrollmentYear": "Fall-2024", "batch": "61", "designation": "5202529", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_127", "name": "Mymuna Tasnim Maisha", "studentId": "242420005341360", "email": "maisha242-35-360@diu.edu.bd", "contact": "01772505190", "enrollmentYear": "Fall-2024", "batch": "43", "designation": "5202530", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_128", "name": "Abrar Hameem Ifat", "studentId": "232-15-961", "email": "ifat2305101961@diu.edu.bd", "contact": "01821821841", "enrollmentYear": "Fall-2024", "batch": "65", "designation": "5202526", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_129", "name": "Sazzad Islam", "studentId": "232-15-835", "email": "islam2305101835@diu.edu.bd", "contact": "01738264842", "enrollmentYear": "Fall-2024", "batch": "65", "designation": "5202529", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_130", "name": "Md. Farhan Abrar Ibne Bari", "studentId": "242310005341404", "email": "bari2305341404@diu.edu.bd", "contact": "01612999252", "enrollmentYear": "Fall-2024", "batch": "40", "designation": "5202529", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_131", "name": "Al Sami", "studentId": "242-15-881", "email": "al242-15-881@diu.edu.bd", "contact": "01516502591", "enrollmentYear": "Fall-2024", "batch": "67", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_132", "name": "Abdullah Al Jaber", "studentId": "252-15-548", "email": "252-15-548@diu.edu.bd", "contact": "01516598961", "enrollmentYear": "Summer-2025", "batch": "69", "designation": "5202542", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_133", "name": "Md. Meraj Sarker", "studentId": "212-15-4213", "email": "meraj15-4213@diu.edu.bd", "contact": "01752525130", "enrollmentYear": "Spring-2022", "batch": "59", "designation": "President (July 24 - July 25)", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_134", "name": "Faysal Bin Khaled Nissan", "studentId": "212-15-4138", "email": "nissan15-4138@diu.edu.bd", "contact": "01961100661", "enrollmentYear": "Spring-2022", "batch": "59", "designation": "G.S. (July 24 - July 25)", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_135", "name": "Md Mahamudul Islam Shakib", "studentId": "212-15-4206", "email": "shakib15-4206@diu.edu.bd", "contact": "01707446979", "enrollmentYear": "Spring-2022", "batch": "59", "designation": "A. G. S. (July 24 - July 25)", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_136", "name": "Akash Sen", "studentId": "212-15-4097", "email": "akash15-4097@diu.edu.bd", "contact": "01705123553", "enrollmentYear": "Spring-2022", "batch": "59", "designation": "M & C S (July 24 - July 25)", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_137", "name": "Hosneara Sultana Akhi", "studentId": "212-15-4200", "email": "hosneara15-4200@diu.edu.bd", "contact": "01938621526", "enrollmentYear": "Spring-2022", "batch": "59", "designation": "Treasurer (July 24 - July 25)", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_138", "name": "Sohi Bilkis Binte Yer", "studentId": "0242220005101917", "email": "yer22205101917@diu.edu.bd", "contact": "01796406310", "enrollmentYear": "Spring-2024", "batch": "63", "designation": "Women Secretary", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_139", "name": "Mahtab Khan", "studentId": "0242220005101608", "email": "khan22205101608@diu.edu.bd", "contact": "01964971125", "enrollmentYear": "Fall-2022", "batch": "63", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_140", "name": "Rokeya Ahsan Jerin", "studentId": "212-15-4197", "email": "rokeya15-4197@diu.edu.bd", "contact": "01907487304", "enrollmentYear": "Spring-2022", "batch": "59", "designation": "Executive", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_141", "name": "Mst Zaba Anika", "studentId": "241-15-839", "email": "zaba241-15-839@diu.edu.bd", "contact": "01972238329", "enrollmentYear": "", "batch": "", "designation": "Member", "extra": "", "payment": "Completed", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_142", "name": "Ayatullah Al-Saba", "studentId": "0242310005101658", "email": "al-saba2305101658@diu.edu.bd", "contact": "01610-665617", "enrollmentYear": "", "batch": "", "designation": "Member", "extra": "", "payment": "PENDING", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_143", "name": "Abir Hasan Mahin", "studentId": "0242310005101213", "email": "hasan23105101213@diu.edu.bd", "contact": "01959-968410", "enrollmentYear": "", "batch": "", "designation": "Member", "extra": "", "payment": "PENDING", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_144", "name": "Sumit Roy Ayon", "studentId": "241-15-049", "email": "roy241-15-049@diu.edu.bd", "contact": "01734-869075", "enrollmentYear": "", "batch": "", "designation": "Member", "extra": "", "payment": "PENDING", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_145", "name": "Md Majba Babu", "studentId": "261-15-040", "email": "261-15-040@diu.edu.bd", "contact": "01323-493513", "enrollmentYear": "", "batch": "", "designation": "Member", "extra": "", "payment": "PENDING", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_146", "name": "Israt Kaniza Himu", "studentId": "241-15-845", "email": "kaniza241-15-845@diu.edu.bd", "contact": "01892-918919", "enrollmentYear": "", "batch": "", "designation": "Member", "extra": "", "payment": "PENDING", "status": "active", "joinedAt": "2024-01-01", "notes": ""}, {"id": "mem_147", "name": "Abdullah Rayhan", "studentId": "241-15-183", "email": "abdullahrayhan2003@gmail.com", "contact": "01869-251411", "enrollmentYear": "", "batch": "", "designation": "Member", "extra": "", "payment": "PENDING", "status": "active", "joinedAt": "2024-01-01", "notes": ""}];
+
 
       const DEFAULT_NOTICES = [
         {
@@ -578,14 +584,30 @@ create policy "ESRC Users Access"
         notices: loadJSON(STORAGE_KEYS.NOTICES, DEFAULT_NOTICES),
         tasks: loadJSON(STORAGE_KEYS.TASKS, DEFAULT_TASKS),
         applications: loadJSON(STORAGE_KEYS.APPLICATIONS, DEFAULT_APPLICATIONS),
-        resources: loadJSON(STORAGE_KEYS.RESOURCES, DEFAULT_RESOURCES)
+        resources: loadJSON(STORAGE_KEYS.RESOURCES, DEFAULT_RESOURCES),
+        members: loadJSON(STORAGE_KEYS.MEMBERS, DEFAULT_MEMBERS),
+        memberQuery: '',
+        memberBatchFilter: 'All',
+        memberYearFilter: 'All',
+        memberRoleFilter: 'All',
+        memberPaymentFilter: 'All',
+        memberSelected: [],
+        memberPage: 1,
+        memberPageSize: 25,
+        alumniQuery: '',
+        alumniBatchFilter: 'All',
+        alumniYearFilter: 'All',
+        alumniSelected: [],
+        alumniPage: 1,
+        alumniPageSize: 25
       };
 
       const KIND_TO_STORAGE = {
         notices: STORAGE_KEYS.NOTICES,
         tasks: STORAGE_KEYS.TASKS,
         applications: STORAGE_KEYS.APPLICATIONS,
-        resources: STORAGE_KEYS.RESOURCES
+        resources: STORAGE_KEYS.RESOURCES,
+        members: STORAGE_KEYS.MEMBERS
       };
 
       function getAdminDirectory() {
@@ -752,8 +774,8 @@ create policy "ESRC Users Access"
           if (rows.length === 0) {
             // Seed initial records into empty cloud table
             const seedRows = [];
-            ['notices', 'tasks', 'applications', 'resources'].forEach(kind => {
-              state[kind].forEach(item => {
+            ['notices', 'tasks', 'applications', 'resources', 'members'].forEach(kind => {
+              (state[kind] || []).forEach(item => {
                 seedRows.push({
                   id: item.id,
                   kind: kind,
@@ -766,7 +788,7 @@ create policy "ESRC Users Access"
               await sbClient.from(SUPABASE_CONFIG.TABLE).upsert(seedRows);
             }
           } else {
-            const grouped = { notices: [], tasks: [], applications: [], resources: [] };
+            const grouped = { notices: [], tasks: [], applications: [], resources: [], members: [] };
             rows.forEach(r => {
               if (grouped[r.kind] && r.payload) {
                 grouped[r.kind].push(r.payload);
@@ -776,6 +798,10 @@ create policy "ESRC Users Access"
               state[kind] = grouped[kind].sort((a, b) => (b.at || 0) - (a.at || 0));
               saveJSON(KIND_TO_STORAGE[kind], state[kind]);
             });
+            if (grouped.members && grouped.members.length > 0) {
+              state.members = grouped.members.sort((a, b) => (a.id || '').localeCompare(b.id || '', undefined, { numeric: true }));
+              saveJSON(STORAGE_KEYS.MEMBERS, state.members);
+            }
           }
 
           state.cloudStatus = 'synced';
@@ -995,6 +1021,12 @@ create policy "ESRC Users Access"
         applications: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>',
         notices: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>',
         tools: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>',
+        members: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>',
+        alumni: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14zm-4 6v-7.5"/></svg>',
+        download: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>',
+        userPlus: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>',
+        filter: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/></svg>',
+        check: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>',
         resources: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>',
         shield: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>',
         user: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>',
@@ -1694,6 +1726,8 @@ create policy "ESRC Users Access"
       function renderHomeView() {
         const openOrders = state.tasks.filter(t => t.status === 'open' || t.status === 'revision').length;
         const pendingApprovals = state.tasks.filter(t => t.status === 'submitted').length + state.applications.filter(a => a.status === 'pending').length;
+        const activeMembersCount = (state.members || []).filter(m => (m.status || 'active') === 'active').length;
+        const alumniMembersCount = (state.members || []).filter(m => m.status === 'alumni').length;
 
         return `
           <div class="space-y-8 animate-fade-in">
@@ -1715,18 +1749,33 @@ create policy "ESRC Users Access"
                   ? `<button id="home-new-task" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition">${ICONS.plus}<span>Assign Order</span></button>`
                   : `<button id="home-new-app" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition">${ICONS.plus}<span>New Application</span></button>`}
                 <button data-nav="tasks" class="nav-btn px-4 py-2.5 rounded-xl text-xs font-semibold border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition">View A4 Orders</button>
+                <button data-nav="members" class="nav-btn px-4 py-2.5 rounded-xl text-xs font-semibold border border-sky-500/30 text-sky-600 dark:text-sky-400 hover:bg-sky-500/10 transition inline-flex items-center gap-1.5">${ICONS.members}<span>Members (${activeMembersCount})</span></button>
               </div>
             </section>
 
             <!-- KPI Metrics -->
-            <section class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
+            <section class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
               <div class="hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/[0.07] dark:border-white/[0.08] rounded-2xl p-4 shadow-hig-sm">
                 <div class="text-[10px] uppercase tracking-widest text-slate-400 font-semibold">Open Orders</div>
                 <div class="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1">${openOrders}</div>
               </div>
               <div class="hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/[0.07] dark:border-white/[0.08] rounded-2xl p-4 shadow-hig-sm">
-                <div class="text-[10px] uppercase tracking-widest text-slate-400 font-semibold">Pending Approvals</div>
+                <div class="text-[10px] uppercase tracking-widest text-slate-400 font-semibold">Approvals</div>
                 <div class="text-2xl font-bold text-amber-600 dark:text-amber-400 mt-1">${pendingApprovals}</div>
+              </div>
+              <div data-nav="members" class="nav-btn cursor-pointer hig-glass bg-white/80 dark:bg-[#151922]/80 border border-sky-500/20 hover:border-sky-500/50 rounded-2xl p-4 shadow-hig-sm transition group">
+                <div class="text-[10px] uppercase tracking-widest text-sky-600 dark:text-sky-400 font-semibold flex items-center justify-between">
+                  <span>Members</span>
+                  <span class="opacity-0 group-hover:opacity-100 transition">→</span>
+                </div>
+                <div class="text-2xl font-bold text-sky-600 dark:text-sky-400 mt-1">${activeMembersCount}</div>
+              </div>
+              <div data-nav="alumni" class="nav-btn cursor-pointer hig-glass bg-white/80 dark:bg-[#151922]/80 border border-purple-500/20 hover:border-purple-500/50 rounded-2xl p-4 shadow-hig-sm transition group">
+                <div class="text-[10px] uppercase tracking-widest text-purple-600 dark:text-purple-400 font-semibold flex items-center justify-between">
+                  <span>Alumni</span>
+                  <span class="opacity-0 group-hover:opacity-100 transition">→</span>
+                </div>
+                <div class="text-2xl font-bold text-purple-600 dark:text-purple-400 mt-1">${alumniMembersCount}</div>
               </div>
               <div class="hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/[0.07] dark:border-white/[0.08] rounded-2xl p-4 shadow-hig-sm">
                 <div class="text-[10px] uppercase tracking-widest text-slate-400 font-semibold">Applications</div>
@@ -2526,6 +2575,8 @@ create policy "ESRC Users Access"
           { id: 'home', label: 'Overview', icon: ICONS.home },
           { id: 'tasks', label: 'Work Orders', icon: ICONS.tasks, count: state.tasks.filter(t => t.status !== 'approved').length },
           { id: 'applications', label: 'Applications', icon: ICONS.applications, count: state.applications.filter(a => a.status === 'pending').length },
+          { id: 'members', label: 'Members', icon: ICONS.members, count: state.members.filter(m => m.status !== 'alumni').length },
+          { id: 'alumni', label: 'Alumni', icon: ICONS.alumni, count: state.members.filter(m => m.status === 'alumni').length },
           { id: 'notices', label: 'Notices', icon: ICONS.notices },
           { id: 'tools', label: 'Tools', icon: ICONS.tools },
           { id: 'resources', label: 'Resources', icon: ICONS.resources }
@@ -2580,6 +2631,8 @@ create policy "ESRC Users Access"
         const viewContent =
           state.view === 'tasks' ? renderTasksView()
           : state.view === 'applications' ? renderApplicationsView()
+          : state.view === 'members' ? renderMembersView()
+          : state.view === 'alumni' ? renderAlumniView()
           : state.view === 'notices' ? renderNoticesView()
           : state.view === 'tools' ? renderToolsView()
           : state.view === 'resources' ? renderResourcesView()
@@ -2640,12 +2693,13 @@ create policy "ESRC Users Access"
               </footer>
 
               <!-- Mobile Bottom Quick Nav -->
-              <nav class="lg:hidden fixed bottom-0 inset-x-0 z-30 hig-glass bg-white/90 dark:bg-[#11151E]/90 border-t border-black/10 dark:border-white/10 px-2 py-1.5 grid grid-cols-4 gap-1">
+              <nav class="lg:hidden fixed bottom-0 inset-x-0 z-30 hig-glass bg-white/90 dark:bg-[#11151E]/90 border-t border-black/10 dark:border-white/10 px-2 py-1.5 grid grid-cols-5 gap-1">
                 ${[
                   { id: 'home', label: 'Home', icon: ICONS.home },
                   { id: 'tasks', label: 'Orders', icon: ICONS.tasks },
-                  { id: 'applications', label: 'Apps', icon: ICONS.applications },
-                  { id: 'resources', label: 'Files', icon: ICONS.resources }
+                  { id: 'members', label: 'Members', icon: ICONS.members },
+                  { id: 'alumni', label: 'Alumni', icon: ICONS.alumni },
+                  { id: 'applications', label: 'Apps', icon: ICONS.applications }
                 ].map(m => `
                   <button data-nav="${m.id}" class="nav-btn flex flex-col items-center justify-center py-1.5 rounded-xl text-[10px] font-semibold transition ${
                     state.view === m.id
@@ -2805,6 +2859,200 @@ create policy "ESRC Users Access"
           };
         });
 
+        
+        // Members View Bindings
+        const btnNewMember = document.getElementById('btn-new-member');
+        if (btnNewMember) btnNewMember.onclick = () => openMemberModal(null, 'active');
+        const btnExportMembers = document.getElementById('btn-export-members');
+        if (btnExportMembers) btnExportMembers.onclick = () => openExportModal('members');
+
+        const memberSearch = document.getElementById('member-search');
+        if (memberSearch) {
+          memberSearch.oninput = (e) => {
+            state.memberQuery = e.target.value;
+            state.memberPage = 1;
+            renderApp();
+            const el = document.getElementById('member-search');
+            if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); }
+          };
+        }
+        const clearMemberSearch = document.getElementById('clear-member-search');
+        if (clearMemberSearch) {
+          clearMemberSearch.onclick = () => {
+            state.memberQuery = '';
+            state.memberPage = 1;
+            renderApp();
+          };
+        }
+
+        const memberBatchFilter = document.getElementById('member-batch-filter');
+        if (memberBatchFilter) memberBatchFilter.onchange = (e) => { state.memberBatchFilter = e.target.value; state.memberPage = 1; renderApp(); };
+        const memberYearFilter = document.getElementById('member-year-filter');
+        if (memberYearFilter) memberYearFilter.onchange = (e) => { state.memberYearFilter = e.target.value; state.memberPage = 1; renderApp(); };
+        const memberRoleFilter = document.getElementById('member-role-filter');
+        if (memberRoleFilter) memberRoleFilter.onchange = (e) => { state.memberRoleFilter = e.target.value; state.memberPage = 1; renderApp(); };
+        const memberPaymentFilter = document.getElementById('member-payment-filter');
+        if (memberPaymentFilter) memberPaymentFilter.onchange = (e) => { state.memberPaymentFilter = e.target.value; state.memberPage = 1; renderApp(); };
+
+        const memberPageSize = document.getElementById('member-page-size');
+        if (memberPageSize) memberPageSize.onchange = (e) => { state.memberPageSize = e.target.value; state.memberPage = 1; renderApp(); };
+        document.querySelectorAll('.member-page-btn').forEach(b => {
+          b.onclick = () => { state.memberPage = parseInt(b.getAttribute('data-page'), 10); renderApp(); };
+        });
+
+        // Master checkbox for members
+        const selectAllMembers = document.getElementById('select-all-members');
+        if (selectAllMembers) {
+          selectAllMembers.onchange = (e) => {
+            const checked = e.target.checked;
+            document.querySelectorAll('.member-checkbox').forEach(cb => {
+              const id = cb.getAttribute('data-id');
+              if (checked) {
+                if (!state.memberSelected.includes(id)) state.memberSelected.push(id);
+              } else {
+                state.memberSelected = state.memberSelected.filter(x => x !== id);
+              }
+            });
+            renderApp();
+          };
+        }
+        document.querySelectorAll('.member-checkbox').forEach(cb => {
+          cb.onchange = (e) => {
+            const id = cb.getAttribute('data-id');
+            if (e.target.checked) {
+              if (!state.memberSelected.includes(id)) state.memberSelected.push(id);
+            } else {
+              state.memberSelected = state.memberSelected.filter(x => x !== id);
+            }
+            renderApp();
+          };
+        });
+
+        // Bulk actions for members
+        const btnBulkAlumni = document.getElementById('btn-bulk-alumni');
+        if (btnBulkAlumni) {
+          btnBulkAlumni.onclick = () => {
+            const count = state.memberSelected.length;
+            state.members.forEach(m => {
+              if (state.memberSelected.includes(m.id)) m.status = 'alumni';
+            });
+            saveJSON(STORAGE_KEYS.MEMBERS, state.members);
+            state.memberSelected = [];
+            showToast(`Moved ${count} members to Alumni directory`, 'info');
+            renderApp();
+          };
+        }
+        const btnExportSelected = document.getElementById('btn-export-selected');
+        if (btnExportSelected) btnExportSelected.onclick = () => openExportModal('members');
+        const btnClearSelection = document.getElementById('btn-clear-selection');
+        if (btnClearSelection) btnClearSelection.onclick = () => { state.memberSelected = []; renderApp(); };
+
+        // Alumni View Bindings
+        const btnNewAlumni = document.getElementById('btn-new-alumni');
+        if (btnNewAlumni) btnNewAlumni.onclick = () => openMemberModal(null, 'alumni');
+        const btnExportAlumni = document.getElementById('btn-export-alumni');
+        if (btnExportAlumni) btnExportAlumni.onclick = () => openExportModal('alumni');
+
+        const alumniSearch = document.getElementById('alumni-search');
+        if (alumniSearch) {
+          alumniSearch.oninput = (e) => {
+            state.alumniQuery = e.target.value;
+            state.alumniPage = 1;
+            renderApp();
+            const el = document.getElementById('alumni-search');
+            if (el) { el.focus(); el.setSelectionRange(el.value.length, el.value.length); }
+          };
+        }
+        const clearAlumniSearch = document.getElementById('clear-alumni-search');
+        if (clearAlumniSearch) {
+          clearAlumniSearch.onclick = () => {
+            state.alumniQuery = '';
+            state.alumniPage = 1;
+            renderApp();
+          };
+        }
+
+        const alumniBatchFilter = document.getElementById('alumni-batch-filter');
+        if (alumniBatchFilter) alumniBatchFilter.onchange = (e) => { state.alumniBatchFilter = e.target.value; state.alumniPage = 1; renderApp(); };
+        const alumniYearFilter = document.getElementById('alumni-year-filter');
+        if (alumniYearFilter) alumniYearFilter.onchange = (e) => { state.alumniYearFilter = e.target.value; state.alumniPage = 1; renderApp(); };
+
+        const alumniPageSize = document.getElementById('alumni-page-size');
+        if (alumniPageSize) alumniPageSize.onchange = (e) => { state.alumniPageSize = e.target.value; state.alumniPage = 1; renderApp(); };
+        document.querySelectorAll('.alumni-page-btn').forEach(b => {
+          b.onclick = () => { state.alumniPage = parseInt(b.getAttribute('data-page'), 10); renderApp(); };
+        });
+
+        // Master checkbox for alumni
+        const selectAllAlumni = document.getElementById('select-all-alumni');
+        if (selectAllAlumni) {
+          selectAllAlumni.onchange = (e) => {
+            const checked = e.target.checked;
+            document.querySelectorAll('.alumni-checkbox').forEach(cb => {
+              const id = cb.getAttribute('data-id');
+              if (checked) {
+                if (!state.alumniSelected.includes(id)) state.alumniSelected.push(id);
+              } else {
+                state.alumniSelected = state.alumniSelected.filter(x => x !== id);
+              }
+            });
+            renderApp();
+          };
+        }
+        document.querySelectorAll('.alumni-checkbox').forEach(cb => {
+          cb.onchange = (e) => {
+            const id = cb.getAttribute('data-id');
+            if (e.target.checked) {
+              if (!state.alumniSelected.includes(id)) state.alumniSelected.push(id);
+            } else {
+              state.alumniSelected = state.alumniSelected.filter(x => x !== id);
+            }
+            renderApp();
+          };
+        });
+
+        // Bulk actions for alumni
+        const btnBulkRestore = document.getElementById('btn-bulk-restore');
+        if (btnBulkRestore) {
+          btnBulkRestore.onclick = () => {
+            const count = state.alumniSelected.length;
+            state.members.forEach(m => {
+              if (state.alumniSelected.includes(m.id)) m.status = 'active';
+            });
+            saveJSON(STORAGE_KEYS.MEMBERS, state.members);
+            state.alumniSelected = [];
+            showToast(`Restored ${count} alumni to Active Members`, 'success');
+            renderApp();
+          };
+        }
+        const btnExportAlumniSelected = document.getElementById('btn-export-alumni-selected');
+        if (btnExportAlumniSelected) btnExportAlumniSelected.onclick = () => openExportModal('alumni');
+        const btnClearAlumniSelection = document.getElementById('btn-clear-alumni-selection');
+        if (btnClearAlumniSelection) btnClearAlumniSelection.onclick = () => { state.alumniSelected = []; renderApp(); };
+
+        // Member / Alumni row actions
+        document.querySelectorAll('.member-status-select').forEach(sel => {
+          sel.onchange = (e) => {
+            const memberId = sel.getAttribute('data-member-id');
+            const newStatus = e.target.value;
+            setMemberStatus(memberId, newStatus);
+          };
+        });
+
+        document.querySelectorAll('.edit-member-btn').forEach(b => {
+          b.onclick = () => {
+            const m = state.members.find(x => x.id === b.getAttribute('data-id'));
+            if (m) openMemberModal(m, m.status);
+          };
+        });
+
+        document.querySelectorAll('.del-member-btn').forEach(b => {
+          b.onclick = () => {
+            const id = b.getAttribute('data-id');
+            deleteMember(id);
+          };
+        });
+
         // Resources actions
         const btnNewRes = document.getElementById('btn-new-res');
         if (btnNewRes) btnNewRes.onclick = openResourceModal;
@@ -2830,6 +3078,944 @@ create policy "ESRC Users Access"
             });
           };
         });
+      }
+
+      
+      /* =========================================================================
+       * 11. MEMBERS & ALUMNI DIRECTORY ENGINE
+       * ========================================================================= */
+      function setMemberStatus(memberId, newStatus) {
+        const m = state.members.find(x => x.id === memberId);
+        if (!m) return;
+        const oldStatus = m.status;
+        m.status = newStatus;
+        saveJSON(STORAGE_KEYS.MEMBERS, state.members);
+        pushRecordToSupabase('members', m);
+        
+        // Clear selection if present
+        state.memberSelected = state.memberSelected.filter(id => id !== memberId);
+        state.alumniSelected = state.alumniSelected.filter(id => id !== memberId);
+
+        if (newStatus === 'alumni') {
+          showToast(`"${escapeHtml(m.name)}" moved to Alumni directory`, 'info');
+        } else {
+          showToast(`"${escapeHtml(m.name)}" restored to Active Members`, 'success');
+        }
+        renderApp();
+      }
+
+      function deleteMember(memberId) {
+        const m = state.members.find(x => x.id === memberId);
+        if (!m) return;
+        openConfirmModal('Remove Member', `Are you sure you want to permanently remove "${m.name}" (${m.studentId}) from the directory?`, async () => {
+          state.members = state.members.filter(x => x.id !== memberId);
+          state.memberSelected = state.memberSelected.filter(id => id !== memberId);
+          state.alumniSelected = state.alumniSelected.filter(id => id !== memberId);
+          saveJSON(STORAGE_KEYS.MEMBERS, state.members);
+          await deleteRecordFromSupabase('members', memberId);
+          showToast('Member removed from directory', 'info');
+          renderApp();
+        });
+      }
+
+      function openMemberModal(memberToEdit = null, defaultStatus = 'active') {
+        const isEdit = !!memberToEdit;
+        const m = memberToEdit || {
+          id: 'mem_' + Date.now(),
+          name: '',
+          studentId: '',
+          email: '',
+          contact: '',
+          enrollmentYear: 'Spring-2024',
+          batch: '66',
+          designation: 'Member',
+          payment: 'Completed',
+          status: defaultStatus,
+          notes: ''
+        };
+
+        const rolesList = [
+          'President', 'Vice President (V.P.)', 'General Secretary (G.S)', 'Assistant General Secretary (A.G.S.)',
+          'Joint Secretary (J.S.)', 'Treasurer', 'Organizing Secretary', 'Press Secretary',
+          'Woman Secretary', 'Office Secretary', 'M. & C. S.', 'Executive', 'Member'
+        ];
+
+        const yearsList = ['Spring-2022', 'Fall-2022', 'Spring-2023', 'Fall-2023', 'Spring-2024', 'Fall-2024', 'Spring-2025', 'Summer-2025'];
+        const batchesList = ['61', '62', '63', '64', '65', '66', '67', '43', '05'];
+
+        openModal(
+          isEdit ? 'Edit Member Profile' : (defaultStatus === 'alumni' ? 'Add Alumni Member' : 'Add New ESRC Member'),
+          isEdit ? `Updating records for ${m.name}` : 'Enter member information to record in directory.',
+          `
+            <form id="form-member" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                <div class="sm:col-span-2">
+                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Full Name <span class="text-red-500">*</span></label>
+                  <input type="text" id="mem-name" required value="${escapeHtml(m.name)}" placeholder="e.g. Sadat Mahmud" class="w-full px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-900 dark:text-white" />
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Student ID <span class="text-red-500">*</span></label>
+                  <input type="text" id="mem-sid" required value="${escapeHtml(m.studentId)}" placeholder="e.g. 0242220005101099" class="w-full px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-900 dark:text-white font-mono" />
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Email <span class="text-red-500">*</span></label>
+                  <input type="email" id="mem-email" required value="${escapeHtml(m.email)}" placeholder="name@diu.edu.bd" class="w-full px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-900 dark:text-white" />
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Contact Phone</label>
+                  <input type="tel" id="mem-contact" value="${escapeHtml(m.contact)}" placeholder="e.g. 01309250507" class="w-full px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-900 dark:text-white font-mono" />
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Enrollment Semester</label>
+                  <input list="list-enr-years" id="mem-year" value="${escapeHtml(m.enrollmentYear)}" placeholder="e.g. Spring-2023" class="w-full px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-900 dark:text-white" />
+                  <datalist id="list-enr-years">
+                    ${yearsList.map(y => `<option value="${y}">`).join('')}
+                  </datalist>
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Batch</label>
+                  <input list="list-batches" id="mem-batch" value="${escapeHtml(m.batch)}" placeholder="e.g. 63" class="w-full px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-900 dark:text-white" />
+                  <datalist id="list-batches">
+                    ${batchesList.map(b => `<option value="${b}">`).join('')}
+                  </datalist>
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Role / Designation</label>
+                  <input list="list-roles" id="mem-role" value="${escapeHtml(m.designation)}" placeholder="e.g. Executive, Member" class="w-full px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-900 dark:text-white" />
+                  <datalist id="list-roles">
+                    ${rolesList.map(r => `<option value="${r}">`).join('')}
+                  </datalist>
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Payment Status</label>
+                  <select id="mem-payment" class="w-full px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-900 dark:text-white">
+                    <option value="Completed" ${m.payment === 'Completed' ? 'selected' : ''}>Completed</option>
+                    <option value="Pending" ${m.payment === 'Pending' ? 'selected' : ''}>Pending</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Directory Status</label>
+                  <select id="mem-status" class="w-full px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-900 dark:text-white font-semibold">
+                    <option value="active" ${m.status === 'active' ? 'selected' : ''}>Active Member</option>
+                    <option value="alumni" ${m.status === 'alumni' ? 'selected' : ''}>Alumni (Graduated / Former)</option>
+                  </select>
+                </div>
+                <div class="sm:col-span-2">
+                  <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-1">Notes / Remarks</label>
+                  <input type="text" id="mem-notes" value="${escapeHtml(m.notes || '')}" placeholder="Optional notes" class="w-full px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-900 dark:text-white" />
+                </div>
+              </div>
+
+              <div class="flex items-center justify-end gap-2 pt-4 border-t border-black/[0.06] dark:border-white/[0.07]">
+                <button type="button" id="mem-cancel" class="px-4 py-2 rounded-xl text-xs font-semibold border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition">Cancel</button>
+                <button type="submit" class="px-5 py-2 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition">${isEdit ? 'Update Member' : 'Save Member'}</button>
+              </div>
+            </form>
+          `,
+          () => {
+            const form = document.getElementById('form-member');
+            document.getElementById('mem-cancel').onclick = closeModal;
+            form.onsubmit = (e) => {
+              e.preventDefault();
+              const name = document.getElementById('mem-name').value.trim();
+              const sid = document.getElementById('mem-sid').value.trim();
+              const email = document.getElementById('mem-email').value.trim();
+              const contact = document.getElementById('mem-contact').value.trim();
+              const year = document.getElementById('mem-year').value.trim();
+              const batch = document.getElementById('mem-batch').value.trim();
+              const role = document.getElementById('mem-role').value.trim() || 'Member';
+              const payment = document.getElementById('mem-payment').value;
+              const status = document.getElementById('mem-status').value;
+              const notes = document.getElementById('mem-notes').value.trim();
+
+              if (!name || !sid) {
+                showToast('Name and Student ID are required', 'error');
+                return;
+              }
+
+              if (isEdit) {
+                const target = state.members.find(x => x.id === m.id);
+                if (target) {
+                  Object.assign(target, { name, studentId: sid, email, contact, enrollmentYear: year, batch, designation: role, payment, status, notes });
+                  pushRecordToSupabase('members', target);
+                }
+                showToast(`Updated "${name}"`, 'success');
+              } else {
+                const newMem = {
+                  id: 'mem_' + Date.now(),
+                  name,
+                  studentId: sid,
+                  email,
+                  contact,
+                  enrollmentYear: year,
+                  batch,
+                  designation: role,
+                  payment,
+                  status,
+                  notes,
+                  joinedAt: new Date().toISOString().split('T')[0]
+                };
+                state.members.unshift(newMem);
+                pushRecordToSupabase('members', newMem);
+                showToast(`Added "${name}" to ${status === 'alumni' ? 'Alumni' : 'Members'}`, 'success');
+              }
+
+              saveJSON(STORAGE_KEYS.MEMBERS, state.members);
+              closeModal();
+              renderApp();
+            };
+          },
+          'max-w-xl'
+        );
+      }
+
+      function openExportModal(targetType = 'members') {
+        const isAlumni = targetType === 'alumni';
+        const sourceList = state.members.filter(m => isAlumni ? m.status === 'alumni' : m.status !== 'alumni');
+        const selectedIds = isAlumni ? state.alumniSelected : state.memberSelected;
+        
+        // Count filtered records based on active query
+        const query = (isAlumni ? state.alumniQuery : state.memberQuery).toLowerCase().trim();
+        const batchFilter = isAlumni ? state.alumniBatchFilter : state.memberBatchFilter;
+        const yearFilter = isAlumni ? state.alumniYearFilter : state.memberYearFilter;
+        
+        const filteredList = sourceList.filter(m => {
+          if (query && !`${m.name} ${m.studentId} ${m.email} ${m.contact} ${m.designation} ${m.batch}`.toLowerCase().includes(query)) return false;
+          if (batchFilter !== 'All' && m.batch !== batchFilter) return false;
+          if (yearFilter !== 'All' && m.enrollmentYear !== yearFilter) return false;
+          return true;
+        });
+
+        openModal(
+          `Export ${isAlumni ? 'Alumni' : 'Members'} Directory`,
+          'Export records as Microsoft Excel (.xlsx) or Comma-Separated Values (.csv) with variable range.',
+          `
+            <form id="form-export" class="space-y-4">
+              <!-- Scope / Variable Length Selector -->
+              <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">1. Select Record Length / Scope</label>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                  <label class="flex items-center gap-2.5 p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] cursor-pointer hover:border-blue-500/50">
+                    <input type="radio" name="export-scope" value="all" checked class="text-blue-600 focus:ring-blue-500" />
+                    <span class="text-xs font-semibold text-slate-800 dark:text-slate-200">All ${isAlumni ? 'Alumni' : 'Members'} (${sourceList.length})</span>
+                  </label>
+                  <label class="flex items-center gap-2.5 p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] cursor-pointer hover:border-blue-500/50">
+                    <input type="radio" name="export-scope" value="filtered" class="text-blue-600 focus:ring-blue-500" />
+                    <span class="text-xs font-semibold text-slate-800 dark:text-slate-200">Current Filtered (${filteredList.length})</span>
+                  </label>
+                  <label class="flex items-center gap-2.5 p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] cursor-pointer hover:border-blue-500/50 ${selectedIds.length ? '' : 'opacity-60'}">
+                    <input type="radio" name="export-scope" value="selected" ${selectedIds.length ? '' : 'disabled'} class="text-blue-600 focus:ring-blue-500" />
+                    <span class="text-xs font-semibold text-slate-800 dark:text-slate-200">Selected Rows (${selectedIds.length})</span>
+                  </label>
+                  <label class="flex items-center gap-2.5 p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] cursor-pointer hover:border-blue-500/50">
+                    <input type="radio" name="export-scope" value="count" class="text-blue-600 focus:ring-blue-500" />
+                    <span class="text-xs font-semibold text-slate-800 dark:text-slate-200">First N Records</span>
+                  </label>
+                  <label class="flex items-center gap-2.5 p-2.5 rounded-xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] cursor-pointer hover:border-blue-500/50 sm:col-span-2">
+                    <input type="radio" name="export-scope" value="range" class="text-blue-600 focus:ring-blue-500" />
+                    <span class="text-xs font-semibold text-slate-800 dark:text-slate-200">Custom Row Range (Index A to B)</span>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Variable Range Inputs (Conditional) -->
+              <div id="export-count-panel" class="hidden p-3 rounded-xl bg-blue-500/[0.06] border border-blue-500/20">
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-blue-600 dark:text-blue-400 mb-1">Specify Number of Records to Export</label>
+                <div class="flex items-center gap-3">
+                  <input type="number" id="export-count-val" min="1" max="${sourceList.length}" value="${Math.min(50, sourceList.length)}" class="w-32 px-3 py-1.5 rounded-lg text-xs font-mono bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40" />
+                  <span class="text-[11px] text-slate-500">records (1 to ${sourceList.length})</span>
+                </div>
+              </div>
+
+              <div id="export-range-panel" class="hidden p-3 rounded-xl bg-indigo-500/[0.06] border border-indigo-500/20">
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 mb-1">Specify Row Index Range</label>
+                <div class="flex items-center gap-2 text-xs">
+                  <span class="text-slate-500">From Row</span>
+                  <input type="number" id="export-range-start" min="1" max="${sourceList.length}" value="1" class="w-24 px-2.5 py-1.5 rounded-lg text-xs font-mono bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10" />
+                  <span class="text-slate-500">to Row</span>
+                  <input type="number" id="export-range-end" min="1" max="${sourceList.length}" value="${Math.min(50, sourceList.length)}" class="w-24 px-2.5 py-1.5 rounded-lg text-xs font-mono bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10" />
+                  <span class="text-slate-500">(max ${sourceList.length})</span>
+                </div>
+              </div>
+
+              <!-- Format Selection -->
+              <div>
+                <label class="block text-[11px] font-bold uppercase tracking-wider text-slate-500 mb-2">2. Choose Export Format</label>
+                <div class="grid grid-cols-2 gap-3">
+                  <label class="flex items-center gap-3 p-3 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] cursor-pointer hover:border-emerald-500/60">
+                    <input type="radio" name="export-format" value="xlsx" checked class="text-emerald-600 focus:ring-emerald-500" />
+                    <div>
+                      <div class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                        <span class="text-emerald-600 font-mono text-[10px] bg-emerald-500/10 px-1.5 py-0.5 rounded">XLSX</span>
+                        <span>Excel Spreadsheet</span>
+                      </div>
+                      <div class="text-[10px] text-slate-500 mt-0.5">Styled Microsoft Excel (.xlsx)</div>
+                    </div>
+                  </label>
+                  <label class="flex items-center gap-3 p-3 rounded-2xl border border-black/10 dark:border-white/10 bg-black/[0.02] dark:bg-white/[0.03] cursor-pointer hover:border-blue-500/60">
+                    <input type="radio" name="export-format" value="csv" class="text-blue-600 focus:ring-blue-500" />
+                    <div>
+                      <div class="text-xs font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
+                        <span class="text-blue-600 font-mono text-[10px] bg-blue-500/10 px-1.5 py-0.5 rounded">CSV</span>
+                        <span>CSV Document</span>
+                      </div>
+                      <div class="text-[10px] text-slate-500 mt-0.5">UTF-8 BOM Comma-Separated</div>
+                    </div>
+                  </label>
+                </div>
+              </div>
+
+              <!-- Column Checkboxes -->
+              <div>
+                <div class="flex items-center justify-between mb-2">
+                  <label class="text-[11px] font-bold uppercase tracking-wider text-slate-500">3. Select Columns to Include</label>
+                  <button type="button" id="toggle-all-cols" class="text-[11px] font-semibold text-blue-600 dark:text-blue-400 hover:underline">Toggle All</button>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-xs">
+                  ${[
+                    ['name', 'Full Name'],
+                    ['studentId', 'Student ID'],
+                    ['email', 'Email Address'],
+                    ['contact', 'Contact Number'],
+                    ['enrollmentYear', 'Enrollment Year'],
+                    ['batch', 'Batch'],
+                    ['designation', 'Designation / Role'],
+                    ['payment', 'Payment Status'],
+                    ['status', 'Member Status']
+                  ].map(([k, label]) => `
+                    <label class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 cursor-pointer">
+                      <input type="checkbox" name="export-col" value="${k}" checked class="rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
+                      <span class="text-slate-700 dark:text-slate-300">${label}</span>
+                    </label>
+                  `).join('')}
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div class="flex items-center justify-end gap-2 pt-4 border-t border-black/[0.06] dark:border-white/[0.07]">
+                <button type="button" id="exp-cancel" class="px-4 py-2 rounded-xl text-xs font-semibold border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition">Cancel</button>
+                <button type="submit" class="inline-flex items-center gap-2 px-5 py-2 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition">
+                  ${ICONS.download}<span>Export & Download</span>
+                </button>
+              </div>
+            </form>
+          `,
+          () => {
+            const form = document.getElementById('form-export');
+            document.getElementById('exp-cancel').onclick = closeModal;
+
+            // Radio toggle for count / range panels
+            form.querySelectorAll('input[name="export-scope"]').forEach(r => {
+              r.onchange = () => {
+                const countPanel = document.getElementById('export-count-panel');
+                const rangePanel = document.getElementById('export-range-panel');
+                if (countPanel) countPanel.classList.toggle('hidden', r.value !== 'count');
+                if (rangePanel) rangePanel.classList.toggle('hidden', r.value !== 'range');
+              };
+            });
+
+            // Toggle all columns button
+            const btnToggleAll = document.getElementById('toggle-all-cols');
+            if (btnToggleAll) {
+              btnToggleAll.onclick = () => {
+                const colBoxes = form.querySelectorAll('input[name="export-col"]');
+                const allChecked = Array.from(colBoxes).every(cb => cb.checked);
+                colBoxes.forEach(cb => cb.checked = !allChecked);
+              };
+            }
+
+            form.onsubmit = (e) => {
+              e.preventDefault();
+              const scope = form.querySelector('input[name="export-scope"]:checked')?.value || 'all';
+              const format = form.querySelector('input[name="export-format"]:checked')?.value || 'xlsx';
+              const selectedCols = Array.from(form.querySelectorAll('input[name="export-col"]:checked')).map(cb => cb.value);
+
+              if (!selectedCols.length) {
+                showToast('Please select at least one column to export', 'error');
+                return;
+              }
+
+              const countVal = parseInt(document.getElementById('export-count-val')?.value || '50', 10);
+              const rangeStart = parseInt(document.getElementById('export-range-start')?.value || '1', 10);
+              const rangeEnd = parseInt(document.getElementById('export-range-end')?.value || String(sourceList.length), 10);
+
+              exportMembersData(targetType, format, scope, selectedCols, countVal, rangeStart, rangeEnd, filteredList);
+              closeModal();
+            };
+          },
+          'max-w-xl'
+        );
+      }
+
+      function exportMembersData(targetType, format, scope, columns, countVal, rangeStart, rangeEnd, filteredList) {
+        const isAlumni = targetType === 'alumni';
+        const sourceList = state.members.filter(m => isAlumni ? m.status === 'alumni' : m.status !== 'alumni');
+        const selectedIds = isAlumni ? state.alumniSelected : state.memberSelected;
+
+        let records = [];
+        if (scope === 'all') {
+          records = sourceList.slice();
+        } else if (scope === 'filtered') {
+          records = filteredList.slice();
+        } else if (scope === 'selected') {
+          records = sourceList.filter(m => selectedIds.includes(m.id));
+        } else if (scope === 'count') {
+          records = sourceList.slice(0, Math.max(1, countVal));
+        } else if (scope === 'range') {
+          const s = Math.max(0, rangeStart - 1);
+          const e = Math.min(sourceList.length, Math.max(s + 1, rangeEnd));
+          records = sourceList.slice(s, e);
+        }
+
+        if (!records.length) {
+          showToast('No matching records to export', 'error');
+          return;
+        }
+
+        const colLabels = {
+          name: 'Name',
+          studentId: 'Student ID',
+          email: 'Email',
+          contact: 'Contact',
+          enrollmentYear: 'Enrollment Year',
+          batch: 'Batch',
+          designation: 'Serial Number / Role',
+          payment: 'Payment',
+          status: 'Membership Status'
+        };
+
+        // Prepare tabular data
+        const exportData = records.map(m => {
+          const row = {};
+          columns.forEach(col => {
+            const label = colLabels[col] || col;
+            let val = m[col] ?? '';
+            if (col === 'status') val = val === 'alumni' ? 'Alumni' : 'Active Member';
+            row[label] = val;
+          });
+          return row;
+        });
+
+        const dateStr = new Date().toISOString().split('T')[0];
+        const baseFilename = `ESRC_${isAlumni ? 'Alumni' : 'Members'}_${records.length}_records_${dateStr}`;
+
+        if (format === 'xlsx' && window.XLSX && typeof window.XLSX.utils?.json_to_sheet === 'function') {
+          try {
+            const ws = window.XLSX.utils.json_to_sheet(exportData);
+            // Auto size columns
+            const colWidths = columns.map(c => {
+              const label = colLabels[c] || c;
+              let maxLen = label.length;
+              records.forEach(r => {
+                const val = String(r[c] || '');
+                if (val.length > maxLen) maxLen = Math.min(40, val.length);
+              });
+              return { wch: maxLen + 3 };
+            });
+            ws['!cols'] = colWidths;
+
+            const wb = window.XLSX.utils.book_new();
+            window.XLSX.utils.book_append_sheet(wb, ws, isAlumni ? 'Alumni' : 'Members');
+            window.XLSX.writeFile(wb, `${baseFilename}.xlsx`);
+            showToast(`Exported ${records.length} records to Excel (.xlsx)`, 'success');
+            return;
+          } catch (err) {
+            console.error('SheetJS export error, falling back to CSV', err);
+          }
+        }
+
+        // CSV Fallback (or if user selected CSV)
+        const csvHeader = columns.map(c => `"${(colLabels[c] || c).replace(/"/g, '""')}"`).join(',');
+        const csvRows = records.map(r => {
+          return columns.map(c => {
+            let val = r[c] ?? '';
+            if (c === 'status') val = val === 'alumni' ? 'Alumni' : 'Active Member';
+            return `"${String(val).replace(/"/g, '""')}"`;
+          }).join(',');
+        });
+
+        const csvContent = '\uFEFF' + [csvHeader].concat(csvRows).join('\r\n');
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = `${baseFilename}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast(`Exported ${records.length} records to CSV`, 'success');
+      }
+
+      function renderMembersView() {
+        const q = state.memberQuery.toLowerCase().trim();
+        const activeMembers = state.members.filter(m => m.status !== 'alumni');
+        
+        // Extract unique batches and years for filters
+        const batches = Array.from(new Set(activeMembers.map(m => m.batch).filter(Boolean))).sort((a,b) => a.localeCompare(b, undefined, {numeric:true}));
+        const years = Array.from(new Set(activeMembers.map(m => m.enrollmentYear).filter(Boolean))).sort();
+
+        const filtered = activeMembers.filter(m => {
+          if (q && !`${m.name} ${m.studentId} ${m.email} ${m.contact} ${m.designation} ${m.batch} ${m.enrollmentYear}`.toLowerCase().includes(q)) return false;
+          if (state.memberBatchFilter !== 'All' && m.batch !== state.memberBatchFilter) return false;
+          if (state.memberYearFilter !== 'All' && m.enrollmentYear !== state.memberYearFilter) return false;
+          if (state.memberPaymentFilter !== 'All' && m.payment !== state.memberPaymentFilter) return false;
+          if (state.memberRoleFilter === 'exec' && !/president|v\.?\s*p|secretary|treasurer|executive/i.test(m.designation)) return false;
+          if (state.memberRoleFilter === 'general' && /president|v\.?\s*p|secretary|treasurer|executive/i.test(m.designation)) return false;
+          return true;
+        });
+
+        // Pagination
+        const pageSize = state.memberPageSize === 'All' ? filtered.length : parseInt(state.memberPageSize, 10);
+        const totalPages = Math.max(1, Math.ceil(filtered.length / (pageSize || 1)));
+        const currentPage = Math.min(state.memberPage, totalPages);
+        const startIdx = (currentPage - 1) * pageSize;
+        const pageItems = filtered.slice(startIdx, startIdx + pageSize);
+
+        // Stats
+        const execCount = activeMembers.filter(m => /president|v\.?\s*p|secretary|treasurer|executive/i.test(m.designation)).length;
+        const paidCount = activeMembers.filter(m => m.payment === 'Completed').length;
+
+        const allCheckedOnPage = pageItems.length > 0 && pageItems.every(m => state.memberSelected.includes(m.id));
+
+        return `
+          <div class="space-y-6 animate-fade-in">
+            <!-- Header Section -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <div class="flex items-center gap-2.5">
+                  <h2 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">ESRC Members Directory</h2>
+                  <span class="text-xs px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 font-bold font-mono">${activeMembers.length} Active</span>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Official register of all active Embedded System Research Center members & executives.</p>
+              </div>
+              <div class="flex flex-wrap items-center gap-2.5">
+                <button type="button" id="btn-export-members" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition">
+                  ${ICONS.download}<span>Export Data</span>
+                </button>
+                <button type="button" id="btn-new-member" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition">
+                  ${ICONS.userPlus}<span>Add Member</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Metric Summary Cards -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+              <div class="p-4 rounded-2xl hig-glass bg-white/70 dark:bg-[#151922]/70 border border-black/[0.06] dark:border-white/[0.07]">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total Active</div>
+                <div class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1 font-mono">${activeMembers.length}</div>
+                <div class="text-[10px] text-blue-600 dark:text-blue-400 mt-0.5 font-medium">Registered in Portal</div>
+              </div>
+              <div class="p-4 rounded-2xl hig-glass bg-white/70 dark:bg-[#151922]/70 border border-black/[0.06] dark:border-white/[0.07]">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Officers & Execs</div>
+                <div class="text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400 mt-1 font-mono">${execCount}</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">Core Committee</div>
+              </div>
+              <div class="p-4 rounded-2xl hig-glass bg-white/70 dark:bg-[#151922]/70 border border-black/[0.06] dark:border-white/[0.07]">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Batches Active</div>
+                <div class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1 font-mono">${batches.length}</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">Batch ${batches[0] || ''} to ${batches[batches.length-1] || ''}</div>
+              </div>
+              <div class="p-4 rounded-2xl hig-glass bg-white/70 dark:bg-[#151922]/70 border border-black/[0.06] dark:border-white/[0.07]">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Payment Status</div>
+                <div class="text-xl sm:text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1 font-mono">${Math.round((paidCount / (activeMembers.length || 1)) * 100)}%</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">${paidCount} Completed</div>
+              </div>
+            </div>
+
+            <!-- Search & Filters Toolbar -->
+            <div class="p-4 rounded-2xl hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/[0.07] dark:border-white/[0.08] space-y-3">
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <div class="relative flex-1">
+                  <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400">🔍</span>
+                  <input type="text" id="member-search" value="${escapeHtml(state.memberQuery)}" placeholder="Search member name, student ID, phone, batch, or role..." class="w-full pl-9 pr-4 py-2.5 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40 text-slate-900 dark:text-white" />
+                  ${state.memberQuery ? `<button type="button" id="clear-member-search" class="absolute inset-y-0 right-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-white text-xs">✕</button>` : ''}
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <select id="member-batch-filter" class="px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-slate-700 dark:text-slate-300">
+                    <option value="All" ${state.memberBatchFilter === 'All' ? 'selected' : ''}>All Batches</option>
+                    ${batches.map(b => `<option value="${b}" ${state.memberBatchFilter === b ? 'selected' : ''}>Batch ${b}</option>`).join('')}
+                  </select>
+                  <select id="member-year-filter" class="px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-slate-700 dark:text-slate-300">
+                    <option value="All" ${state.memberYearFilter === 'All' ? 'selected' : ''}>All Semesters</option>
+                    ${years.map(y => `<option value="${y}" ${state.memberYearFilter === y ? 'selected' : ''}>${y}</option>`).join('')}
+                  </select>
+                  <select id="member-role-filter" class="px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-slate-700 dark:text-slate-300">
+                    <option value="All" ${state.memberRoleFilter === 'All' ? 'selected' : ''}>All Roles</option>
+                    <option value="exec" ${state.memberRoleFilter === 'exec' ? 'selected' : ''}>Leadership & Executives</option>
+                    <option value="general" ${state.memberRoleFilter === 'general' ? 'selected' : ''}>General Members</option>
+                  </select>
+                  <select id="member-payment-filter" class="px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-slate-700 dark:text-slate-300">
+                    <option value="All" ${state.memberPaymentFilter === 'All' ? 'selected' : ''}>All Payments</option>
+                    <option value="Completed" ${state.memberPaymentFilter === 'Completed' ? 'selected' : ''}>Completed</option>
+                    <option value="Pending" ${state.memberPaymentFilter === 'Pending' ? 'selected' : ''}>Pending</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Bulk Action Ribbon (Shows when rows are selected) -->
+              ${state.memberSelected.length ? `
+                <div class="flex items-center justify-between p-2.5 rounded-xl bg-blue-500/10 border border-blue-500/20 text-xs text-blue-700 dark:text-blue-300 animate-fade-in">
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold">${state.memberSelected.length} members selected</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button type="button" id="btn-bulk-alumni" class="px-3 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-sm transition">
+                      Mark Selected as Alumni
+                    </button>
+                    <button type="button" id="btn-export-selected" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold shadow-sm transition">
+                      Export Selected (${state.memberSelected.length})
+                    </button>
+                    <button type="button" id="btn-clear-selection" class="px-2.5 py-1.5 rounded-lg border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition">
+                      Clear
+                    </button>
+                  </div>
+                </div>
+              ` : ''}
+            </div>
+
+            <!-- Members Data Table -->
+            <div class="rounded-2xl hig-glass bg-white/90 dark:bg-[#151922]/90 border border-black/[0.08] dark:border-white/[0.08] overflow-hidden shadow-hig-sm">
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr class="border-b border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.02] text-slate-500 dark:text-slate-400 font-semibold">
+                      <th class="p-3.5 pl-4 w-10 text-center">
+                        <input type="checkbox" id="select-all-members" ${allCheckedOnPage ? 'checked' : ''} class="rounded border-slate-300 text-blue-600 focus:ring-blue-500" title="Select all on this page" />
+                      </th>
+                      <th class="p-3.5">Member Name</th>
+                      <th class="p-3.5">Student ID</th>
+                      <th class="p-3.5">Contact</th>
+                      <th class="p-3.5">Batch / Year</th>
+                      <th class="p-3.5">Role / Designation</th>
+                      <th class="p-3.5">Payment</th>
+                      <th class="p-3.5 text-center">Status (Dropdown)</th>
+                      <th class="p-3.5 pr-4 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
+                    ${pageItems.length ? pageItems.map((m, idx) => {
+                      const isSelected = state.memberSelected.includes(m.id);
+                      const isExec = /president|v\.?\s*p|secretary|treasurer|executive/i.test(m.designation);
+                      const initials = m.name.split(' ').map(n => n[0]).filter(Boolean).slice(0, 2).join('').toUpperCase() || 'M';
+                      return `
+                        <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition ${isSelected ? 'bg-blue-500/[0.05]' : ''}">
+                          <td class="p-3.5 pl-4 text-center">
+                            <input type="checkbox" class="member-checkbox rounded border-slate-300 text-blue-600 focus:ring-blue-500" data-id="${m.id}" ${isSelected ? 'checked' : ''} />
+                          </td>
+                          <td class="p-3.5">
+                            <div class="flex items-center gap-2.5">
+                              <span class="w-7 h-7 rounded-lg bg-gradient-to-br ${isExec ? 'from-blue-600 to-indigo-600' : 'from-slate-600 to-slate-700'} text-white font-bold text-[10px] flex items-center justify-center shrink-0">${initials}</span>
+                              <div class="min-w-0">
+                                <div class="font-bold text-slate-900 dark:text-white truncate">${escapeHtml(m.name)}</div>
+                                ${m.email ? `<a href="mailto:${escapeHtml(m.email)}" class="text-[10px] text-slate-400 hover:text-blue-500 truncate block">${escapeHtml(m.email)}</a>` : ''}
+                              </div>
+                            </div>
+                          </td>
+                          <td class="p-3.5">
+                            <div class="inline-flex items-center gap-1 font-mono text-[11px] text-slate-700 dark:text-slate-300">
+                              <span>${escapeHtml(m.studentId)}</span>
+                              <button type="button" class="copy-btn text-slate-400 hover:text-slate-600 dark:hover:text-white text-[10px]" data-copy="${escapeHtml(m.studentId)}" title="Copy ID">📋</button>
+                            </div>
+                          </td>
+                          <td class="p-3.5">
+                            ${m.contact ? `
+                              <a href="tel:${escapeHtml(m.contact)}" class="font-mono text-[11px] text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1">
+                                <span>${escapeHtml(m.contact)}</span>
+                              </a>
+                            ` : '<span class="text-slate-400">—</span>'}
+                          </td>
+                          <td class="p-3.5">
+                            <div class="text-slate-800 dark:text-slate-200 font-semibold">${m.batch ? 'Batch ' + escapeHtml(m.batch) : '—'}</div>
+                            <div class="text-[10px] text-slate-400">${escapeHtml(m.enrollmentYear || '')}</div>
+                          </td>
+                          <td class="p-3.5">
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                              /president/i.test(m.designation) ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400 border border-blue-500/20'
+                              : isExec ? 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20'
+                              : 'bg-black/[0.05] dark:bg-white/[0.06] text-slate-600 dark:text-slate-400'
+                            }">
+                              ${escapeHtml(m.designation || 'Member')}
+                            </span>
+                          </td>
+                          <td class="p-3.5">
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                              m.payment === 'Completed'
+                                ? 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'
+                                : 'bg-amber-500/10 text-amber-600 dark:text-amber-400'
+                            }">
+                              <span class="w-1.5 h-1.5 rounded-full ${m.payment === 'Completed' ? 'bg-emerald-500' : 'bg-amber-500'}"></span>
+                              <span>${escapeHtml(m.payment || 'Completed')}</span>
+                            </span>
+                          </td>
+                          <td class="p-3.5 text-center">
+                            <!-- Direct Alumni / Active Dropdown as requested -->
+                            <select class="member-status-select text-[11px] font-semibold py-1 px-2 rounded-lg border border-black/10 dark:border-white/10 bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200 cursor-pointer focus:ring-2 focus:ring-blue-500" data-member-id="${m.id}">
+                              <option value="active" selected>Active Member</option>
+                              <option value="alumni">→ Move to Alumni</option>
+                            </select>
+                          </td>
+                          <td class="p-3.5 pr-4 text-right">
+                            <div class="inline-flex items-center gap-1">
+                              <button type="button" class="edit-member-btn p-1.5 rounded-lg text-slate-400 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-black/5 dark:hover:bg-white/10 transition" data-id="${m.id}" title="Edit Profile">✏️</button>
+                              <button type="button" class="del-member-btn p-1.5 rounded-lg text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-500/10 transition" data-id="${m.id}" title="Delete Member">🗑️</button>
+                            </div>
+                          </td>
+                        </tr>
+                      `;
+                    }).join('') : `
+                      <tr>
+                        <td colspan="9" class="p-8 text-center text-slate-400 text-xs">
+                          No members matching the current filters.
+                        </td>
+                      </tr>
+                    `}
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Pagination & Range Controls -->
+              <div class="p-4 border-t border-black/[0.06] dark:border-white/[0.06] bg-black/[0.01] dark:bg-white/[0.01] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+                <div class="flex items-center gap-3">
+                  <span>Showing <strong class="text-slate-900 dark:text-white">${filtered.length ? startIdx + 1 : 0}</strong> to <strong class="text-slate-900 dark:text-white">${Math.min(startIdx + pageSize, filtered.length)}</strong> of <strong class="text-slate-900 dark:text-white">${filtered.length}</strong> members</span>
+                  <div class="flex items-center gap-1.5 pl-2 border-l border-slate-300 dark:border-slate-700">
+                    <span class="text-[11px]">Rows:</span>
+                    <select id="member-page-size" class="px-2 py-1 rounded-lg text-xs bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10">
+                      <option value="10" ${state.memberPageSize === '10' ? 'selected' : ''}>10</option>
+                      <option value="25" ${state.memberPageSize === '25' || !state.memberPageSize ? 'selected' : ''}>25</option>
+                      <option value="50" ${state.memberPageSize === '50' ? 'selected' : ''}>50</option>
+                      <option value="100" ${state.memberPageSize === '100' ? 'selected' : ''}>100</option>
+                      <option value="All" ${state.memberPageSize === 'All' ? 'selected' : ''}>All</option>
+                    </select>
+                  </div>
+                </div>
+
+                ${state.memberPageSize !== 'All' && totalPages > 1 ? `
+                  <div class="flex items-center gap-1">
+                    <button type="button" class="member-page-btn px-2.5 py-1 rounded-lg border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 disabled:opacity-40" data-page="${currentPage - 1}" ${currentPage <= 1 ? 'disabled' : ''}>Prev</button>
+                    <span class="px-3 py-1 font-mono text-[11px]">Page ${currentPage} / ${totalPages}</span>
+                    <button type="button" class="member-page-btn px-2.5 py-1 rounded-lg border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 disabled:opacity-40" data-page="${currentPage + 1}" ${currentPage >= totalPages ? 'disabled' : ''}>Next</button>
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function renderAlumniView() {
+        const q = state.alumniQuery.toLowerCase().trim();
+        const alumniMembers = state.members.filter(m => m.status === 'alumni');
+        
+        const batches = Array.from(new Set(alumniMembers.map(m => m.batch).filter(Boolean))).sort((a,b) => a.localeCompare(b, undefined, {numeric:true}));
+        const years = Array.from(new Set(alumniMembers.map(m => m.enrollmentYear).filter(Boolean))).sort();
+
+        const filtered = alumniMembers.filter(m => {
+          if (q && !`${m.name} ${m.studentId} ${m.email} ${m.contact} ${m.designation} ${m.batch} ${m.enrollmentYear}`.toLowerCase().includes(q)) return false;
+          if (state.alumniBatchFilter !== 'All' && m.batch !== state.alumniBatchFilter) return false;
+          if (state.alumniYearFilter !== 'All' && m.enrollmentYear !== state.alumniYearFilter) return false;
+          return true;
+        });
+
+        const pageSize = state.alumniPageSize === 'All' ? filtered.length : parseInt(state.alumniPageSize, 10);
+        const totalPages = Math.max(1, Math.ceil(filtered.length / (pageSize || 1)));
+        const currentPage = Math.min(state.alumniPage, totalPages);
+        const startIdx = (currentPage - 1) * pageSize;
+        const pageItems = filtered.slice(startIdx, startIdx + pageSize);
+
+        const allCheckedOnPage = pageItems.length > 0 && pageItems.every(m => state.alumniSelected.includes(m.id));
+
+        return `
+          <div class="space-y-6 animate-fade-in">
+            <!-- Header Section -->
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <div class="flex items-center gap-2.5">
+                  <h2 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">ESRC Alumni Network</h2>
+                  <span class="text-xs px-2.5 py-0.5 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 font-bold font-mono">${alumniMembers.length} Alumni</span>
+                </div>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Directory of graduated officers, former executive committee leaders, and honorary alumni.</p>
+              </div>
+              <div class="flex flex-wrap items-center gap-2.5">
+                <button type="button" id="btn-export-alumni" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition">
+                  ${ICONS.download}<span>Export Alumni</span>
+                </button>
+                <button type="button" id="btn-new-alumni" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm transition">
+                  ${ICONS.userPlus}<span>Add Alumni</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Alumni Stat Cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+              <div class="p-4 rounded-2xl hig-glass bg-white/70 dark:bg-[#151922]/70 border border-black/[0.06] dark:border-white/[0.07]">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Total Alumni Network</div>
+                <div class="text-xl sm:text-2xl font-bold text-indigo-600 dark:text-indigo-400 mt-1 font-mono">${alumniMembers.length}</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">Recorded in Registry</div>
+              </div>
+              <div class="p-4 rounded-2xl hig-glass bg-white/70 dark:bg-[#151922]/70 border border-black/[0.06] dark:border-white/[0.07]">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Former Presidents & Executives</div>
+                <div class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1 font-mono">${alumniMembers.filter(m => /president|v\.?\s*p|secretary|treasurer/i.test(m.designation)).length}</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">Past Club Leadership</div>
+              </div>
+              <div class="p-4 rounded-2xl hig-glass bg-white/70 dark:bg-[#151922]/70 border border-black/[0.06] dark:border-white/[0.07]">
+                <div class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Batches Represented</div>
+                <div class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white mt-1 font-mono">${batches.length}</div>
+                <div class="text-[10px] text-slate-400 mt-0.5">Diverse Graduation Years</div>
+              </div>
+            </div>
+
+            <!-- Search & Filters -->
+            <div class="p-4 rounded-2xl hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/[0.07] dark:border-white/[0.08] space-y-3">
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                <div class="relative flex-1">
+                  <span class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400">🔍</span>
+                  <input type="text" id="alumni-search" value="${escapeHtml(state.alumniQuery)}" placeholder="Search alumni name, student ID, former role, or batch..." class="w-full pl-9 pr-4 py-2.5 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-indigo-500/40 text-slate-900 dark:text-white" />
+                  ${state.alumniQuery ? `<button type="button" id="clear-alumni-search" class="absolute inset-y-0 right-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-white text-xs">✕</button>` : ''}
+                </div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <select id="alumni-batch-filter" class="px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-slate-700 dark:text-slate-300">
+                    <option value="All" ${state.alumniBatchFilter === 'All' ? 'selected' : ''}>All Batches</option>
+                    ${batches.map(b => `<option value="${b}" ${state.alumniBatchFilter === b ? 'selected' : ''}>Batch ${b}</option>`).join('')}
+                  </select>
+                  <select id="alumni-year-filter" class="px-3 py-2 rounded-xl text-xs bg-black/[0.04] dark:bg-white/[0.05] border border-black/10 dark:border-white/10 text-slate-700 dark:text-slate-300">
+                    <option value="All" ${state.alumniYearFilter === 'All' ? 'selected' : ''}>All Semesters</option>
+                    ${years.map(y => `<option value="${y}" ${state.alumniYearFilter === y ? 'selected' : ''}>${y}</option>`).join('')}
+                  </select>
+                </div>
+              </div>
+
+              <!-- Bulk Action Ribbon for Alumni -->
+              ${state.alumniSelected.length ? `
+                <div class="flex items-center justify-between p-2.5 rounded-xl bg-indigo-500/10 border border-indigo-500/20 text-xs text-indigo-700 dark:text-indigo-300 animate-fade-in">
+                  <div class="flex items-center gap-2">
+                    <span class="font-bold">${state.alumniSelected.length} alumni selected</span>
+                  </div>
+                  <div class="flex items-center gap-2">
+                    <button type="button" id="btn-bulk-restore" class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold shadow-sm transition">
+                      Revert Selected to Active
+                    </button>
+                    <button type="button" id="btn-export-alumni-selected" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold shadow-sm transition">
+                      Export Selected (${state.alumniSelected.length})
+                    </button>
+                    <button type="button" id="btn-clear-alumni-selection" class="px-2.5 py-1.5 rounded-lg border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition">
+                      Clear
+                    </button>
+                  </div>
+                </div>
+              ` : ''}
+            </div>
+
+            <!-- Alumni Data Table -->
+            <div class="rounded-2xl hig-glass bg-white/90 dark:bg-[#151922]/90 border border-black/[0.08] dark:border-white/[0.08] overflow-hidden shadow-hig-sm">
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse text-xs">
+                  <thead>
+                    <tr class="border-b border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.02] text-slate-500 dark:text-slate-400 font-semibold">
+                      <th class="p-3.5 pl-4 w-10 text-center">
+                        <input type="checkbox" id="select-all-alumni" ${allCheckedOnPage ? 'checked' : ''} class="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" title="Select all on this page" />
+                      </th>
+                      <th class="p-3.5">Alumni Name</th>
+                      <th class="p-3.5">Student ID</th>
+                      <th class="p-3.5">Contact</th>
+                      <th class="p-3.5">Batch / Year</th>
+                      <th class="p-3.5">Past Designation / Role</th>
+                      <th class="p-3.5 text-center">Status (Dropdown)</th>
+                      <th class="p-3.5 pr-4 text-right">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
+                    ${pageItems.length ? pageItems.map((m, idx) => {
+                      const isSelected = state.alumniSelected.includes(m.id);
+                      const initials = m.name.split(' ').map(n => n[0]).filter(Boolean).slice(0, 2).join('').toUpperCase() || 'A';
+                      return `
+                        <tr class="hover:bg-black/[0.02] dark:hover:bg-white/[0.03] transition ${isSelected ? 'bg-indigo-500/[0.05]' : ''}">
+                          <td class="p-3.5 pl-4 text-center">
+                            <input type="checkbox" class="alumni-checkbox rounded border-slate-300 text-indigo-600 focus:ring-indigo-500" data-id="${m.id}" ${isSelected ? 'checked' : ''} />
+                          </td>
+                          <td class="p-3.5">
+                            <div class="flex items-center gap-2.5">
+                              <span class="w-7 h-7 rounded-lg bg-gradient-to-br from-indigo-600 to-purple-600 text-white font-bold text-[10px] flex items-center justify-center shrink-0">${initials}</span>
+                              <div class="min-w-0">
+                                <div class="font-bold text-slate-900 dark:text-white truncate">${escapeHtml(m.name)}</div>
+                                ${m.email ? `<a href="mailto:${escapeHtml(m.email)}" class="text-[10px] text-slate-400 hover:text-indigo-500 truncate block">${escapeHtml(m.email)}</a>` : ''}
+                              </div>
+                            </div>
+                          </td>
+                          <td class="p-3.5">
+                            <div class="inline-flex items-center gap-1 font-mono text-[11px] text-slate-700 dark:text-slate-300">
+                              <span>${escapeHtml(m.studentId)}</span>
+                              <button type="button" class="copy-btn text-slate-400 hover:text-slate-600 dark:hover:text-white text-[10px]" data-copy="${escapeHtml(m.studentId)}" title="Copy ID">📋</button>
+                            </div>
+                          </td>
+                          <td class="p-3.5">
+                            ${m.contact ? `
+                              <a href="tel:${escapeHtml(m.contact)}" class="font-mono text-[11px] text-indigo-600 dark:text-indigo-400 hover:underline inline-flex items-center gap-1">
+                                <span>${escapeHtml(m.contact)}</span>
+                              </a>
+                            ` : '<span class="text-slate-400">—</span>'}
+                          </td>
+                          <td class="p-3.5">
+                            <div class="text-slate-800 dark:text-slate-200 font-semibold">${m.batch ? 'Batch ' + escapeHtml(m.batch) : '—'}</div>
+                            <div class="text-[10px] text-slate-400">${escapeHtml(m.enrollmentYear || '')}</div>
+                          </td>
+                          <td class="p-3.5">
+                            <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-500/10 text-indigo-700 dark:text-indigo-300 border border-indigo-500/20">
+                              🎓 ${escapeHtml(m.designation || 'Alumni')}
+                            </span>
+                          </td>
+                          <td class="p-3.5 text-center">
+                            <!-- Direct Dropdown to Revert to Active or stay Alumni -->
+                            <select class="member-status-select text-[11px] font-semibold py-1 px-2 rounded-lg border border-black/10 dark:border-white/10 bg-white dark:bg-slate-900 text-indigo-700 dark:text-indigo-300 cursor-pointer focus:ring-2 focus:ring-indigo-500" data-member-id="${m.id}">
+                              <option value="alumni" selected>Alumni Member</option>
+                              <option value="active">← Revert to Active</option>
+                            </select>
+                          </td>
+                          <td class="p-3.5 pr-4 text-right">
+                            <div class="inline-flex items-center gap-1">
+                              <button type="button" class="edit-member-btn p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-black/5 dark:hover:bg-white/10 transition" data-id="${m.id}" title="Edit Profile">✏️</button>
+                              <button type="button" class="del-member-btn p-1.5 rounded-lg text-slate-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-red-500/10 transition" data-id="${m.id}" title="Delete Record">🗑️</button>
+                            </div>
+                          </td>
+                        </tr>
+                      `;
+                    }).join('') : `
+                      <tr>
+                        <td colspan="8" class="p-10 text-center text-slate-400 text-xs">
+                          <div class="text-2xl mb-1">🎓</div>
+                          <div class="font-bold text-slate-600 dark:text-slate-300">No Alumni Records Found</div>
+                          <div class="text-[11px] text-slate-400 mt-1">To add members to the alumni directory, change their status in the Members table dropdown or click "Add Alumni".</div>
+                        </td>
+                      </tr>
+                    `}
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Pagination Controls for Alumni -->
+              <div class="p-4 border-t border-black/[0.06] dark:border-white/[0.06] bg-black/[0.01] dark:bg-white/[0.01] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+                <div class="flex items-center gap-3">
+                  <span>Showing <strong class="text-slate-900 dark:text-white">${filtered.length ? startIdx + 1 : 0}</strong> to <strong class="text-slate-900 dark:text-white">${Math.min(startIdx + pageSize, filtered.length)}</strong> of <strong class="text-slate-900 dark:text-white">${filtered.length}</strong> alumni</span>
+                  <div class="flex items-center gap-1.5 pl-2 border-l border-slate-300 dark:border-slate-700">
+                    <span class="text-[11px]">Rows:</span>
+                    <select id="alumni-page-size" class="px-2 py-1 rounded-lg text-xs bg-white dark:bg-slate-900 border border-black/10 dark:border-white/10">
+                      <option value="10" ${state.alumniPageSize === '10' ? 'selected' : ''}>10</option>
+                      <option value="25" ${state.alumniPageSize === '25' || !state.alumniPageSize ? 'selected' : ''}>25</option>
+                      <option value="50" ${state.alumniPageSize === '50' ? 'selected' : ''}>50</option>
+                      <option value="All" ${state.alumniPageSize === 'All' ? 'selected' : ''}>All</option>
+                    </select>
+                  </div>
+                </div>
+
+                ${state.alumniPageSize !== 'All' && totalPages > 1 ? `
+                  <div class="flex items-center gap-1">
+                    <button type="button" class="alumni-page-btn px-2.5 py-1 rounded-lg border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 disabled:opacity-40" data-page="${currentPage - 1}" ${currentPage <= 1 ? 'disabled' : ''}>Prev</button>
+                    <span class="px-3 py-1 font-mono text-[11px]">Page ${currentPage} / ${totalPages}</span>
+                    <button type="button" class="alumni-page-btn px-2.5 py-1 rounded-lg border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 disabled:opacity-40" data-page="${currentPage + 1}" ${currentPage >= totalPages ? 'disabled' : ''}>Next</button>
+                  </div>
+                ` : ''}
+              </div>
+            </div>
+          </div>
+        `;
       }
 
       /* =========================================================================

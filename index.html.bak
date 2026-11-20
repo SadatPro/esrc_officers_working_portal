@@ -1,0 +1,2869 @@
+<!DOCTYPE html>
+<html lang="en" class="antialiased">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>ESRC DIU · Officers Working Portal</title>
+
+  <!-- Google Font: Roboto Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Supabase JS v2 UMD Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            mono: ['"Roboto Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace'],
+            sans: ['"Roboto Mono"', 'ui-monospace', 'SFMono-Regular', 'Menlo', 'monospace']
+          },
+          boxShadow: {
+            'hig-sm': '0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.04)',
+            'hig-md': '0 8px 24px -4px rgba(15, 23, 42, 0.08), 0 2px 8px -2px rgba(15, 23, 42, 0.04)',
+            'hig-lg': '0 20px 44px -10px rgba(15, 23, 42, 0.16), 0 4px 14px -4px rgba(15, 23, 42, 0.08)'
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    html, body {
+      font-family: 'Roboto Mono', monospace;
+      font-variant-numeric: tabular-nums;
+      overflow-x: hidden;
+    }
+
+    /* Ambient HIG Mesh Backdrop */
+    .hig-bg {
+      background-color: #f4f6fa;
+      background-image:
+        radial-gradient(at 10% 12%, rgba(37, 99, 235, 0.08) 0px, transparent 50%),
+        radial-gradient(at 90% 10%, rgba(16, 185, 129, 0.07) 0px, transparent 45%),
+        radial-gradient(at 50% 92%, rgba(99, 102, 241, 0.06) 0px, transparent 55%);
+    }
+    .dark .hig-bg {
+      background-color: #0b0e14;
+      background-image:
+        radial-gradient(at 10% 12%, rgba(59, 130, 246, 0.13) 0px, transparent 50%),
+        radial-gradient(at 90% 10%, rgba(16, 185, 129, 0.09) 0px, transparent 45%),
+        radial-gradient(at 50% 92%, rgba(99, 102, 241, 0.10) 0px, transparent 55%);
+    }
+
+    /* Frosted Glass Surface */
+    .hig-glass {
+      backdrop-filter: blur(18px) saturate(160%);
+      -webkit-backdrop-filter: blur(18px) saturate(160%);
+    }
+
+    /* Tactile HIG Card Hover & Transitions */
+    .hig-card {
+      transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+    .hig-card:hover {
+      transform: translateY(-2px);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.24s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-6px); }
+      40% { transform: translateX(6px); }
+      60% { transform: translateX(-4px); }
+      80% { transform: translateX(4px); }
+    }
+    .animate-shake {
+      animation: shake 0.34s ease-in-out;
+    }
+
+    /* Subtle Scrollbars */
+    ::-webkit-scrollbar { width: 7px; height: 7px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(128, 128, 128, 0.28); border-radius: 999px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(128, 128, 128, 0.45); }
+
+    /* A4 Official Printable Document Sheet */
+    .a4-sheet {
+      width: 210mm;
+      min-height: 297mm;
+      background: #ffffff;
+      color: #0f172a;
+      padding: 16mm 18mm;
+      box-sizing: border-box;
+      margin: 0 auto;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.22);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    @media screen and (max-width: 840px) {
+      .a4-sheet {
+        width: 100%;
+        min-height: auto;
+        padding: 20px;
+      }
+    }
+
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    @media print {
+      html, body {
+        background: #ffffff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+      }
+      #app, #modal-root, #toast-root {
+        display: none !important;
+      }
+      #print-root {
+        display: block !important;
+        position: static !important;
+      }
+      .a4-sheet {
+        width: 210mm !important;
+        min-height: 297mm !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+        padding: 15mm 17mm !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="hig-bg text-slate-900 dark:text-slate-100 min-h-screen selection:bg-blue-500/20">
+  <!-- Main Application Root -->
+  <div id="app"></div>
+  <!-- Modal Overlay Root -->
+  <div id="modal-root"></div>
+  <!-- Toast Notification Root -->
+  <div id="toast-root" class="fixed bottom-20 lg:bottom-6 right-4 sm:right-6 z-50 flex flex-col gap-2 pointer-events-none"></div>
+  <!-- Dedicated A4 Print Container -->
+  <div id="print-root" class="hidden"></div>
+
+  <script>
+    (function () {
+      'use strict';
+
+      /* =========================================================================
+       * 1. ENCRYPTED CREDENTIALS VAULTS (NO PLAINTEXT PASSWORDS IN SOURCE)
+       * ========================================================================= */
+      const ADMIN_VAULT = [
+        {
+          slot: 0,
+          id: 'adm_01',
+          role: 'admin',
+          code: 'PRES-01',
+          name: 'Sadat Mahmud',
+          title: 'President · ESRC DIU',
+          avatar: 'SM',
+          accent: 'from-blue-600 to-indigo-600',
+          seal: '6c681a293f280a602e3b3e3b29606a',
+          active: true,
+          last_login_at: null
+        },
+        {
+          slot: 1,
+          id: 'adm_02',
+          role: 'admin',
+          code: 'ADM-02',
+          name: 'Operations Admin',
+          title: 'Operations Lead · ESRC',
+          avatar: 'OA',
+          accent: 'from-emerald-600 to-teal-600',
+          seal: '6c68383b362f333e60683433373e3b606b',
+          active: true,
+          last_login_at: null
+        },
+        {
+          slot: 2,
+          id: 'adm_03',
+          role: 'admin',
+          code: 'ADM-03',
+          name: 'Research Admin',
+          title: 'Research Coordinator · ESRC',
+          avatar: 'RA',
+          accent: 'from-violet-600 to-purple-600',
+          seal: '6c68363b2e28352a60693433373e3b6068',
+          active: true,
+          last_login_at: null
+        }
+      ];
+
+      const OFFICER_ROSTER = [
+        {
+          slot: 0,
+          id: 'ESRC-GS-01',
+          role: 'officer',
+          code: 'G.S',
+          name: 'Abir Hasan Mahin',
+          title: 'General Secretary (G.S)',
+          wing: 'General Secretary (G.S)',
+          avatar: 'AM',
+          accent: 'from-emerald-500 to-teal-600',
+          seal: '6c686a6879091d602833383b606a',
+          active: true,
+          last_login_at: null
+        },
+        {
+          slot: 1,
+          id: 'ESRC-VP-02',
+          role: 'officer',
+          code: 'V.P',
+          name: 'Ayatulla Al Saba Kabbo',
+          title: 'Vice President',
+          wing: 'Vice President',
+          avatar: 'AK',
+          accent: 'from-cyan-500 to-blue-600',
+          seal: '6c686a68790a0c603538383b31606b',
+          active: true,
+          last_login_at: null
+        },
+        {
+          slot: 2,
+          id: 'ESRC-AGS-03',
+          role: 'officer',
+          code: 'A.G.S',
+          name: 'Al Sami',
+          title: 'Assistant General Secretary (A.G.S)',
+          wing: 'Assistant General Secretary (A.G.S)',
+          avatar: 'AS',
+          accent: 'from-teal-500 to-emerald-600',
+          seal: '6c6879091d1b6033373b296068',
+          active: true,
+          last_login_at: null
+        }
+      ];
+
+      function sealCredential(slot, user, pass) {
+        const raw = `${slot}:${String(user || '').trim().toLowerCase()}:${String(pass || '')}`;
+        const rev = raw.split('').reverse().join('');
+        let hex = '';
+        for (let i = 0; i < rev.length; i++) {
+          hex += (rev.charCodeAt(i) ^ 0x5A).toString(16).padStart(2, '0');
+        }
+        return hex;
+      }
+
+      function constantTimeEqual(a, b) {
+        if (!a || !b || a.length !== b.length) return false;
+        let diff = 0;
+        for (let i = 0; i < a.length; i++) {
+          diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
+        }
+        return diff === 0;
+      }
+
+      function matchDirectoryUser(list, preferredSlot, userInput, passInput) {
+        const candidates = list.filter(u => u && u.active !== false);
+        const ordered = [];
+        const pref = candidates.find(u => Number(u.slot) === Number(preferredSlot));
+        if (pref) ordered.push(pref);
+        candidates.forEach(u => {
+          if (!pref || u.id !== pref.id) ordered.push(u);
+        });
+        for (let i = 0; i < ordered.length; i++) {
+          const target = ordered[i];
+          const computed = sealCredential(target.slot, userInput, passInput);
+          if (constantTimeEqual(computed, target.seal)) {
+            return target;
+          }
+        }
+        return null;
+      }
+
+      /* =========================================================================
+       * 2. SUPABASE CONFIGURATION & SQL SETUP
+       * ========================================================================= */
+      const SUPABASE_CONFIG = {
+        URL: 'https://kpyzvkgfwzeaerhwnstj.supabase.co',
+        KEY: 'sb_publishable_6awHRH1MwXKPTkz0s4XbMg_9ZGJAfEU',
+        TABLE: 'esrc_records',
+        USERS_TABLE: 'esrc_users'
+      };
+
+      const SUPABASE_SETUP_SQL = `-- 1. Portal Records Table (Notices, Orders, Applications, Resources)
+create table if not exists public.esrc_records (
+  id text primary key,
+  kind text not null,
+  payload jsonb not null,
+  created_at bigint not null
+);
+
+alter table public.esrc_records enable row level security;
+
+drop policy if exists "ESRC Portal Access" on public.esrc_records;
+create policy "ESRC Portal Access"
+  on public.esrc_records
+  for all
+  using (true)
+  with check (true);
+
+-- 2. Encrypted Accounts & Login Sync Table (Admin + Officers)
+create table if not exists public.esrc_users (
+  id text primary key,
+  role text not null,
+  slot integer not null default 0,
+  code text not null,
+  name text not null,
+  title text not null,
+  avatar text not null,
+  accent text not null,
+  seal text not null,
+  active boolean not null default true,
+  last_login_at bigint
+);
+
+alter table public.esrc_users enable row level security;
+
+drop policy if exists "ESRC Users Access" on public.esrc_users;
+create policy "ESRC Users Access"
+  on public.esrc_users
+  for all
+  using (true)
+  with check (true);`;
+
+      let sbClient = null;
+      try {
+        if (window.supabase && typeof window.supabase.createClient === 'function') {
+          sbClient = window.supabase.createClient(SUPABASE_CONFIG.URL, SUPABASE_CONFIG.KEY, {
+            auth: { persistSession: false, autoRefreshToken: false }
+          });
+        }
+      } catch (err) {
+        sbClient = null;
+      }
+
+      /* =========================================================================
+       * 3. PORTAL CONSTANTS, DEFAULT DATA & STATE
+       * ========================================================================= */
+      const TOOLS = [
+        {
+          id: 't1',
+          icon: '🎓',
+          name: 'Certificate Studio',
+          desc: 'Design and batch-generate verified certificates for workshops, seminars, and robotics competitions.',
+          url: 'https://sadatpro.github.io/certificate_studio/',
+          accent: 'border-t-blue-500'
+        },
+        {
+          id: 't2',
+          icon: '📜',
+          name: 'Internship Certificate Studio',
+          desc: 'Prepare, verify, and issue official ESRC internship completion certificates for outgoing interns.',
+          url: 'https://sadatpro.github.io/Internship_Certificate_Studio/',
+          accent: 'border-t-emerald-500'
+        },
+        {
+          id: 't3',
+          icon: '🗂️',
+          name: 'Project Management App',
+          desc: 'Plan embedded hardware projects, assign sprints, and monitor team deliverables.',
+          url: 'https://sadatpro.github.io/project-management-app/',
+          accent: 'border-t-indigo-500'
+        }
+      ];
+
+      const RESOURCE_CATS = ['Templates', 'Certificates', 'Reports', 'Meetings', 'Projects', 'Other'];
+      const APP_TYPES = ['Project Proposal', 'Component Requisition', 'Event & Budget Request', 'Duty & Lab Access'];
+
+      const STORAGE_KEYS = {
+        SESSION: 'esrc_hig_session_v5',
+        THEME: 'esrc_hig_theme_v5',
+        USERS: 'esrc_hig_users_v5',
+        NOTICES: 'esrc_hig_notices_v5',
+        TASKS: 'esrc_hig_tasks_v5',
+        APPLICATIONS: 'esrc_hig_apps_v5',
+        RESOURCES: 'esrc_hig_resources_v5'
+      };
+
+      const DEFAULT_USERS = [].concat(ADMIN_VAULT, OFFICER_ROSTER);
+
+      const DEFAULT_NOTICES = [
+        {
+          id: 'ntc_1',
+          title: 'Q4 Embedded Robotics Exhibition — Officer Briefing',
+          body: 'All executive officers must finalize lab inventory checklists and submit component requisitions through the Applications tab before Friday 17:00.',
+          priority: 'High',
+          by: 'Sadat Mahmud',
+          at: Date.now() - 86400000 * 2
+        },
+        {
+          id: 'ntc_2',
+          title: 'A4 Work Order & Approval Protocol Active',
+          body: 'Official work orders issued by Admin can be exported directly as A4 sheets. Officers should submit completion links for Admin sign-off.',
+          priority: 'Normal',
+          by: 'Sadat Mahmud',
+          at: Date.now() - 86400000 * 5
+        }
+      ];
+
+      const DEFAULT_TASKS = [
+        {
+          id: 'tsk_1',
+          orderNo: 'ESRC/WO/2026/001',
+          title: 'Prepare STM32 Workshop Kits & Lab Stations',
+          desc: 'Inspect 20 STM32F4 Nucleo boards, verify ST-Link cables, and organize oscilloscope probes across Lab Bench 1–5.',
+          deliverables: [
+            'Test all 20 STM32F4 boards with blink firmware',
+            'Label USB-C and ST-Link debugger cables',
+            'Upload signed inventory sheet to Google Drive'
+          ],
+          to: 'Abir Hasan Mahin',
+          toId: 'G.S',
+          wing: 'General Secretary (G.S)',
+          by: 'Sadat Mahmud',
+          due: '2026-12-05',
+          priority: 'High',
+          status: 'open', // open | submitted | revision | approved
+          report: '',
+          doc: '',
+          adminRemarks: '',
+          submittedAt: null,
+          approvedBy: '',
+          approvedAt: null,
+          at: Date.now() - 86400000 * 3
+        },
+        {
+          id: 'tsk_2',
+          orderNo: 'ESRC/WO/2026/002',
+          title: 'Finalize Fall Intern Certificate Roster',
+          desc: 'Cross-check attendance logs for all 14 research interns and generate draft PDFs using Internship Certificate Studio.',
+          deliverables: [
+            'Verify spelling and DIU Student IDs',
+            'Generate draft PDFs and upload folder link'
+          ],
+          to: 'Ayatulla Al Saba Kabbo',
+          toId: 'V.P',
+          wing: 'Vice President',
+          by: 'Sadat Mahmud',
+          due: '2026-11-28',
+          priority: 'Normal',
+          status: 'submitted',
+          report: 'All 14 intern records verified against attendance logs. Draft certificates exported to Drive for President review.',
+          doc: 'https://drive.google.com/drive/folders/esrc-intern-certs-2026',
+          adminRemarks: '',
+          submittedAt: Date.now() - 3600000 * 6,
+          approvedBy: '',
+          approvedAt: null,
+          at: Date.now() - 86400000 * 6
+        }
+      ];
+
+      const DEFAULT_APPLICATIONS = [
+        {
+          id: 'app_1',
+          refNo: 'ESRC/APP/2026/001',
+          type: 'Component Requisition',
+          title: 'LoRaWAN Telemetry Sensor Modules for Smart Campus Node',
+          applicant: 'Al Sami',
+          applicantId: 'A.G.S',
+          wing: 'Assistant General Secretary (A.G.S)',
+          budget: '8,500 BDT',
+          targetDate: '2026-12-10',
+          summary: 'Requesting approval to procure 4x SX1278 LoRa transceivers, 4x ESP32-S3 devkits, and weatherproof IP65 enclosures for the DIU Smart Campus Air Quality Node.',
+          items: [
+            '4x SX1278 433MHz LoRa Modules — 2,800 BDT',
+            '4x ESP32-S3 DevKitC — 3,600 BDT',
+            '4x IP65 Junction Enclosures & LiPo packs — 2,100 BDT'
+          ],
+          doc: 'https://docs.google.com/spreadsheets/d/esrc-bom-lorawan',
+          status: 'pending', // pending | approved | rejected
+          adminRemarks: '',
+          reviewedBy: '',
+          reviewedAt: null,
+          at: Date.now() - 86400000 * 1
+        },
+        {
+          id: 'app_2',
+          refNo: 'ESRC/APP/2026/002',
+          type: 'Project Proposal',
+          title: 'Autonomous Line-Maze & PID Controller Bootcamp',
+          applicant: 'Abir Hasan Mahin',
+          applicantId: 'G.S',
+          wing: 'General Secretary (G.S)',
+          budget: '5,000 BDT',
+          targetDate: '2026-12-18',
+          summary: 'A 2-day hands-on workshop for 40 junior DIU students covering IR sensor arrays, PID tuning, and PCB soldering in the ESRC Hardware Lab.',
+          items: [
+            'Lab reservation for Friday–Saturday (10:00–16:00)',
+            'Printed workshop handouts & participant certificates',
+            'Refreshment allocation for 40 attendees'
+          ],
+          doc: 'https://docs.google.com/document/d/esrc-pid-bootcamp',
+          status: 'approved',
+          adminRemarks: 'Approved. Coordinate venue keys with Operations Admin 48 hours prior.',
+          reviewedBy: 'Sadat Mahmud',
+          reviewedAt: Date.now() - 43200000,
+          at: Date.now() - 86400000 * 4
+        }
+      ];
+
+      const DEFAULT_RESOURCES = [
+        {
+          id: 'res_1',
+          title: 'ESRC Official Letterhead & A4 Templates',
+          url: 'https://drive.google.com/drive/folders/esrc-official-templates',
+          desc: 'Approved DIU ESRC logos, letterhead templates, and slide decks.',
+          cat: 'Templates',
+          by: 'Sadat Mahmud',
+          at: Date.now() - 86400000 * 7
+        },
+        {
+          id: 'res_2',
+          title: 'Lab Inventory Master Sheet 2026',
+          url: 'https://docs.google.com/spreadsheets/d/esrc-lab-inventory-2026',
+          desc: 'Live microcontroller, sensor, and equipment checkout ledger.',
+          cat: 'Projects',
+          by: 'Abir Hasan Mahin',
+          at: Date.now() - 86400000 * 4
+        }
+      ];
+
+      function loadJSON(key, fallback) {
+        try {
+          const raw = localStorage.getItem(key);
+          if (!raw) return JSON.parse(JSON.stringify(fallback));
+          const parsed = JSON.parse(raw);
+          return Array.isArray(parsed) ? parsed : JSON.parse(JSON.stringify(fallback));
+        } catch (e) {
+          return JSON.parse(JSON.stringify(fallback));
+        }
+      }
+
+      function saveJSON(key, value) {
+        try {
+          localStorage.setItem(key, JSON.stringify(value));
+        } catch (e) {}
+      }
+
+      const state = {
+        user: null,
+        loginSegment: 'admin',
+        loginSlot: 0,
+        officerSlot: 0,
+        failedAttempts: 0,
+        lockUntil: 0,
+        view: 'home',
+        mobileMenu: false,
+        cat: 'All',
+        query: '',
+        taskQuery: '',
+        appQuery: '',
+        taskFilter: 'all',
+        appFilter: 'all',
+        appTypeFilter: 'All',
+        cloudStatus: sbClient ? 'connecting' : 'offline',
+        authCloudStatus: sbClient ? 'connecting' : 'offline',
+        lastSyncAt: null,
+        users: loadJSON(STORAGE_KEYS.USERS, DEFAULT_USERS),
+        notices: loadJSON(STORAGE_KEYS.NOTICES, DEFAULT_NOTICES),
+        tasks: loadJSON(STORAGE_KEYS.TASKS, DEFAULT_TASKS),
+        applications: loadJSON(STORAGE_KEYS.APPLICATIONS, DEFAULT_APPLICATIONS),
+        resources: loadJSON(STORAGE_KEYS.RESOURCES, DEFAULT_RESOURCES)
+      };
+
+      const KIND_TO_STORAGE = {
+        notices: STORAGE_KEYS.NOTICES,
+        tasks: STORAGE_KEYS.TASKS,
+        applications: STORAGE_KEYS.APPLICATIONS,
+        resources: STORAGE_KEYS.RESOURCES
+      };
+
+      function getAdminDirectory() {
+        return state.users.filter(u => u.role === 'admin').sort((a, b) => Number(a.slot) - Number(b.slot));
+      }
+
+      function getOfficerDirectory() {
+        return state.users.filter(u => u.role === 'officer').sort((a, b) => Number(a.slot) - Number(b.slot));
+      }
+
+      function isAdmin() {
+        return !!(state.user && state.user.role === 'admin');
+      }
+
+      /* =========================================================================
+       * 4. SUPABASE CLOUD & AUTH DIRECTORY SYNC (HTTPS-ONLY, NO WEBSOCKETS)
+       * ========================================================================= */
+      async function syncUsersFromSupabase(silent = true) {
+        if (!sbClient) {
+          state.authCloudStatus = 'offline';
+          return state.users;
+        }
+        try {
+          const res = await sbClient
+            .from(SUPABASE_CONFIG.USERS_TABLE)
+            .select('*')
+            .order('slot', { ascending: true });
+
+          if (res.error) {
+            if (res.error.code === '42P01' || res.error.code === 'PGRST205' || /esrc_users/i.test(res.error.message || '')) {
+              state.authCloudStatus = 'setup-needed';
+            } else {
+              state.authCloudStatus = 'offline';
+            }
+            if (!silent) showToast('Run SQL setup to activate Supabase Login table', 'error');
+            return state.users;
+          }
+
+          const data = res.data || [];
+          if (data.length === 0) {
+            const seedUsers = DEFAULT_USERS.map(u => ({
+              id: u.id,
+              role: u.role,
+              slot: Number(u.slot || 0),
+              code: u.code,
+              name: u.name,
+              title: u.title || u.wing || 'ESRC Member',
+              avatar: u.avatar,
+              accent: u.accent,
+              seal: u.seal,
+              active: u.active !== false,
+              last_login_at: u.last_login_at || null
+            }));
+            await sbClient.from(SUPABASE_CONFIG.USERS_TABLE).upsert(seedUsers);
+            state.users = seedUsers.map(u => Object.assign({}, u, { wing: u.title }));
+          } else {
+            state.users = data.map(u => Object.assign({}, u, { wing: u.title }));
+          }
+
+          saveJSON(STORAGE_KEYS.USERS, state.users);
+          state.authCloudStatus = 'synced';
+          return state.users;
+        } catch (e) {
+          state.authCloudStatus = 'offline';
+          return state.users;
+        }
+      }
+
+      async function upsertUserToSupabase(userObj) {
+        const clean = {
+          id: userObj.id,
+          role: userObj.role,
+          slot: Number(userObj.slot || 0),
+          code: userObj.code,
+          name: userObj.name,
+          title: userObj.title || userObj.wing || 'ESRC Member',
+          avatar: userObj.avatar,
+          accent: userObj.accent || 'from-emerald-500 to-teal-600',
+          seal: userObj.seal,
+          active: userObj.active !== false,
+          last_login_at: userObj.last_login_at || null
+        };
+        const idx = state.users.findIndex(u => u.id === clean.id);
+        if (idx >= 0) state.users[idx] = Object.assign({}, clean, { wing: clean.title });
+        else state.users.push(Object.assign({}, clean, { wing: clean.title }));
+        saveJSON(STORAGE_KEYS.USERS, state.users);
+
+        if (!sbClient || state.authCloudStatus === 'setup-needed') return false;
+        try {
+          const res = await sbClient.from(SUPABASE_CONFIG.USERS_TABLE).upsert(clean);
+          if (!res.error) {
+            state.authCloudStatus = 'synced';
+            return true;
+          }
+        } catch (e) {}
+        return false;
+      }
+
+      async function authenticateWithSupabase(role, preferredSlot, userInput, passInput) {
+        await syncUsersFromSupabase(true);
+        const list = role === 'admin' ? getAdminDirectory() : getOfficerDirectory();
+        const matched = matchDirectoryUser(list, preferredSlot, userInput, passInput);
+        if (!matched) return null;
+
+        matched.last_login_at = Date.now();
+        await upsertUserToSupabase(matched);
+        return matched;
+      }
+
+      async function pushRecordToSupabase(kind, item) {
+        saveJSON(KIND_TO_STORAGE[kind], state[kind]);
+        if (!sbClient || state.cloudStatus === 'setup-needed') return;
+        try {
+          const res = await sbClient.from(SUPABASE_CONFIG.TABLE).upsert({
+            id: item.id,
+            kind: kind,
+            payload: item,
+            created_at: item.at || Date.now()
+          });
+          if (!res.error) {
+            state.cloudStatus = 'synced';
+            state.lastSyncAt = Date.now();
+          }
+        } catch (e) {}
+      }
+
+      async function deleteRecordFromSupabase(kind, id) {
+        state[kind] = state[kind].filter(x => x.id !== id);
+        saveJSON(KIND_TO_STORAGE[kind], state[kind]);
+        if (!sbClient || state.cloudStatus === 'setup-needed') return;
+        try {
+          await sbClient.from(SUPABASE_CONFIG.TABLE).delete().eq('id', id);
+        } catch (e) {}
+      }
+
+      async function syncPullFromSupabase(silent = false) {
+        await syncUsersFromSupabase(true);
+        if (!sbClient) {
+          state.cloudStatus = 'offline';
+          if (state.user) renderApp();
+          else renderLogin();
+          return;
+        }
+        try {
+          const res = await sbClient
+            .from(SUPABASE_CONFIG.TABLE)
+            .select('*')
+            .order('created_at', { ascending: false });
+
+          if (res.error) {
+            if (res.error.code === '42P01' || res.error.code === 'PGRST205' || /esrc_records/i.test(res.error.message || '')) {
+              state.cloudStatus = 'setup-needed';
+              if (!silent) showToast('Supabase table not found — click SETUP DB SQL', 'error');
+            } else {
+              state.cloudStatus = 'offline';
+              if (!silent) showToast('Supabase sync unavailable (using local cache)', 'error');
+            }
+            if (state.user) renderApp();
+            else renderLogin();
+            return;
+          }
+
+          const rows = res.data || [];
+          if (rows.length === 0) {
+            // Seed initial records into empty cloud table
+            const seedRows = [];
+            ['notices', 'tasks', 'applications', 'resources'].forEach(kind => {
+              state[kind].forEach(item => {
+                seedRows.push({
+                  id: item.id,
+                  kind: kind,
+                  payload: item,
+                  created_at: item.at || Date.now()
+                });
+              });
+            });
+            if (seedRows.length) {
+              await sbClient.from(SUPABASE_CONFIG.TABLE).upsert(seedRows);
+            }
+          } else {
+            const grouped = { notices: [], tasks: [], applications: [], resources: [] };
+            rows.forEach(r => {
+              if (grouped[r.kind] && r.payload) {
+                grouped[r.kind].push(r.payload);
+              }
+            });
+            ['notices', 'tasks', 'applications', 'resources'].forEach(kind => {
+              state[kind] = grouped[kind].sort((a, b) => (b.at || 0) - (a.at || 0));
+              saveJSON(KIND_TO_STORAGE[kind], state[kind]);
+            });
+          }
+
+          state.cloudStatus = 'synced';
+          state.lastSyncAt = Date.now();
+          if (!silent) showToast('Synced with Supabase cloud', 'success');
+          if (state.user) renderApp();
+          else renderLogin();
+        } catch (err) {
+          state.cloudStatus = 'offline';
+          if (state.user) renderApp();
+          else renderLogin();
+        }
+      }
+
+      let syncTimer = null;
+      function startSupabaseAutoSync() {
+        if (syncTimer) clearInterval(syncTimer);
+        syncTimer = setInterval(() => {
+          if (document.visibilityState === 'visible' && state.user) {
+            syncPullFromSupabase(true);
+          }
+        }, 20000);
+        window.addEventListener('focus', () => {
+          if (state.user) syncPullFromSupabase(true);
+        });
+      }
+
+      /* =========================================================================
+       * 5. THEME, UTILITIES, TOASTS & MODAL ENGINE
+       * ========================================================================= */
+      function initTheme() {
+        const saved = localStorage.getItem(STORAGE_KEYS.THEME);
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+        const isDark = saved ? saved === 'dark' : prefersDark;
+        document.documentElement.classList.toggle('dark', isDark);
+      }
+
+      function toggleTheme() {
+        const isDark = document.documentElement.classList.toggle('dark');
+        try { localStorage.setItem(STORAGE_KEYS.THEME, isDark ? 'dark' : 'light'); } catch (e) {}
+      }
+
+      function escapeHtml(str) {
+        return String(str == null ? '' : str)
+          .replace(/&/g, '&amp;')
+          .replace(/</g, '&lt;')
+          .replace(/>/g, '&gt;')
+          .replace(/"/g, '&quot;')
+          .replace(/'/g, '&#39;');
+      }
+
+      function normalizeUrl(u) {
+        let s = String(u || '').trim();
+        if (!s) return null;
+        if (!/^[a-z]+:\/\//i.test(s)) s = 'https://' + s;
+        try {
+          const parsed = new URL(s);
+          return /^https?:$/.test(parsed.protocol) ? parsed.href : null;
+        } catch (e) {
+          return null;
+        }
+      }
+
+      function detectLinkKind(u) {
+        try {
+          const x = new URL(u);
+          const p = x.pathname;
+          if (/docs\.google\.com/i.test(x.host)) {
+            if (/\/spreadsheets/i.test(p)) return ['📊', 'Google Sheet'];
+            if (/\/presentation/i.test(p)) return ['📽️', 'Google Slides'];
+            if (/\/forms/i.test(p)) return ['📝', 'Google Form'];
+            return ['📄', 'Google Doc'];
+          }
+          if (/drive\.google\.com/i.test(x.host)) {
+            return /folders/i.test(p) ? ['📁', 'Drive Folder'] : ['📎', 'Drive File'];
+          }
+        } catch (e) {}
+        return ['🔗', 'Web Link'];
+      }
+
+      function formatDate(ts) {
+        if (!ts) return '—';
+        try {
+          return new Date(ts).toLocaleDateString(undefined, { day: '2-digit', month: 'short', year: 'numeric' });
+        } catch (e) {
+          return '—';
+        }
+      }
+
+      function formatRelativeTime(ts) {
+        if (!ts) return 'Never signed in';
+        const diff = Math.max(0, Date.now() - ts);
+        const mins = Math.floor(diff / 60000);
+        if (mins < 1) return 'Active just now';
+        if (mins < 60) return `Active ${mins}m ago`;
+        const hrs = Math.floor(mins / 60);
+        if (hrs < 24) return `Active ${hrs}h ago`;
+        return `Last seen ${formatDate(ts)}`;
+      }
+
+      function copyToClipboard(text) {
+        try {
+          const ta = document.createElement('textarea');
+          ta.value = text;
+          ta.setAttribute('readonly', '');
+          ta.style.position = 'fixed';
+          ta.style.opacity = '0';
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand('copy');
+          document.body.removeChild(ta);
+          showToast('Copied to clipboard', 'success');
+        } catch (e) {
+          showToast('Could not copy automatically', 'error');
+        }
+      }
+
+      function showToast(message, type = 'info') {
+        const root = document.getElementById('toast-root');
+        if (!root) return;
+        const colors = {
+          success: 'border-emerald-500/30 bg-emerald-500/15 text-emerald-800 dark:text-emerald-200',
+          error: 'border-red-500/30 bg-red-500/15 text-red-800 dark:text-red-200',
+          info: 'border-blue-500/30 bg-blue-500/15 text-blue-800 dark:text-blue-200'
+        };
+        const el = document.createElement('div');
+        el.className = `pointer-events-auto hig-glass px-4 py-2.5 rounded-2xl border shadow-hig-md text-xs font-semibold animate-fade-in ${colors[type] || colors.info}`;
+        el.textContent = message;
+        root.appendChild(el);
+        setTimeout(() => {
+          el.style.opacity = '0';
+          el.style.transition = 'opacity 0.25s ease';
+          setTimeout(() => el.remove(), 260);
+        }, 2800);
+      }
+
+      function openModal(title, subtitle, bodyHtml, onMount, maxWidthClass = 'max-w-lg') {
+        const root = document.getElementById('modal-root');
+        if (!root) return;
+        root.innerHTML = `
+          <div id="modal-backdrop" class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-5 overflow-y-auto">
+            <div class="w-full ${maxWidthClass} hig-glass bg-white/95 dark:bg-[#151922]/95 border border-black/10 dark:border-white/10 rounded-3xl shadow-hig-lg p-5 sm:p-6 my-auto animate-fade-in max-h-[92vh] overflow-y-auto">
+              <div class="flex items-start justify-between gap-3 mb-4 pb-3 border-b border-black/[0.06] dark:border-white/[0.07]">
+                <div>
+                  <h3 class="text-sm font-bold text-slate-900 dark:text-white">${escapeHtml(title)}</h3>
+                  ${subtitle ? `<p class="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">${escapeHtml(subtitle)}</p>` : ''}
+                </div>
+                <button type="button" id="modal-x" class="p-1.5 rounded-xl text-slate-400 hover:text-slate-800 dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition" aria-label="Close">✕</button>
+              </div>
+              <div>${bodyHtml}</div>
+            </div>
+          </div>
+        `;
+        document.getElementById('modal-x').onclick = closeModal;
+        document.getElementById('modal-backdrop').onclick = (e) => {
+          if (e.target.id === 'modal-backdrop') closeModal();
+        };
+        if (typeof onMount === 'function') onMount();
+      }
+
+      function closeModal() {
+        const root = document.getElementById('modal-root');
+        if (root) root.innerHTML = '';
+      }
+
+      function openConfirmModal(title, message, onConfirm) {
+        openModal(title, '', `
+          <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-5">${escapeHtml(message)}</p>
+          <div class="flex justify-end gap-2">
+            <button type="button" id="cfm-cancel" class="px-4 py-2 rounded-xl text-xs font-medium border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5">Cancel</button>
+            <button type="button" id="cfm-ok" class="px-4 py-2 rounded-xl text-xs font-semibold bg-red-600 hover:bg-red-700 text-white">Remove</button>
+          </div>
+        `, () => {
+          document.getElementById('cfm-cancel').onclick = closeModal;
+          document.getElementById('cfm-ok').onclick = () => {
+            closeModal();
+            onConfirm();
+          };
+        }, 'max-w-sm');
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          const root = document.getElementById('modal-root');
+          if (root && root.innerHTML.trim()) {
+            closeModal();
+          } else if (state.mobileMenu) {
+            state.mobileMenu = false;
+            renderApp();
+          }
+        }
+      });
+
+      /* =========================================================================
+       * 6. SVG LOGOS & ICONS
+       * ========================================================================= */
+      function esrcLogoSvg(cls = 'w-10 h-10') {
+        return `
+          <svg class="${cls}" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="esrcG" x1="0" y1="0" x2="64" y2="64" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#1D4ED8"/>
+                <stop offset="1" stop-color="#10B981"/>
+              </linearGradient>
+            </defs>
+            <rect width="64" height="64" rx="16" fill="url(#esrcG)"/>
+            <rect x="17" y="17" width="30" height="30" rx="6" stroke="white" stroke-width="2.6" fill="rgba(255,255,255,0.12)"/>
+            <path d="M25 27H39M25 32H35M25 37H39" stroke="white" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M24 11V17M32 11V17M40 11V17M24 47V53M32 47V53M40 47V53M11 24H17M11 32H17M11 40H17M47 24H53M47 32H53M47 40H53" stroke="white" stroke-opacity="0.85" stroke-width="2.2" stroke-linecap="round"/>
+          </svg>
+        `;
+      }
+
+      const ICONS = {
+        home: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 10.5L12 3l9 7.5V20a1 1 0 01-1 1h-5.5v-6.5h-5V21H4a1 1 0 01-1-1v-9.5z"/></svg>',
+        tasks: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>',
+        applications: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>',
+        notices: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 10-12 0v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>',
+        tools: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>',
+        resources: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M3 7a2 2 0 012-2h4l2 2h8a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2V7z"/></svg>',
+        shield: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>',
+        user: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>',
+        lock: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>',
+        print: '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z"/></svg>',
+        sun: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>',
+        moon: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>',
+        menu: '<svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>',
+        logout: '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1"/></svg>',
+        plus: '<svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M12 5v14m7-7H5"/></svg>',
+        key: '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z"/></svg>',
+        users: '<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>'
+      };
+
+      /* =========================================================================
+       * 7. SUPABASE SETUP MODAL
+       * ========================================================================= */
+      function openSupabaseSetupModal() {
+        openModal('Supabase Cloud & Auth Setup', 'Run this SQL once in your Supabase SQL Editor to enable multi-device data & encrypted login sync.', `
+          <div class="space-y-4">
+            <div class="p-3.5 rounded-xl bg-blue-500/[0.07] border border-blue-500/20 text-xs text-slate-700 dark:text-slate-300 leading-relaxed space-y-1">
+              <div>Project URL: <strong class="break-all">${escapeHtml(SUPABASE_CONFIG.URL)}</strong></div>
+              <div class="flex flex-wrap gap-3 pt-1">
+                <span>Records DB: <strong class="uppercase">${escapeHtml(state.cloudStatus)}</strong></span>
+                <span>Login Auth DB: <strong class="uppercase">${escapeHtml(state.authCloudStatus)}</strong></span>
+              </div>
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1.5">1. Copy &amp; Run in Supabase → SQL Editor</label>
+              <pre class="p-3.5 rounded-xl bg-slate-950 text-emerald-300 text-[11px] overflow-x-auto max-h-60 leading-relaxed border border-white/10"><code>${escapeHtml(SUPABASE_SETUP_SQL)}</code></pre>
+            </div>
+            <div class="flex flex-wrap justify-end gap-2 pt-2">
+              <button type="button" id="sb-copy-sql" class="px-4 py-2.5 rounded-xl text-xs font-semibold border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5">Copy SQL</button>
+              <button type="button" id="sb-test-sync" class="px-4 py-2.5 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white">Test &amp; Sync Now</button>
+            </div>
+          </div>
+        `, () => {
+          document.getElementById('sb-copy-sql').onclick = () => copyToClipboard(SUPABASE_SETUP_SQL);
+          document.getElementById('sb-test-sync').onclick = async () => {
+            closeModal();
+            await syncPullFromSupabase(false);
+          };
+        });
+      }
+
+      /* =========================================================================
+       * 8. PRINTABLE A4 DOCUMENT ENGINE (WORK ORDERS & OFFICER APPLICATIONS)
+       * ========================================================================= */
+      function buildA4WorkOrderHtml(x) {
+        const stampMap = {
+          open: { text: 'ISSUED', cls: 'border-blue-700 text-blue-700' },
+          submitted: { text: 'AWAITING APPROVAL', cls: 'border-amber-600 text-amber-700' },
+          revision: { text: 'REVISION REQUIRED', cls: 'border-orange-600 text-orange-700' },
+          approved: { text: 'APPROVED', cls: 'border-emerald-700 text-emerald-700' }
+        };
+        const st = stampMap[x.status] || stampMap.open;
+        const items = Array.isArray(x.deliverables) && x.deliverables.length ? x.deliverables : ['Complete assigned task and attach proof of work.'];
+
+        return `
+          <div class="a4-sheet">
+            <div>
+              <!-- Official Letterhead -->
+              <div class="flex items-center justify-between border-b-2 border-slate-900 pb-4 mb-5">
+                <div class="flex items-center gap-3.5">
+                  ${esrcLogoSvg('w-12 h-12 shrink-0')}
+                  <div>
+                    <div class="text-[10px] font-bold tracking-widest uppercase text-blue-700">Daffodil International University</div>
+                    <div class="text-base font-bold tracking-tight text-slate-900">Embedded System Research Center (ESRC)</div>
+                    <div class="text-[10px] text-slate-500">Official Administrative Work Order &amp; Task Directive</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="inline-block px-3 py-1 border-2 rounded-lg text-[11px] font-bold tracking-widest uppercase ${st.cls}">${st.text}</span>
+                  <div class="text-[10px] text-slate-500 mt-1.5">Ref: <strong>${escapeHtml(x.orderNo || x.id)}</strong></div>
+                </div>
+              </div>
+
+              <!-- Metadata Grid -->
+              <div class="grid grid-cols-2 gap-3 text-[11px] bg-slate-50 border border-slate-200 rounded-xl p-4 mb-5">
+                <div><span class="text-slate-500 uppercase text-[9px] block">Assigned Officer</span><strong>${escapeHtml(x.to)}</strong> (${escapeHtml(x.toId || 'Officer')})</div>
+                <div><span class="text-slate-500 uppercase text-[9px] block">Position / Wing</span><strong>${escapeHtml(x.wing || 'ESRC Operations')}</strong></div>
+                <div><span class="text-slate-500 uppercase text-[9px] block">Issued By (Admin)</span><strong>${escapeHtml(x.by || 'Admin')}</strong></div>
+                <div><span class="text-slate-500 uppercase text-[9px] block">Issue Date / Deadline</span><strong>${escapeHtml(formatDate(x.at))}</strong> · Due: <strong>${escapeHtml(x.due || 'N/A')}</strong></div>
+              </div>
+
+              <!-- Subject & Directive -->
+              <div class="mb-5">
+                <div class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1">Order Subject</div>
+                <div class="text-sm font-bold text-slate-900 pb-2 border-b border-slate-200">${escapeHtml(x.title)}</div>
+                <div class="text-xs text-slate-700 leading-relaxed mt-3 whitespace-pre-wrap">${escapeHtml(x.desc || 'No additional instructions.')}</div>
+              </div>
+
+              <!-- Deliverables Table -->
+              <div class="mb-5">
+                <div class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Mandatory Deliverables Checklist</div>
+                <table class="w-full text-xs border-collapse border border-slate-300">
+                  <thead>
+                    <tr class="bg-slate-100 text-left text-[10px] uppercase">
+                      <th class="border border-slate-300 px-3 py-2 w-10">#</th>
+                      <th class="border border-slate-300 px-3 py-2">Deliverable Description</th>
+                      <th class="border border-slate-300 px-3 py-2 w-24 text-center">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${items.map((it, idx) => `
+                      <tr>
+                        <td class="border border-slate-300 px-3 py-2 text-center">${idx + 1}</td>
+                        <td class="border border-slate-300 px-3 py-2">${escapeHtml(it)}</td>
+                        <td class="border border-slate-300 px-3 py-2 text-center font-semibold">${x.status === 'approved' ? 'VERIFIED' : x.status === 'submitted' ? 'DONE' : 'PENDING'}</td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Officer Completion Report -->
+              <div class="mb-5 p-4 rounded-xl border border-slate-200 bg-slate-50/70">
+                <div class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1.5">Officer Completion Report</div>
+                <div class="text-xs text-slate-700 leading-relaxed whitespace-pre-wrap">${x.report ? escapeHtml(x.report) : 'Pending officer submission.'}</div>
+                ${x.doc ? `<div class="text-[10px] text-blue-700 mt-2 break-all">Attachment URL: ${escapeHtml(x.doc)}</div>` : ''}
+              </div>
+
+              <!-- Admin Remarks -->
+              ${x.adminRemarks ? `
+                <div class="mb-5 p-4 rounded-xl border border-emerald-200 bg-emerald-50/60">
+                  <div class="text-[10px] font-bold uppercase tracking-widest text-emerald-800 mb-1">Administrator Approval Remarks</div>
+                  <div class="text-xs text-slate-800 leading-relaxed">${escapeHtml(x.adminRemarks)}</div>
+                </div>
+              ` : ''}
+            </div>
+
+            <!-- Dual Signature Footer -->
+            <div class="pt-6 border-t border-slate-300">
+              <div class="grid grid-cols-2 gap-10 text-xs">
+                <div>
+                  <div class="h-12 flex items-end pb-1 italic text-slate-700 font-semibold">${x.report ? escapeHtml(x.to) : ''}</div>
+                  <div class="border-t border-slate-400 pt-1.5">
+                    <div class="font-bold text-slate-900">${escapeHtml(x.to)}</div>
+                    <div class="text-[10px] text-slate-500">Assigned Officer · ${x.submittedAt ? 'Submitted ' + formatDate(x.submittedAt) : 'Signature &amp; Date'}</div>
+                  </div>
+                </div>
+                <div>
+                  <div class="h-12 flex items-end pb-1 italic text-blue-800 font-semibold">${x.approvedBy ? escapeHtml(x.approvedBy) : escapeHtml(x.by || '')}</div>
+                  <div class="border-t border-slate-400 pt-1.5">
+                    <div class="font-bold text-slate-900">${escapeHtml(x.approvedBy || x.by || 'Administrator')}</div>
+                    <div class="text-[10px] text-slate-500">Approving Authority · ${x.approvedAt ? 'Approved ' + formatDate(x.approvedAt) : 'ESRC DIU Admin'}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-5 text-[9px] text-slate-400 flex justify-between">
+                <span>Generated via ESRC DIU Officers Working Portal</span>
+                <span>Printed: ${escapeHtml(formatDate(Date.now()))}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function buildA4ApplicationHtml(a) {
+        const stampMap = {
+          pending: { text: 'UNDER REVIEW', cls: 'border-amber-600 text-amber-700' },
+          approved: { text: 'APPROVED', cls: 'border-emerald-700 text-emerald-700' },
+          rejected: { text: 'REJECTED', cls: 'border-red-700 text-red-700' }
+        };
+        const st = stampMap[a.status] || stampMap.pending;
+        const items = Array.isArray(a.items) && a.items.length ? a.items : ['See executive summary above.'];
+
+        return `
+          <div class="a4-sheet">
+            <div>
+              <!-- Official Letterhead -->
+              <div class="flex items-center justify-between border-b-2 border-slate-900 pb-4 mb-5">
+                <div class="flex items-center gap-3.5">
+                  ${esrcLogoSvg('w-12 h-12 shrink-0')}
+                  <div>
+                    <div class="text-[10px] font-bold tracking-widest uppercase text-emerald-700">Daffodil International University</div>
+                    <div class="text-base font-bold tracking-tight text-slate-900">Embedded System Research Center (ESRC)</div>
+                    <div class="text-[10px] text-slate-500">Official Officer Application · ${escapeHtml(a.type)}</div>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="inline-block px-3 py-1 border-2 rounded-lg text-[11px] font-bold tracking-widest uppercase ${st.cls}">${st.text}</span>
+                  <div class="text-[10px] text-slate-500 mt-1.5">Ref: <strong>${escapeHtml(a.refNo || a.id)}</strong></div>
+                </div>
+              </div>
+
+              <!-- Applicant Metadata -->
+              <div class="grid grid-cols-2 gap-3 text-[11px] bg-slate-50 border border-slate-200 rounded-xl p-4 mb-5">
+                <div><span class="text-slate-500 uppercase text-[9px] block">Applicant Officer</span><strong>${escapeHtml(a.applicant)}</strong> (${escapeHtml(a.applicantId || 'Officer')})</div>
+                <div><span class="text-slate-500 uppercase text-[9px] block">Position / Wing</span><strong>${escapeHtml(a.wing || 'ESRC')}</strong></div>
+                <div><span class="text-slate-500 uppercase text-[9px] block">Estimated Budget</span><strong>${escapeHtml(a.budget || 'N/A')}</strong></div>
+                <div><span class="text-slate-500 uppercase text-[9px] block">Filed / Target Date</span><strong>${escapeHtml(formatDate(a.at))}</strong> · Target: <strong>${escapeHtml(a.targetDate || 'N/A')}</strong></div>
+              </div>
+
+              <!-- Application Subject & Summary -->
+              <div class="mb-5">
+                <div class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1">Application Subject</div>
+                <div class="text-sm font-bold text-slate-900 pb-2 border-b border-slate-200">${escapeHtml(a.title)}</div>
+                <div class="text-xs text-slate-700 leading-relaxed mt-3 whitespace-pre-wrap">${escapeHtml(a.summary || '')}</div>
+              </div>
+
+              <!-- Breakdown / BOM Table -->
+              <div class="mb-5">
+                <div class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-2">Line Items / Milestones / Requirements</div>
+                <table class="w-full text-xs border-collapse border border-slate-300">
+                  <thead>
+                    <tr class="bg-slate-100 text-left text-[10px] uppercase">
+                      <th class="border border-slate-300 px-3 py-2 w-10">#</th>
+                      <th class="border border-slate-300 px-3 py-2">Specification / Item Details</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${items.map((it, idx) => `
+                      <tr>
+                        <td class="border border-slate-300 px-3 py-2 text-center">${idx + 1}</td>
+                        <td class="border border-slate-300 px-3 py-2">${escapeHtml(it)}</td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+                ${a.doc ? `<div class="text-[10px] text-blue-700 mt-2.5 break-all">Supporting Document: ${escapeHtml(a.doc)}</div>` : ''}
+              </div>
+
+              <!-- Admin Decision Remarks -->
+              <div class="mb-5 p-4 rounded-xl border border-slate-200 bg-slate-50/70">
+                <div class="text-[10px] font-bold uppercase tracking-widest text-slate-500 mb-1">Administrator Decision &amp; Remarks</div>
+                <div class="text-xs text-slate-800 leading-relaxed">${a.adminRemarks ? escapeHtml(a.adminRemarks) : 'Awaiting administrative review.'}</div>
+              </div>
+            </div>
+
+            <!-- Dual Signature Footer -->
+            <div class="pt-6 border-t border-slate-300">
+              <div class="grid grid-cols-2 gap-10 text-xs">
+                <div>
+                  <div class="h-12 flex items-end pb-1 italic text-slate-700 font-semibold">${escapeHtml(a.applicant)}</div>
+                  <div class="border-t border-slate-400 pt-1.5">
+                    <div class="font-bold text-slate-900">${escapeHtml(a.applicant)}</div>
+                    <div class="text-[10px] text-slate-500">Applicant Officer · Filed ${escapeHtml(formatDate(a.at))}</div>
+                  </div>
+                </div>
+                <div>
+                  <div class="h-12 flex items-end pb-1 italic text-blue-800 font-semibold">${escapeHtml(a.reviewedBy || '')}</div>
+                  <div class="border-t border-slate-400 pt-1.5">
+                    <div class="font-bold text-slate-900">${escapeHtml(a.reviewedBy || 'Approving Administrator')}</div>
+                    <div class="text-[10px] text-slate-500">ESRC DIU Admin · ${a.reviewedAt ? formatDate(a.reviewedAt) : 'Pending Approval'}</div>
+                  </div>
+                </div>
+              </div>
+              <div class="mt-5 text-[9px] text-slate-400 flex justify-between">
+                <span>Generated via ESRC DIU Officers Working Portal</span>
+                <span>Printed: ${escapeHtml(formatDate(Date.now()))}</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }
+
+      function openA4PreviewModal(title, a4Html) {
+        const printRoot = document.getElementById('print-root');
+        if (printRoot) printRoot.innerHTML = a4Html;
+
+        openModal(`A4 Preview · ${title}`, 'Formatted for ISO A4 (210mm × 297mm) printing or Save as PDF.', `
+          <div class="space-y-4">
+            <div class="flex flex-wrap items-center justify-between gap-2 p-3 rounded-2xl bg-black/[0.04] dark:bg-white/[0.05]">
+              <span class="text-[11px] text-slate-600 dark:text-slate-300">Ready for A4 Print / PDF Export</span>
+              <div class="flex gap-2">
+                <button type="button" id="a4-close" class="px-3.5 py-2 rounded-xl text-xs font-medium border border-black/10 dark:border-white/10">Close</button>
+                <button type="button" id="a4-print-btn" class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm">
+                  ${ICONS.print}<span>Print / Save A4 PDF</span>
+                </button>
+              </div>
+            </div>
+            <div class="overflow-x-auto bg-slate-200/70 dark:bg-slate-900/80 p-3 sm:p-5 rounded-2xl border border-black/10 dark:border-white/10">
+              ${a4Html}
+            </div>
+          </div>
+        `, () => {
+          document.getElementById('a4-close').onclick = closeModal;
+          document.getElementById('a4-print-btn').onclick = () => {
+            window.print();
+          };
+        }, 'max-w-4xl');
+      }
+
+      /* =========================================================================
+       * 9. LOGIN VIEW (2-SEGMENT GATE INTERCONNECTED WITH SUPABASE)
+       * ========================================================================= */
+      function renderLogin() {
+        const app = document.getElementById('app');
+        const admins = getAdminDirectory();
+        const officers = getOfficerDirectory().filter(o => o.active !== false);
+        const activeSlot = admins[state.loginSlot] || admins[0];
+        const activeOfficer = officers[state.officerSlot] || officers[0];
+        const isAdmSeg = state.loginSegment === 'admin';
+        const authReady = state.authCloudStatus === 'synced';
+        const authSetupNeeded = state.authCloudStatus === 'setup-needed' || state.cloudStatus === 'setup-needed';
+        const lockedSecs = Math.max(0, Math.ceil((state.lockUntil - Date.now()) / 1000));
+
+        app.innerHTML = `
+          <div class="min-h-screen flex flex-col items-center justify-center p-4 sm:p-6">
+            <div class="w-full max-w-md animate-fade-in">
+              <!-- Top Utility Row -->
+              <div class="flex items-center justify-between mb-4 px-1 gap-2">
+                <button id="login-cloud-btn" type="button" class="inline-flex items-center gap-2 text-[10px] font-semibold tracking-widest uppercase px-2.5 py-1.5 rounded-full border transition ${
+                  authReady
+                    ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-700 dark:text-emerald-300'
+                    : authSetupNeeded
+                    ? 'bg-amber-500/10 border-amber-500/25 text-amber-700 dark:text-amber-300 hover:bg-amber-500/20'
+                    : 'bg-white/60 dark:bg-white/5 border-black/10 dark:border-white/10 text-slate-500 dark:text-slate-400'
+                }">
+                  <span class="w-2 h-2 rounded-full ${authReady ? 'bg-emerald-500 animate-pulse' : authSetupNeeded ? 'bg-amber-500 animate-pulse' : 'bg-slate-400'}"></span>
+                  <span>${authReady ? 'SUPABASE AUTH LIVE' : authSetupNeeded ? 'SETUP SUPABASE SQL' : 'CONNECTING AUTH…'}</span>
+                </button>
+                <button id="login-theme-btn" class="p-2 rounded-xl hig-glass bg-white/70 dark:bg-white/5 border border-black/10 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-white/10 transition" title="Toggle Appearance">
+                  ${document.documentElement.classList.contains('dark') ? ICONS.sun : ICONS.moon}
+                </button>
+              </div>
+
+              <!-- HIG Frosted Login Card -->
+              <div id="login-card" class="hig-glass bg-white/85 dark:bg-[#151922]/85 border border-black/[0.08] dark:border-white/[0.09] rounded-3xl shadow-hig-lg p-7 sm:p-8">
+                <div class="flex items-center gap-4 mb-6">
+                  ${esrcLogoSvg('w-12 h-12 shrink-0 shadow-md rounded-2xl')}
+                  <div>
+                    <h1 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white leading-tight">ESRC DIU Portal</h1>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Cloud-Synced Operations &amp; Approval Suite</p>
+                  </div>
+                </div>
+
+                <!-- PRIMARY 2-SEGMENT CONTROL: ADMIN vs OFFICER -->
+                <div class="grid grid-cols-2 gap-1.5 p-1 rounded-2xl bg-black/[0.06] dark:bg-white/[0.07] border border-black/[0.04] dark:border-white/[0.05] mb-6">
+                  <button type="button" data-seg="admin" class="seg-btn py-2.5 px-3 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-2 ${
+                    isAdmSeg
+                      ? 'bg-white dark:bg-[#232938] text-blue-600 dark:text-blue-400 shadow-hig-sm'
+                      : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+                  }">
+                    ${ICONS.shield}<span>Admin</span>
+                  </button>
+                  <button type="button" data-seg="officer" class="seg-btn py-2.5 px-3 rounded-xl text-xs font-semibold transition-all flex items-center justify-center gap-2 ${
+                    !isAdmSeg
+                      ? 'bg-white dark:bg-[#232938] text-emerald-600 dark:text-emerald-400 shadow-hig-sm'
+                      : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+                  }">
+                    ${ICONS.user}<span>Officer</span>
+                  </button>
+                </div>
+
+                ${isAdmSeg ? `
+                  <div class="mb-5">
+                    <label class="block text-[10px] font-semibold tracking-widest uppercase text-slate-500 dark:text-slate-400 mb-2">Admin Channels (${admins.length} Encrypted)</label>
+                    <div class="grid grid-cols-3 gap-1.5 p-1 rounded-2xl bg-black/[0.05] dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.05]">
+                      ${admins.map((adm, idx) => `
+                        <button type="button" data-slot="${idx}" class="slot-btn py-2 px-2 rounded-xl text-[11px] font-semibold transition-all ${
+                          state.loginSlot === idx
+                            ? 'bg-white dark:bg-[#232938] text-slate-900 dark:text-white shadow-hig-sm'
+                            : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+                        }">
+                          ${escapeHtml(adm.code)}
+                        </button>
+                      `).join('')}
+                    </div>
+                    ${activeSlot ? `
+                      <div class="mt-2.5 flex items-center justify-between px-3 py-2.5 rounded-xl bg-blue-500/[0.06] dark:bg-blue-400/[0.08] border border-blue-500/15">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                          <span class="w-8 h-8 rounded-lg bg-gradient-to-br ${activeSlot.accent} text-white text-[11px] font-bold flex items-center justify-center shadow-sm shrink-0">${escapeHtml(activeSlot.avatar)}</span>
+                          <div class="min-w-0">
+                            <div class="text-xs font-semibold text-slate-800 dark:text-slate-100 leading-tight truncate">${escapeHtml(activeSlot.name)}</div>
+                            <div class="text-[10px] text-slate-500 dark:text-slate-400 truncate">${escapeHtml(activeSlot.title)}</div>
+                          </div>
+                        </div>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-blue-500/15 text-blue-600 dark:text-blue-300 shrink-0">${escapeHtml(activeSlot.code)}</span>
+                      </div>
+                    ` : ''}
+                  </div>
+
+                  <form id="login-form" class="space-y-4" autocomplete="off">
+                    <div>
+                      <label for="adm-user" class="block text-[10px] font-semibold tracking-widest uppercase text-slate-500 dark:text-slate-400 mb-1.5">Admin ID</label>
+                      <input id="adm-user" type="text" required placeholder="Enter admin identifier"
+                        class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition" />
+                    </div>
+                    <div>
+                      <label for="adm-pass" class="block text-[10px] font-semibold tracking-widest uppercase text-slate-500 dark:text-slate-400 mb-1.5">Passkey</label>
+                      <div class="relative">
+                        <input id="adm-pass" type="password" required placeholder="••••••••"
+                          class="w-full px-3.5 py-2.5 pr-16 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/40 focus:border-blue-500 transition" />
+                        <button type="button" id="toggle-pass" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-semibold uppercase tracking-wider px-2 py-1 rounded-lg text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 transition">Show</button>
+                      </div>
+                    </div>
+                    <div id="login-err" class="hidden text-xs text-red-600 dark:text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl px-3.5 py-2.5"></div>
+                    <button id="adm-submit" type="submit" ${lockedSecs > 0 ? 'disabled' : ''} class="w-full py-3 px-4 rounded-xl text-xs font-semibold tracking-wide bg-blue-600 hover:bg-blue-700 disabled:opacity-60 active:scale-[0.99] text-white shadow-md shadow-blue-600/20 transition flex items-center justify-center gap-2">
+                      ${ICONS.lock}<span>${lockedSecs > 0 ? `Locked (${lockedSecs}s)` : 'Authenticate Admin'}</span>
+                    </button>
+                  </form>
+                ` : `
+                  <div class="mb-5">
+                    <label class="block text-[10px] font-semibold tracking-widest uppercase text-slate-500 dark:text-slate-400 mb-2">Officers Directory (${officers.length} Active)</label>
+                    <div class="flex flex-wrap gap-1.5 p-1 rounded-2xl bg-black/[0.05] dark:bg-white/[0.06] border border-black/[0.04] dark:border-white/[0.05]">
+                      ${officers.map((off, idx) => `
+                        <button type="button" data-off-slot="${idx}" class="off-slot-btn flex-1 min-w-[70px] py-2 px-2 rounded-xl text-[11px] font-semibold transition-all ${
+                          state.officerSlot === idx
+                            ? 'bg-white dark:bg-[#232938] text-slate-900 dark:text-white shadow-hig-sm'
+                            : 'text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200'
+                        }">
+                          ${escapeHtml(off.code)}
+                        </button>
+                      `).join('')}
+                    </div>
+                    ${activeOfficer ? `
+                      <div class="mt-2.5 flex items-center justify-between px-3 py-2.5 rounded-xl bg-emerald-500/[0.06] dark:bg-emerald-400/[0.08] border border-emerald-500/15">
+                        <div class="flex items-center gap-2.5 min-w-0">
+                          <span class="w-8 h-8 rounded-lg bg-gradient-to-br ${activeOfficer.accent} text-white text-[11px] font-bold flex items-center justify-center shadow-sm shrink-0">${escapeHtml(activeOfficer.avatar)}</span>
+                          <div class="min-w-0">
+                            <div class="text-xs font-semibold text-slate-800 dark:text-slate-100 leading-tight truncate">${escapeHtml(activeOfficer.name)}</div>
+                            <div class="text-[10px] text-slate-500 dark:text-slate-400 truncate">${escapeHtml(activeOfficer.title || activeOfficer.wing)}</div>
+                          </div>
+                        </div>
+                        <span class="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 shrink-0">${escapeHtml(activeOfficer.code)}</span>
+                      </div>
+                    ` : ''}
+                  </div>
+
+                  <form id="officer-form" class="space-y-4" autocomplete="off">
+                    <div>
+                      <label for="off-user" class="block text-[10px] font-semibold tracking-widest uppercase text-slate-500 dark:text-slate-400 mb-1.5">Officer Login ID</label>
+                      <input id="off-user" type="text" required placeholder="Enter officer identifier"
+                        class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 transition" />
+                    </div>
+                    <div>
+                      <label for="off-pass" class="block text-[10px] font-semibold tracking-widest uppercase text-slate-500 dark:text-slate-400 mb-1.5">Officer Passkey</label>
+                      <div class="relative">
+                        <input id="off-pass" type="password" required placeholder="••••••••"
+                          class="w-full px-3.5 py-2.5 pr-16 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10 text-slate-900 dark:text-white placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-emerald-500/40 focus:border-emerald-500 transition" />
+                        <button type="button" id="toggle-off-pass" class="absolute right-2.5 top-1/2 -translate-y-1/2 text-[10px] font-semibold uppercase tracking-wider px-2 py-1 rounded-lg text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 hover:bg-black/5 dark:hover:bg-white/10 transition">Show</button>
+                      </div>
+                    </div>
+                    <div id="off-err" class="hidden text-xs text-red-600 dark:text-red-400 bg-red-500/10 border border-red-500/20 rounded-xl px-3.5 py-2.5"></div>
+                    <button id="off-submit" type="submit" ${lockedSecs > 0 ? 'disabled' : ''} class="w-full py-3 px-4 rounded-xl text-xs font-semibold tracking-wide bg-emerald-600 hover:bg-emerald-700 disabled:opacity-60 active:scale-[0.99] text-white shadow-md shadow-emerald-600/20 transition flex items-center justify-center gap-2">
+                      ${ICONS.lock}<span>${lockedSecs > 0 ? `Locked (${lockedSecs}s)` : 'Authenticate Officer'}</span>
+                    </button>
+                  </form>
+                `}
+
+                <div class="mt-6 pt-4 border-t border-black/[0.06] dark:border-white/[0.07] flex items-center justify-between text-[10px] text-slate-400 dark:text-slate-500">
+                  <span class="inline-flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full ${authReady ? 'bg-emerald-500' : 'bg-blue-500'}"></span>
+                    ${authReady ? 'SUPABASE ENCRYPTED AUTH' : 'ENCRYPTED LOCAL VAULT'}
+                  </span>
+                  <span>A4 PRINT READY</span>
+                </div>
+              </div>
+
+              <p class="text-center text-[11px] text-slate-400 dark:text-slate-500 mt-5">
+                Embedded System Research Center · Daffodil International University
+              </p>
+            </div>
+          </div>
+        `;
+
+        document.getElementById('login-theme-btn').onclick = () => { toggleTheme(); renderLogin(); };
+        document.getElementById('login-cloud-btn').onclick = openSupabaseSetupModal;
+
+        document.querySelectorAll('.seg-btn').forEach(btn => {
+          btn.onclick = () => {
+            state.loginSegment = btn.getAttribute('data-seg');
+            renderLogin();
+          };
+        });
+
+        async function handleAuthSubmit(role, slotIndex, uVal, pVal, errId, submitBtnId) {
+          if (Date.now() < state.lockUntil) return;
+          const submitBtn = document.getElementById(submitBtnId);
+          const errEl = document.getElementById(errId);
+          const card = document.getElementById('login-card');
+
+          if (submitBtn) {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `<span class="w-3.5 h-3.5 border-2 border-white/40 border-t-white rounded-full animate-spin"></span><span>Verifying with Supabase…</span>`;
+          }
+
+          const matched = await authenticateWithSupabase(role, slotIndex, uVal, pVal);
+          if (matched) {
+            state.failedAttempts = 0;
+            state.lockUntil = 0;
+            state.user = Object.assign({}, matched, { title: matched.title || matched.wing });
+            try { sessionStorage.setItem(STORAGE_KEYS.SESSION, JSON.stringify({ role: matched.role, id: matched.id })); } catch (err) {}
+            showToast(`${role === 'admin' ? 'Admin' : 'Officer'} verified: ${matched.name}`, 'success');
+            renderApp();
+            syncPullFromSupabase(true);
+          } else {
+            state.failedAttempts += 1;
+            if (state.failedAttempts >= 5) {
+              state.lockUntil = Date.now() + 20000;
+              state.failedAttempts = 0;
+              setTimeout(() => { if (!state.user) renderLogin(); }, 20200);
+            }
+            if (submitBtn) {
+              const locked = Math.max(0, Math.ceil((state.lockUntil - Date.now()) / 1000));
+              submitBtn.disabled = locked > 0;
+              submitBtn.innerHTML = `${ICONS.lock}<span>${locked > 0 ? `Locked (${locked}s)` : (role === 'admin' ? 'Authenticate Admin' : 'Authenticate Officer')}</span>`;
+            }
+            errEl.textContent = state.lockUntil > Date.now()
+              ? 'Too many failed attempts. Please wait 20 seconds.'
+              : 'Access denied. Invalid encrypted ID or passkey.';
+            errEl.classList.remove('hidden');
+            card.classList.remove('animate-shake');
+            void card.offsetWidth;
+            card.classList.add('animate-shake');
+          }
+        }
+
+        if (isAdmSeg) {
+          document.querySelectorAll('.slot-btn').forEach(btn => {
+            btn.onclick = () => {
+              state.loginSlot = Number(btn.getAttribute('data-slot'));
+              renderLogin();
+            };
+          });
+          const passInput = document.getElementById('adm-pass');
+          const togglePass = document.getElementById('toggle-pass');
+          togglePass.onclick = () => {
+            const isPwd = passInput.type === 'password';
+            passInput.type = isPwd ? 'text' : 'password';
+            togglePass.textContent = isPwd ? 'Hide' : 'Show';
+          };
+          document.getElementById('login-form').onsubmit = (e) => {
+            e.preventDefault();
+            handleAuthSubmit('admin', activeSlot ? activeSlot.slot : 0, document.getElementById('adm-user').value, passInput.value, 'login-err', 'adm-submit');
+          };
+          document.getElementById('adm-user').focus();
+        } else {
+          document.querySelectorAll('.off-slot-btn').forEach(btn => {
+            btn.onclick = () => {
+              state.officerSlot = Number(btn.getAttribute('data-off-slot'));
+              renderLogin();
+            };
+          });
+          const offPass = document.getElementById('off-pass');
+          const toggleOffPass = document.getElementById('toggle-off-pass');
+          toggleOffPass.onclick = () => {
+            const isPwd = offPass.type === 'password';
+            offPass.type = isPwd ? 'text' : 'password';
+            toggleOffPass.textContent = isPwd ? 'Hide' : 'Show';
+          };
+          document.getElementById('officer-form').onsubmit = (e) => {
+            e.preventDefault();
+            handleAuthSubmit('officer', activeOfficer ? activeOfficer.slot : 0, document.getElementById('off-user').value, offPass.value, 'off-err', 'off-submit');
+          };
+          document.getElementById('off-user').focus();
+        }
+      }
+
+      /* =========================================================================
+       * 10. CARDS & SECTION VIEWS
+       * ========================================================================= */
+      function renderToolCard(t) {
+        return `
+          <article class="hig-card hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/[0.07] dark:border-white/[0.08] border-t-4 ${t.accent} rounded-2xl p-5 shadow-hig-sm hover:shadow-hig-md flex flex-col">
+            <div class="text-2xl mb-3">${t.icon}</div>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white">${escapeHtml(t.name)}</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed flex-1">${escapeHtml(t.desc)}</p>
+            <div class="flex flex-wrap gap-2 mt-4 pt-3 border-t border-black/[0.05] dark:border-white/[0.06]">
+              <a href="${escapeHtml(t.url)}" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-xl text-[11px] font-semibold bg-blue-600 hover:bg-blue-700 text-white transition">Open Tool</a>
+              <button type="button" data-copy="${escapeHtml(t.url)}" class="copy-btn px-3 py-2 rounded-xl text-[11px] font-medium border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition">Copy Link</button>
+            </div>
+          </article>
+        `;
+      }
+
+      function renderNoticeCard(n) {
+        const isHigh = n.priority === 'High';
+        return `
+          <article class="hig-card hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/[0.07] dark:border-white/[0.08] rounded-2xl p-5 shadow-hig-sm hover:shadow-hig-md flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-2.5">
+              <span class="text-[10px] font-bold uppercase tracking-widest px-2.5 py-0.5 rounded-full ${
+                isHigh ? 'bg-red-500/10 text-red-600 dark:text-red-400' : 'bg-blue-500/10 text-blue-600 dark:text-blue-400'
+              }">${isHigh ? 'Priority' : 'Announcement'}</span>
+              <span class="text-[10px] text-slate-400">${escapeHtml(formatDate(n.at))}</span>
+            </div>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">${escapeHtml(n.title)}</h3>
+            <p class="text-xs text-slate-600 dark:text-slate-300 mt-2 leading-relaxed whitespace-pre-wrap flex-1">${escapeHtml(n.body)}</p>
+            <div class="flex items-center justify-between gap-2 mt-4 pt-3 border-t border-black/[0.05] dark:border-white/[0.06]">
+              <span class="text-[10px] text-slate-400">By ${escapeHtml(n.by || 'Admin')}</span>
+              ${isAdmin() ? `<button type="button" data-del-notice="${escapeHtml(n.id)}" class="del-notice-btn text-[11px] font-semibold text-red-600 dark:text-red-400 hover:underline">Remove</button>` : ''}
+            </div>
+          </article>
+        `;
+      }
+
+      function renderTaskCard(x) {
+        const badges = {
+          open: 'bg-blue-500/10 text-blue-600 dark:text-blue-400',
+          submitted: 'bg-amber-500/15 text-amber-700 dark:text-amber-300',
+          revision: 'bg-orange-500/15 text-orange-700 dark:text-orange-300',
+          approved: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
+        };
+        const labels = {
+          open: 'Issued / Open',
+          submitted: 'Awaiting Approval',
+          revision: 'Needs Revision',
+          approved: 'Approved'
+        };
+        const isAssignedToMe = state.user && (x.to === state.user.name || x.toId === state.user.code);
+        const canSubmit = (x.status === 'open' || x.status === 'revision') && (isAdmin() || isAssignedToMe);
+
+        return `
+          <article class="hig-card hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/[0.07] dark:border-white/[0.08] rounded-2xl p-5 shadow-hig-sm hover:shadow-hig-md flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${badges[x.status] || badges.open}">${labels[x.status] || 'Open'}</span>
+              <span class="text-[10px] font-semibold text-slate-400">${escapeHtml(x.orderNo || '')}</span>
+            </div>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">${escapeHtml(x.title)}</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed flex-1">${escapeHtml(x.desc || '')}</p>
+
+            <div class="mt-3 p-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] text-[11px] space-y-1">
+              <div class="flex justify-between gap-2"><span class="text-slate-400">Officer:</span><strong class="text-slate-800 dark:text-slate-200 truncate">${escapeHtml(x.to)} (${escapeHtml(x.toId || 'OFF')})</strong></div>
+              <div class="flex justify-between gap-2"><span class="text-slate-400">Deadline:</span><strong class="text-slate-800 dark:text-slate-200">${escapeHtml(x.due || '—')}</strong></div>
+            </div>
+
+            ${x.report ? `<div class="mt-2.5 text-[11px] text-slate-600 dark:text-slate-300 bg-blue-500/[0.05] border border-blue-500/15 rounded-xl p-2.5"><strong>Report:</strong> ${escapeHtml(x.report)}</div>` : ''}
+            ${x.adminRemarks ? `<div class="mt-2 text-[11px] text-emerald-700 dark:text-emerald-300 bg-emerald-500/[0.07] border border-emerald-500/20 rounded-xl p-2.5"><strong>Admin:</strong> ${escapeHtml(x.adminRemarks)}</div>` : ''}
+
+            <div class="flex flex-wrap gap-2 mt-4 pt-3 border-t border-black/[0.05] dark:border-white/[0.06]">
+              <button type="button" data-print-task="${escapeHtml(x.id)}" class="print-task-btn inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-semibold border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition">
+                ${ICONS.print}<span>A4 Form</span>
+              </button>
+              ${canSubmit ? `<button type="button" data-submit-task="${escapeHtml(x.id)}" class="submit-task-btn px-3 py-2 rounded-xl text-[11px] font-semibold bg-emerald-600 hover:bg-emerald-700 text-white transition">Submit Report</button>` : ''}
+              ${isAdmin() && x.status === 'submitted' ? `<button type="button" data-review-task="${escapeHtml(x.id)}" class="review-task-btn px-3 py-2 rounded-xl text-[11px] font-semibold bg-blue-600 hover:bg-blue-700 text-white transition">Review &amp; Approve</button>` : ''}
+              ${x.doc && normalizeUrl(x.doc) ? `<a href="${escapeHtml(normalizeUrl(x.doc))}" target="_blank" rel="noopener" class="px-3 py-2 rounded-xl text-[11px] font-medium border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition">Doc</a>` : ''}
+              ${isAdmin() ? `<button type="button" data-del-task="${escapeHtml(x.id)}" class="del-task-btn ml-auto px-2.5 py-2 rounded-xl text-[11px] font-semibold text-red-600 dark:text-red-400 hover:bg-red-500/10 transition">Delete</button>` : ''}
+            </div>
+          </article>
+        `;
+      }
+
+      function renderApplicationCard(a) {
+        const badges = {
+          pending: 'bg-amber-500/15 text-amber-700 dark:text-amber-300',
+          approved: 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300',
+          rejected: 'bg-red-500/15 text-red-600 dark:text-red-400'
+        };
+        const labels = {
+          pending: 'Pending Review',
+          approved: 'Approved',
+          rejected: 'Rejected'
+        };
+        return `
+          <article class="hig-card hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/[0.07] dark:border-white/[0.08] rounded-2xl p-5 shadow-hig-sm hover:shadow-hig-md flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full ${badges[a.status] || badges.pending}">${labels[a.status] || 'Pending'}</span>
+              <span class="text-[10px] font-semibold text-slate-400">${escapeHtml(a.refNo || '')}</span>
+            </div>
+            <div class="text-[10px] font-semibold uppercase tracking-widest text-emerald-600 dark:text-emerald-400 mb-1">${escapeHtml(a.type)}</div>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">${escapeHtml(a.title)}</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed flex-1">${escapeHtml(a.summary || '')}</p>
+
+            <div class="mt-3 p-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] text-[11px] space-y-1">
+              <div class="flex justify-between gap-2"><span class="text-slate-400">Applicant:</span><strong class="text-slate-800 dark:text-slate-200 truncate">${escapeHtml(a.applicant)} (${escapeHtml(a.applicantId || 'OFF')})</strong></div>
+              <div class="flex justify-between gap-2"><span class="text-slate-400">Budget / Target:</span><strong class="text-slate-800 dark:text-slate-200">${escapeHtml(a.budget || 'N/A')} · ${escapeHtml(a.targetDate || '—')}</strong></div>
+            </div>
+
+            ${a.adminRemarks ? `<div class="mt-2.5 text-[11px] text-slate-700 dark:text-slate-200 bg-black/[0.04] dark:bg-white/[0.06] rounded-xl p-2.5"><strong>Admin Remarks:</strong> ${escapeHtml(a.adminRemarks)}</div>` : ''}
+
+            <div class="flex flex-wrap gap-2 mt-4 pt-3 border-t border-black/[0.05] dark:border-white/[0.06]">
+              <button type="button" data-print-app="${escapeHtml(a.id)}" class="print-app-btn inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-[11px] font-semibold border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition">
+                ${ICONS.print}<span>A4 Form</span>
+              </button>
+              ${isAdmin() && a.status === 'pending' ? `<button type="button" data-review-app="${escapeHtml(a.id)}" class="review-app-btn px-3 py-2 rounded-xl text-[11px] font-semibold bg-blue-600 hover:bg-blue-700 text-white transition">Approve / Reject</button>` : ''}
+              ${a.doc && normalizeUrl(a.doc) ? `<a href="${escapeHtml(normalizeUrl(a.doc))}" target="_blank" rel="noopener" class="px-3 py-2 rounded-xl text-[11px] font-medium border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition">Doc</a>` : ''}
+              ${isAdmin() ? `<button type="button" data-del-app="${escapeHtml(a.id)}" class="del-app-btn ml-auto px-2.5 py-2 rounded-xl text-[11px] font-semibold text-red-600 dark:text-red-400 hover:bg-red-500/10 transition">Delete</button>` : ''}
+            </div>
+          </article>
+        `;
+      }
+
+      function renderResourceCard(r) {
+        const k = detectLinkKind(r.url);
+        let host = r.url;
+        try { host = new URL(r.url).host; } catch (e) {}
+        return `
+          <article class="hig-card hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/[0.07] dark:border-white/[0.08] rounded-2xl p-5 shadow-hig-sm hover:shadow-hig-md flex flex-col">
+            <div class="flex items-center justify-between gap-2 mb-2.5">
+              <span class="text-xl">${k[0]}</span>
+              <span class="text-[10px] font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400">${escapeHtml(r.cat || 'Other')}</span>
+            </div>
+            <h3 class="text-sm font-bold text-slate-900 dark:text-white leading-snug">${escapeHtml(r.title)}</h3>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1.5 leading-relaxed flex-1 break-words">${escapeHtml(r.desc || host)}</p>
+            <div class="text-[10px] text-slate-400 mt-3">${escapeHtml(k[1])} · Added by ${escapeHtml(r.by || 'Officer')}</div>
+            <div class="flex flex-wrap gap-2 mt-3 pt-3 border-t border-black/[0.05] dark:border-white/[0.06]">
+              <a href="${escapeHtml(r.url)}" target="_blank" rel="noopener" class="px-3.5 py-2 rounded-xl text-[11px] font-semibold bg-blue-600 hover:bg-blue-700 text-white transition">Open</a>
+              <button type="button" data-copy="${escapeHtml(r.url)}" class="copy-btn px-3 py-2 rounded-xl text-[11px] font-medium border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition">Copy Link</button>
+              ${(isAdmin() || (state.user && r.by === state.user.name)) ? `<button type="button" data-del-res="${escapeHtml(r.id)}" class="del-res-btn ml-auto px-2.5 py-2 rounded-xl text-[11px] font-semibold text-red-600 dark:text-red-400 hover:bg-red-500/10 transition">Remove</button>` : ''}
+            </div>
+          </article>
+        `;
+      }
+
+      function renderHomeView() {
+        const openOrders = state.tasks.filter(t => t.status === 'open' || t.status === 'revision').length;
+        const pendingApprovals = state.tasks.filter(t => t.status === 'submitted').length + state.applications.filter(a => a.status === 'pending').length;
+
+        return `
+          <div class="space-y-8 animate-fade-in">
+            <!-- Hero Welcome Banner -->
+            <section class="hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/[0.07] dark:border-white/[0.08] rounded-3xl p-6 sm:p-8 shadow-hig-sm flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+              <div>
+                <div class="inline-flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full ${isAdmin() ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400' : 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400'} mb-3">
+                  <span>${isAdmin() ? 'Admin Command Segment' : 'General Officer Segment'}</span>
+                </div>
+                <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-slate-900 dark:text-white">Welcome back, ${escapeHtml(state.user.name.split(' ')[0])}.</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 max-w-2xl leading-relaxed">
+                  ${isAdmin()
+                    ? 'Issue printable A4 Work Orders, review officer submissions, approve requisitions & proposals, and manage Supabase access.'
+                    : 'Track assigned Work Orders, export official A4 documents, file project/budget applications, and access shared lab resources.'}
+                </p>
+              </div>
+              <div class="flex flex-wrap gap-2.5 shrink-0">
+                ${isAdmin()
+                  ? `<button id="home-new-task" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition">${ICONS.plus}<span>Assign Order</span></button>`
+                  : `<button id="home-new-app" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition">${ICONS.plus}<span>New Application</span></button>`}
+                <button data-nav="tasks" class="nav-btn px-4 py-2.5 rounded-xl text-xs font-semibold border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/5 transition">View A4 Orders</button>
+              </div>
+            </section>
+
+            <!-- KPI Metrics -->
+            <section class="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
+              <div class="hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/[0.07] dark:border-white/[0.08] rounded-2xl p-4 shadow-hig-sm">
+                <div class="text-[10px] uppercase tracking-widest text-slate-400 font-semibold">Open Orders</div>
+                <div class="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-1">${openOrders}</div>
+              </div>
+              <div class="hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/[0.07] dark:border-white/[0.08] rounded-2xl p-4 shadow-hig-sm">
+                <div class="text-[10px] uppercase tracking-widest text-slate-400 font-semibold">Pending Approvals</div>
+                <div class="text-2xl font-bold text-amber-600 dark:text-amber-400 mt-1">${pendingApprovals}</div>
+              </div>
+              <div class="hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/[0.07] dark:border-white/[0.08] rounded-2xl p-4 shadow-hig-sm">
+                <div class="text-[10px] uppercase tracking-widest text-slate-400 font-semibold">Applications</div>
+                <div class="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mt-1">${state.applications.length}</div>
+              </div>
+              <div class="hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/[0.07] dark:border-white/[0.08] rounded-2xl p-4 shadow-hig-sm">
+                <div class="text-[10px] uppercase tracking-widest text-slate-400 font-semibold">Shared Files</div>
+                <div class="text-2xl font-bold text-indigo-600 dark:text-indigo-400 mt-1">${state.resources.length}</div>
+              </div>
+            </section>
+
+            <!-- Executive & Officers Roster -->
+            <section>
+              <div class="flex items-center justify-between mb-4 gap-2">
+                <h3 class="text-xs font-bold tracking-widest uppercase text-slate-500 dark:text-slate-400">ESRC Executive &amp; Officers Roster</h3>
+                ${isAdmin() ? `<button id="btn-manage-access" class="inline-flex items-center gap-1.5 text-[10px] font-semibold px-3 py-1.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400 hover:bg-blue-500/20 transition">${ICONS.users}<span>Manage Access</span></button>` : ''}
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-3.5">
+                ${getAdminDirectory().slice(0, 1).map(adm => `
+                  <div class="hig-card hig-glass bg-white/80 dark:bg-[#151922]/80 border border-blue-500/20 rounded-2xl p-4 shadow-hig-sm flex items-center gap-3">
+                    <span class="w-10 h-10 rounded-xl bg-gradient-to-br ${adm.accent} text-white text-xs font-bold flex items-center justify-center shrink-0">${escapeHtml(adm.avatar)}</span>
+                    <div class="min-w-0">
+                      <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-blue-500/10 text-blue-600 dark:text-blue-400">Admin · ${escapeHtml(adm.code)}</span>
+                      <div class="text-xs font-bold text-slate-900 dark:text-white truncate mt-1">${escapeHtml(adm.name)}</div>
+                      <div class="text-[10px] text-slate-400 truncate">${escapeHtml(formatRelativeTime(adm.last_login_at))}</div>
+                    </div>
+                  </div>
+                `).join('')}
+                ${getOfficerDirectory().filter(o => o.active !== false).map(o => `
+                  <div class="hig-card hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/[0.07] dark:border-white/[0.08] rounded-2xl p-4 shadow-hig-sm flex items-center gap-3">
+                    <span class="w-10 h-10 rounded-xl bg-gradient-to-br ${o.accent} text-white text-xs font-bold flex items-center justify-center shrink-0">${escapeHtml(o.avatar)}</span>
+                    <div class="min-w-0">
+                      <span class="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">General · ${escapeHtml(o.code)}</span>
+                      <div class="text-xs font-bold text-slate-900 dark:text-white truncate mt-1">${escapeHtml(o.name)}</div>
+                      <div class="text-[10px] text-slate-400 truncate">${escapeHtml(formatRelativeTime(o.last_login_at))}</div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </section>
+
+            <!-- Recent Notices -->
+            <section>
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xs font-bold tracking-widest uppercase text-slate-500 dark:text-slate-400">Latest Notices</h3>
+                <button data-nav="notices" class="nav-btn text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline">All Notices →</button>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                ${state.notices.length ? state.notices.slice(0, 2).map(renderNoticeCard).join('') : '<div class="col-span-full p-8 text-center text-xs text-slate-400 border border-dashed border-black/10 dark:border-white/10 rounded-2xl">No notices posted yet.</div>'}
+              </div>
+            </section>
+
+            <!-- Quick Tools -->
+            <section>
+              <div class="flex items-center justify-between mb-4">
+                <h3 class="text-xs font-bold tracking-widest uppercase text-slate-500 dark:text-slate-400">Working Tools</h3>
+                <button data-nav="tools" class="nav-btn text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline">View Tools →</button>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                ${TOOLS.map(renderToolCard).join('')}
+              </div>
+            </section>
+          </div>
+        `;
+      }
+
+      function renderTasksView() {
+        const tq = state.taskQuery.toLowerCase();
+        const filtered = state.tasks.filter(x => {
+          const matchesQuery = !tq || `${x.orderNo || ''} ${x.title || ''} ${x.to || ''} ${x.desc || ''}`.toLowerCase().includes(tq);
+          if (!matchesQuery) return false;
+          if (state.taskFilter === 'mine') return isAdmin() ? x.by === state.user.name : (x.to === state.user.name || x.toId === state.user.code);
+          if (state.taskFilter === 'open') return x.status === 'open' || x.status === 'revision';
+          if (state.taskFilter === 'submitted') return x.status === 'submitted';
+          if (state.taskFilter === 'approved') return x.status === 'approved';
+          return true;
+        });
+
+        const filters = [
+          ['all', 'All Orders'],
+          ['mine', isAdmin() ? 'Issued by Me' : 'Assigned to Me'],
+          ['open', 'Open / Revision'],
+          ['submitted', 'Awaiting Approval'],
+          ['approved', 'Approved']
+        ];
+
+        return `
+          <div class="space-y-6 animate-fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Work Orders &amp; Tasks</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Official printable A4 order forms with Admin assignment and approval.</p>
+              </div>
+              ${isAdmin() ? `
+                <button id="btn-new-task" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition">
+                  ${ICONS.plus}<span>Assign Order / Task</span>
+                </button>
+              ` : ''}
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+              <input id="task-search" type="search" value="${escapeHtml(state.taskQuery)}" placeholder="Search by Ref No., title, or officer..."
+                class="flex-1 px-4 py-2.5 rounded-xl text-xs hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40" />
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              ${filters.map(f => `
+                <button type="button" data-tf="${f[0]}" class="tf-btn px-3.5 py-1.5 rounded-full text-xs font-semibold border transition ${
+                  state.taskFilter === f[0]
+                    ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                    : 'bg-white/70 dark:bg-white/5 border-black/10 dark:border-white/10 text-slate-600 dark:text-slate-300 hover:bg-white dark:hover:bg-white/10'
+                }">${f[1]}</button>
+              `).join('')}
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              ${filtered.length ? filtered.map(renderTaskCard).join('') : '<div class="col-span-full p-10 text-center text-xs text-slate-400 border border-dashed border-black/10 dark:border-white/10 rounded-2xl">No work orders match your filter.</div>'}
+            </div>
+          </div>
+        `;
+      }
+
+      function renderApplicationsView() {
+        const aq = state.appQuery.toLowerCase();
+        const filtered = state.applications.filter(a => {
+          const qOk = !aq || `${a.refNo || ''} ${a.title || ''} ${a.applicant || ''} ${a.type || ''}`.toLowerCase().includes(aq);
+          const stOk = state.appFilter === 'all' || a.status === state.appFilter;
+          const tpOk = state.appTypeFilter === 'All' || a.type === state.appTypeFilter;
+          return qOk && stOk && tpOk;
+        });
+
+        return `
+          <div class="space-y-6 animate-fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Officer Applications</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Project proposals, component requisitions, budgets &amp; duty forms — approved by Admin &amp; printable in A4.</p>
+              </div>
+              <button id="btn-new-app" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white shadow-sm transition">
+                ${ICONS.plus}<span>New Application</span>
+              </button>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+              <input id="app-search" type="search" value="${escapeHtml(state.appQuery)}" placeholder="Search applications by Ref No., subject, or officer..."
+                class="flex-1 px-4 py-2.5 rounded-xl text-xs hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-emerald-500/40" />
+            </div>
+
+            <div class="space-y-2.5">
+              <div class="flex flex-wrap gap-2">
+                ${[['all', 'All Status'], ['pending', 'Pending'], ['approved', 'Approved'], ['rejected', 'Rejected']].map(f => `
+                  <button type="button" data-af="${f[0]}" class="af-btn px-3.5 py-1.5 rounded-full text-xs font-semibold border transition ${
+                    state.appFilter === f[0]
+                      ? 'bg-emerald-600 text-white border-emerald-600 shadow-sm'
+                      : 'bg-white/70 dark:bg-white/5 border-black/10 dark:border-white/10 text-slate-600 dark:text-slate-300'
+                  }">${f[1]}</button>
+                `).join('')}
+              </div>
+              <div class="flex flex-wrap gap-1.5">
+                ${['All'].concat(APP_TYPES).map(t => `
+                  <button type="button" data-at="${escapeHtml(t)}" class="at-btn px-3 py-1 rounded-lg text-[11px] font-medium border transition ${
+                    state.appTypeFilter === t
+                      ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 border-transparent'
+                      : 'bg-white/60 dark:bg-white/5 border-black/10 dark:border-white/10 text-slate-500 dark:text-slate-400'
+                  }">${escapeHtml(t)}</button>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              ${filtered.length ? filtered.map(renderApplicationCard).join('') : '<div class="col-span-full p-10 text-center text-xs text-slate-400 border border-dashed border-black/10 dark:border-white/10 rounded-2xl">No applications found.</div>'}
+            </div>
+          </div>
+        `;
+      }
+
+      function renderNoticesView() {
+        return `
+          <div class="space-y-6 animate-fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Notice Board</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Official announcements synced across all officers.</p>
+              </div>
+              ${isAdmin() ? `
+                <button id="btn-new-notice" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition">
+                  ${ICONS.plus}<span>Post Notice</span>
+                </button>
+              ` : ''}
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              ${state.notices.length ? state.notices.map(renderNoticeCard).join('') : '<div class="col-span-full p-10 text-center text-xs text-slate-400 border border-dashed border-black/10 dark:border-white/10 rounded-2xl">No notices posted.</div>'}
+            </div>
+          </div>
+        `;
+      }
+
+      function renderToolsView() {
+        return `
+          <div class="space-y-6 animate-fade-in">
+            <div>
+              <h2 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">ESRC Working Tools</h2>
+              <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Integrated web studios and apps open in a new tab.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+              ${TOOLS.map(renderToolCard).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      function renderResourcesView() {
+        const q = state.query.toLowerCase();
+        const filtered = state.resources.filter(r => {
+          const catOk = state.cat === 'All' || r.cat === state.cat;
+          const qOk = !q || `${r.title || ''} ${r.desc || ''} ${r.url || ''}`.toLowerCase().includes(q);
+          return catOk && qOk;
+        });
+
+        return `
+          <div class="space-y-6 animate-fade-in">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div>
+                <h2 class="text-lg font-bold tracking-tight text-slate-900 dark:text-white">Shared Resource Dashboard</h2>
+                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Centralized Google Drive folders, documents, sheets, and team links.</p>
+              </div>
+              <button id="btn-new-res" class="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white shadow-sm transition">
+                ${ICONS.plus}<span>Add Resources</span>
+              </button>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-3">
+              <input id="res-search" type="search" value="${escapeHtml(state.query)}" placeholder="Search title, note, or URL..."
+                class="flex-1 px-4 py-2.5 rounded-xl text-xs hig-glass bg-white/80 dark:bg-[#151922]/80 border border-black/10 dark:border-white/10 focus:outline-none focus:ring-2 focus:ring-blue-500/40" />
+            </div>
+
+            <div class="flex flex-wrap gap-2">
+              ${['All'].concat(RESOURCE_CATS).map(c => `
+                <button type="button" data-cat="${escapeHtml(c)}" class="cat-btn px-3.5 py-1.5 rounded-full text-xs font-semibold border transition ${
+                  state.cat === c
+                    ? 'bg-blue-600 text-white border-blue-600 shadow-sm'
+                    : 'bg-white/70 dark:bg-white/5 border-black/10 dark:border-white/10 text-slate-600 dark:text-slate-300'
+                }">${escapeHtml(c)}</button>
+              `).join('')}
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              ${filtered.length ? filtered.map(renderResourceCard).join('') : '<div class="col-span-full p-10 text-center text-xs text-slate-400 border border-dashed border-black/10 dark:border-white/10 rounded-2xl">No resources match your search.</div>'}
+            </div>
+          </div>
+        `;
+      }
+
+      /* =========================================================================
+       * 11. ACTION MODALS (ORDERS, APPLICATIONS, NOTICES, RESOURCES, ACCESS)
+       * ========================================================================= */
+      function openTaskModal() {
+        const nextNum = String(state.tasks.length + 1).padStart(3, '0');
+        const defaultOrderNo = `ESRC/WO/2026/${nextNum}`;
+        const officerOptions = getOfficerDirectory()
+          .filter(o => o.active !== false)
+          .map(o => `<option value="${escapeHtml(o.name)}|${escapeHtml(o.code)}|${escapeHtml(o.title || o.wing)}">${escapeHtml(o.name)} (${escapeHtml(o.code)})</option>`)
+          .join('');
+
+        openModal('Assign Official Work Order / Task', 'Creates a printable A4 order sheet assigned to an officer.', `
+          <form id="f-task" class="space-y-3.5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Order Ref No.</label>
+                <input id="ft-ref" required value="${escapeHtml(defaultOrderNo)}" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Due Date</label>
+                <input id="ft-due" type="date" required class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Assign To Officer</label>
+              <select id="ft-to" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10">${officerOptions}</select>
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Order Title</label>
+              <input id="ft-title" required placeholder="e.g. Lab Equipment Calibration" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Instructions &amp; Scope</label>
+              <textarea id="ft-desc" rows="3" required placeholder="Detailed instructions..." class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10"></textarea>
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Deliverables (one per line)</label>
+              <textarea id="ft-items" rows="3" placeholder="Step 1&#10;Step 2" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10"></textarea>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+              <button type="button" id="ft-cancel" class="px-4 py-2 rounded-xl text-xs font-medium border border-black/10 dark:border-white/10">Cancel</button>
+              <button type="submit" class="px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white">Issue Work Order</button>
+            </div>
+          </form>
+        `, () => {
+          document.getElementById('ft-cancel').onclick = closeModal;
+          document.getElementById('f-task').onsubmit = async (e) => {
+            e.preventDefault();
+            const parts = document.getElementById('ft-to').value.split('|');
+            const deliverables = document.getElementById('ft-items').value
+              .split(/\n+/).map(s => s.trim()).filter(Boolean);
+            const item = {
+              id: 'tsk_' + Date.now(),
+              orderNo: document.getElementById('ft-ref').value.trim(),
+              title: document.getElementById('ft-title').value.trim(),
+              desc: document.getElementById('ft-desc').value.trim(),
+              deliverables: deliverables.length ? deliverables : ['Complete assigned directive and submit proof.'],
+              to: parts[0] || 'Officer',
+              toId: parts[1] || 'OFF',
+              wing: parts[2] || 'ESRC',
+              by: state.user.name,
+              due: document.getElementById('ft-due').value,
+              priority: 'Normal',
+              status: 'open',
+              report: '',
+              doc: '',
+              adminRemarks: '',
+              submittedAt: null,
+              approvedBy: '',
+              approvedAt: null,
+              at: Date.now()
+            };
+            state.tasks.unshift(item);
+            await pushRecordToSupabase('tasks', item);
+            closeModal();
+            showToast('Work Order issued & synced', 'success');
+            renderApp();
+          };
+        });
+      }
+
+      function openSubmitTaskModal(task) {
+        openModal(`Submit Report · ${task.orderNo}`, task.title, `
+          <form id="f-sub-task" class="space-y-4">
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1.5">Completion Report</label>
+              <textarea id="fs-rep" rows="4" required placeholder="Summarize completed work and findings..." class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10">${escapeHtml(task.report || '')}</textarea>
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1.5">Supporting Document / Drive Link</label>
+              <input id="fs-doc" value="${escapeHtml(task.doc || '')}" placeholder="https://drive.google.com/..." class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+              <button type="button" id="fs-cancel" class="px-4 py-2 rounded-xl text-xs font-medium border border-black/10 dark:border-white/10">Cancel</button>
+              <button type="submit" class="px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white">Submit for Admin Approval</button>
+            </div>
+          </form>
+        `, () => {
+          document.getElementById('fs-cancel').onclick = closeModal;
+          document.getElementById('f-sub-task').onsubmit = async (e) => {
+            e.preventDefault();
+            task.report = document.getElementById('fs-rep').value.trim();
+            task.doc = normalizeUrl(document.getElementById('fs-doc').value) || '';
+            task.status = 'submitted';
+            task.submittedAt = Date.now();
+            await pushRecordToSupabase('tasks', task);
+            closeModal();
+            showToast('Report submitted for Admin approval', 'success');
+            renderApp();
+          };
+        });
+      }
+
+      function openReviewTaskModal(task) {
+        openModal(`Admin Review · ${task.orderNo}`, task.title, `
+          <div class="space-y-4">
+            <div class="p-3.5 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] text-xs space-y-1.5">
+              <div><strong>Officer:</strong> ${escapeHtml(task.to)}</div>
+              <div><strong>Report:</strong> ${escapeHtml(task.report || 'No report text.')}</div>
+              ${task.doc ? `<div><strong>Link:</strong> <a href="${escapeHtml(task.doc)}" target="_blank" rel="noopener" class="text-blue-600 underline break-all">${escapeHtml(task.doc)}</a></div>` : ''}
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1.5">Admin Remarks</label>
+              <textarea id="fr-rem" rows="3" placeholder="Optional approval note or revision feedback..." class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10">${escapeHtml(task.adminRemarks || '')}</textarea>
+            </div>
+            <div class="flex flex-wrap justify-end gap-2 pt-2">
+              <button type="button" id="fr-rev" class="px-4 py-2 rounded-xl text-xs font-semibold bg-amber-500/15 text-amber-700 dark:text-amber-300 hover:bg-amber-500/25">Request Revision</button>
+              <button type="button" id="fr-app" class="px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white">Approve Order</button>
+            </div>
+          </div>
+        `, () => {
+          document.getElementById('fr-rev').onclick = async () => {
+            task.status = 'revision';
+            task.adminRemarks = document.getElementById('fr-rem').value.trim() || 'Please revise and resubmit.';
+            await pushRecordToSupabase('tasks', task);
+            closeModal();
+            showToast('Revision requested', 'info');
+            renderApp();
+          };
+          document.getElementById('fr-app').onclick = async () => {
+            task.status = 'approved';
+            task.adminRemarks = document.getElementById('fr-rem').value.trim() || 'Verified and approved.';
+            task.approvedBy = state.user.name;
+            task.approvedAt = Date.now();
+            await pushRecordToSupabase('tasks', task);
+            closeModal();
+            showToast('Work Order approved!', 'success');
+            renderApp();
+          };
+        });
+      }
+
+      function openApplicationModal() {
+        const nextNum = String(state.applications.length + 1).padStart(3, '0');
+        const defaultRef = `ESRC/APP/2026/${nextNum}`;
+        openModal('Submit Official Officer Application', 'Printable A4 form routed to Admin for approval.', `
+          <form id="f-app" class="space-y-3.5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Application Type</label>
+                <select id="fa-type" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10">
+                  ${APP_TYPES.map(t => `<option value="${escapeHtml(t)}">${escapeHtml(t)}</option>`).join('')}
+                </select>
+              </div>
+              <div>
+                <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Reference No.</label>
+                <input id="fa-ref" required value="${escapeHtml(defaultRef)}" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Application Subject</label>
+              <input id="fa-title" required placeholder="e.g. Sensor Procurement for Rover V2" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Estimated Budget</label>
+                <input id="fa-budget" placeholder="e.g. 6,000 BDT or N/A" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Target Date</label>
+                <input id="fa-date" type="date" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+              </div>
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Justification &amp; Summary</label>
+              <textarea id="fa-sum" rows="3" required placeholder="Explain the purpose and expected outcome..." class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10"></textarea>
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Items / Milestones (one per line)</label>
+              <textarea id="fa-items" rows="3" placeholder="Item 1 — Cost&#10;Item 2 — Cost" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10"></textarea>
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Supporting Drive / Sheet Link (optional)</label>
+              <input id="fa-doc" placeholder="https://docs.google.com/..." class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+              <button type="button" id="fa-cancel" class="px-4 py-2 rounded-xl text-xs font-medium border border-black/10 dark:border-white/10">Cancel</button>
+              <button type="submit" class="px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white">Submit Application</button>
+            </div>
+          </form>
+        `, () => {
+          document.getElementById('fa-cancel').onclick = closeModal;
+          document.getElementById('f-app').onsubmit = async (e) => {
+            e.preventDefault();
+            const items = document.getElementById('fa-items').value.split(/\n+/).map(s => s.trim()).filter(Boolean);
+            const appItem = {
+              id: 'app_' + Date.now(),
+              refNo: document.getElementById('fa-ref').value.trim(),
+              type: document.getElementById('fa-type').value,
+              title: document.getElementById('fa-title').value.trim(),
+              applicant: state.user.name,
+              applicantId: state.user.code,
+              wing: state.user.title || state.user.wing || 'ESRC',
+              budget: document.getElementById('fa-budget').value.trim() || 'N/A',
+              targetDate: document.getElementById('fa-date').value || 'TBD',
+              summary: document.getElementById('fa-sum').value.trim(),
+              items: items.length ? items : ['Standard requisition as described above.'],
+              doc: normalizeUrl(document.getElementById('fa-doc').value) || '',
+              status: 'pending',
+              adminRemarks: '',
+              reviewedBy: '',
+              reviewedAt: null,
+              at: Date.now()
+            };
+            state.applications.unshift(appItem);
+            await pushRecordToSupabase('applications', appItem);
+            closeModal();
+            showToast('Application submitted & synced', 'success');
+            renderApp();
+          };
+        });
+      }
+
+      function openReviewAppModal(appItem) {
+        openModal(`Admin Decision · ${appItem.refNo}`, appItem.title, `
+          <div class="space-y-4">
+            <div class="p-3.5 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] text-xs space-y-1">
+              <div><strong>Applicant:</strong> ${escapeHtml(appItem.applicant)} (${escapeHtml(appItem.applicantId)})</div>
+              <div><strong>Type:</strong> ${escapeHtml(appItem.type)} · <strong>Budget:</strong> ${escapeHtml(appItem.budget)}</div>
+              <div class="pt-1 text-slate-600 dark:text-slate-300">${escapeHtml(appItem.summary)}</div>
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1.5">Official Decision Remarks</label>
+              <textarea id="far-rem" rows="3" placeholder="Enter approval note or rejection reason..." class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10"></textarea>
+            </div>
+            <div class="flex flex-wrap justify-end gap-2 pt-2">
+              <button type="button" id="far-rej" class="px-4 py-2 rounded-xl text-xs font-semibold bg-red-600/15 text-red-600 dark:text-red-400 hover:bg-red-600/25">Reject</button>
+              <button type="button" id="far-app" class="px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white">Approve Application</button>
+            </div>
+          </div>
+        `, () => {
+          document.getElementById('far-rej').onclick = async () => {
+            appItem.status = 'rejected';
+            appItem.adminRemarks = document.getElementById('far-rem').value.trim() || 'Not approved at this time.';
+            appItem.reviewedBy = state.user.name;
+            appItem.reviewedAt = Date.now();
+            await pushRecordToSupabase('applications', appItem);
+            closeModal();
+            showToast('Application rejected', 'info');
+            renderApp();
+          };
+          document.getElementById('far-app').onclick = async () => {
+            appItem.status = 'approved';
+            appItem.adminRemarks = document.getElementById('far-rem').value.trim() || 'Approved for execution.';
+            appItem.reviewedBy = state.user.name;
+            appItem.reviewedAt = Date.now();
+            await pushRecordToSupabase('applications', appItem);
+            closeModal();
+            showToast('Application approved!', 'success');
+            renderApp();
+          };
+        });
+      }
+
+      function openNoticeModal() {
+        openModal('Post Official Notice', 'Broadcasts immediately to all officers.', `
+          <form id="f-notice" class="space-y-4">
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Title</label>
+              <input id="fn-title" required placeholder="Notice headline" class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Priority</label>
+              <select id="fn-prio" class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10">
+                <option value="Normal">Normal Announcement</option>
+                <option value="High">High Priority</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Message</label>
+              <textarea id="fn-body" rows="4" required placeholder="Write announcement details..." class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10"></textarea>
+            </div>
+            <div class="flex justify-end gap-2 pt-2">
+              <button type="button" id="fn-cancel" class="px-4 py-2 rounded-xl text-xs font-medium border border-black/10 dark:border-white/10">Cancel</button>
+              <button type="submit" class="px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white">Publish Notice</button>
+            </div>
+          </form>
+        `, () => {
+          document.getElementById('fn-cancel').onclick = closeModal;
+          document.getElementById('f-notice').onsubmit = async (e) => {
+            e.preventDefault();
+            const item = {
+              id: 'ntc_' + Date.now(),
+              title: document.getElementById('fn-title').value.trim(),
+              priority: document.getElementById('fn-prio').value,
+              body: document.getElementById('fn-body').value.trim(),
+              by: state.user.name,
+              at: Date.now()
+            };
+            state.notices.unshift(item);
+            await pushRecordToSupabase('notices', item);
+            closeModal();
+            showToast('Notice published', 'success');
+            renderApp();
+          };
+        });
+      }
+
+      function openResourceModal() {
+        openModal('Add Shared Resources', 'Add a single link or paste multiple links (one per line).', `
+          <form id="f-res" class="space-y-3.5">
+            <div class="grid grid-cols-2 gap-1.5 p-1 rounded-xl bg-black/[0.05] dark:bg-white/[0.06]">
+              <button type="button" id="rm-one" class="py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-[#232938] shadow-sm">Single Link</button>
+              <button type="button" id="rm-many" class="py-1.5 rounded-lg text-xs font-semibold text-slate-500">Bulk Import</button>
+            </div>
+            <div id="r-one-box" class="space-y-3">
+              <div>
+                <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Title</label>
+                <input id="fr-title" placeholder="e.g. Workshop Photos 2026" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">URL (Google Drive, Docs, Web)</label>
+                <input id="fr-url" placeholder="https://drive.google.com/..." class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+              </div>
+              <div>
+                <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Note (optional)</label>
+                <input id="fr-desc" placeholder="Short description" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+              </div>
+            </div>
+            <div id="r-many-box" class="hidden">
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Links (one per line, optional "Title | URL")</label>
+              <textarea id="fr-bulk" rows="5" placeholder="Meeting Notes | https://docs.google.com/...&#10;https://drive.google.com/..." class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10"></textarea>
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1">Category</label>
+              <select id="fr-cat" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10">
+                ${RESOURCE_CATS.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('')}
+              </select>
+            </div>
+            <div id="fr-err" class="hidden text-xs text-red-500"></div>
+            <div class="flex justify-end gap-2 pt-2">
+              <button type="button" id="fr-cancel" class="px-4 py-2 rounded-xl text-xs font-medium border border-black/10 dark:border-white/10">Cancel</button>
+              <button type="submit" class="px-4 py-2 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white">Save Resource</button>
+            </div>
+          </form>
+        `, () => {
+          let mode = 'one';
+          const b1 = document.getElementById('rm-one');
+          const b2 = document.getElementById('rm-many');
+          const box1 = document.getElementById('r-one-box');
+          const box2 = document.getElementById('r-many-box');
+          b1.onclick = () => {
+            mode = 'one';
+            box1.classList.remove('hidden'); box2.classList.add('hidden');
+            b1.className = 'py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-[#232938] shadow-sm';
+            b2.className = 'py-1.5 rounded-lg text-xs font-semibold text-slate-500';
+          };
+          b2.onclick = () => {
+            mode = 'many';
+            box2.classList.remove('hidden'); box1.classList.add('hidden');
+            b2.className = 'py-1.5 rounded-lg text-xs font-semibold bg-white dark:bg-[#232938] shadow-sm';
+            b1.className = 'py-1.5 rounded-lg text-xs font-semibold text-slate-500';
+          };
+          document.getElementById('fr-cancel').onclick = closeModal;
+          document.getElementById('f-res').onsubmit = async (e) => {
+            e.preventDefault();
+            const cat = document.getElementById('fr-cat').value;
+            const err = document.getElementById('fr-err');
+            const added = [];
+            if (mode === 'one') {
+              const u = normalizeUrl(document.getElementById('fr-url').value);
+              if (!u) { err.textContent = 'Enter a valid URL starting with https://'; err.classList.remove('hidden'); return; }
+              const title = document.getElementById('fr-title').value.trim() || `${detectLinkKind(u)[1]} · ${new URL(u).host}`;
+              added.push({ id: 'res_' + Date.now(), title, url: u, desc: document.getElementById('fr-desc').value.trim(), cat, by: state.user.name, at: Date.now() });
+            } else {
+              const lines = document.getElementById('fr-bulk').value.split(/\n+/);
+              lines.forEach((line, idx) => {
+                const s = line.trim();
+                if (!s) return;
+                const parts = s.split('|');
+                const rawUrl = parts.pop();
+                const u = normalizeUrl(rawUrl);
+                if (!u) return;
+                const title = parts.join('|').trim() || `${detectLinkKind(u)[1]} · ${new URL(u).host}`;
+                added.push({ id: `res_${Date.now()}_${idx}`, title, url: u, desc: '', cat, by: state.user.name, at: Date.now() + idx });
+              });
+              if (!added.length) { err.textContent = 'No valid links found.'; err.classList.remove('hidden'); return; }
+            }
+            for (let i = 0; i < added.length; i++) {
+              state.resources.unshift(added[i]);
+              await pushRecordToSupabase('resources', added[i]);
+            }
+            closeModal();
+            showToast(`Added ${added.length} resource(s)`, 'success');
+            renderApp();
+          };
+        });
+      }
+
+      function openChangePasskeyModal() {
+        openModal('Update Your Encrypted Passkey', 'Changes sync immediately to Supabase across all devices.', `
+          <form id="f-passkey" class="space-y-4">
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1.5">Your Login ID</label>
+              <input id="fp-user" required placeholder="Enter your login ID (e.g. sadat, abir)" class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1.5">Current Passkey</label>
+              <input id="fp-old" type="password" required placeholder="Current passkey" class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+            </div>
+            <div>
+              <label class="block text-[10px] font-semibold uppercase tracking-widest text-slate-500 mb-1.5">New Passkey (min 6 chars)</label>
+              <input id="fp-new" type="password" minlength="6" required placeholder="New strong passkey" class="w-full px-3.5 py-2.5 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+            </div>
+            <div id="fp-err" class="hidden text-xs text-red-500"></div>
+            <div class="flex justify-end gap-2 pt-2">
+              <button type="button" id="fp-cancel" class="px-4 py-2.5 rounded-xl text-xs font-medium border border-black/10 dark:border-white/10">Cancel</button>
+              <button type="submit" class="px-4 py-2.5 rounded-xl text-xs font-semibold bg-blue-600 hover:bg-blue-700 text-white">Save Encrypted Passkey</button>
+            </div>
+          </form>
+        `, () => {
+          document.getElementById('fp-cancel').onclick = closeModal;
+          document.getElementById('f-passkey').onsubmit = async (e) => {
+            e.preventDefault();
+            const loginId = document.getElementById('fp-user').value.trim();
+            const oldPass = document.getElementById('fp-old').value;
+            const newPass = document.getElementById('fp-new').value;
+            const err = document.getElementById('fp-err');
+            const current = state.users.find(u => u.id === state.user.id);
+            if (!current || !constantTimeEqual(sealCredential(current.slot, loginId, oldPass), current.seal)) {
+              err.textContent = 'Current Login ID or Passkey does not match.';
+              err.classList.remove('hidden');
+              return;
+            }
+            current.seal = sealCredential(current.slot, loginId, newPass);
+            state.user.seal = current.seal;
+            await upsertUserToSupabase(current);
+            closeModal();
+            showToast('Passkey updated & synced to Supabase', 'success');
+          };
+        });
+      }
+
+      function openManageAccessModal() {
+        const officers = getOfficerDirectory();
+        openModal('Supabase Access & Officers Directory', 'Add new officers or toggle account status — synced to Supabase.', `
+          <div class="space-y-5">
+            <div class="space-y-2 max-h-52 overflow-y-auto pr-1">
+              ${officers.map(o => `
+                <div class="flex items-center justify-between gap-3 p-3 rounded-xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.06] dark:border-white/[0.07]">
+                  <div class="min-w-0">
+                    <div class="text-xs font-bold text-slate-900 dark:text-white truncate">${escapeHtml(o.name)} <span class="text-[10px] font-normal text-slate-400">(${escapeHtml(o.code)})</span></div>
+                    <div class="text-[10px] text-slate-400 truncate">${escapeHtml(o.title || o.wing)} · ${escapeHtml(formatRelativeTime(o.last_login_at))}</div>
+                  </div>
+                  <button type="button" data-toggle-user="${escapeHtml(o.id)}" class="toggle-user-btn px-2.5 py-1 rounded-lg text-[10px] font-semibold transition ${
+                    o.active !== false
+                      ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-300 hover:bg-red-500/15 hover:text-red-600'
+                      : 'bg-red-500/15 text-red-600 dark:text-red-400 hover:bg-emerald-500/15 hover:text-emerald-600'
+                  }">${o.active !== false ? 'Active' : 'Disabled'}</button>
+                </div>
+              `).join('')}
+            </div>
+
+            <form id="f-add-officer" class="pt-4 border-t border-black/10 dark:border-white/10 space-y-3">
+              <div class="text-[10px] font-bold uppercase tracking-widest text-slate-500">Add New Officer Account (Encrypted)</div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                <input id="no-name" required placeholder="Full Name" class="px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+                <input id="no-code" required placeholder="Short Role (e.g. EXEC)" class="px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+                <input id="no-wing" required placeholder="Position / Wing" class="px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+                <input id="no-login" required placeholder="Unique Login ID" class="px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+              </div>
+              <input id="no-pass" type="password" minlength="6" required placeholder="Initial Passkey (min 6 chars)" class="w-full px-3 py-2 rounded-xl text-xs bg-white dark:bg-[#0E1118] border border-black/10 dark:border-white/10" />
+              <div class="flex justify-end gap-2 pt-1">
+                <button type="button" id="no-close" class="px-4 py-2 rounded-xl text-xs font-medium border border-black/10 dark:border-white/10">Close</button>
+                <button type="submit" class="px-4 py-2 rounded-xl text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white">Create &amp; Sync Officer</button>
+              </div>
+            </form>
+          </div>
+        `, () => {
+          document.getElementById('no-close').onclick = closeModal;
+          document.querySelectorAll('.toggle-user-btn').forEach(btn => {
+            btn.onclick = async () => {
+              const target = state.users.find(u => u.id === btn.getAttribute('data-toggle-user'));
+              if (!target) return;
+              target.active = target.active === false ? true : false;
+              await upsertUserToSupabase(target);
+              showToast(`${target.name} ${target.active ? 'enabled' : 'disabled'}`, 'info');
+              openManageAccessModal();
+              renderApp();
+            };
+          });
+          document.getElementById('f-add-officer').onsubmit = async (e) => {
+            e.preventDefault();
+            const name = document.getElementById('no-name').value.trim();
+            const code = document.getElementById('no-code').value.trim().toUpperCase();
+            const wing = document.getElementById('no-wing').value.trim();
+            const loginId = document.getElementById('no-login').value.trim().toLowerCase();
+            const pass = document.getElementById('no-pass').value;
+            const nextSlot = getOfficerDirectory().reduce((m, o) => Math.max(m, Number(o.slot || 0)), -1) + 1;
+            const initials = name.split(/\s+/).map(p => p[0] || '').join('').slice(0, 2).toUpperCase() || 'OF';
+            const newOfficer = {
+              id: `ESRC-${code.replace(/[^A-Z0-9]/g, '')}-${String(nextSlot + 1).padStart(2, '0')}`,
+              role: 'officer',
+              slot: nextSlot,
+              code,
+              name,
+              title: wing,
+              wing,
+              avatar: initials,
+              accent: 'from-sky-500 to-indigo-600',
+              seal: sealCredential(nextSlot, loginId, pass),
+              active: true,
+              last_login_at: null
+            };
+            await upsertUserToSupabase(newOfficer);
+            showToast(`Officer ${name} created & synced`, 'success');
+            closeModal();
+            renderApp();
+          };
+        });
+      }
+
+      /* =========================================================================
+       * 12. MAIN APPLICATION SHELL RENDERER
+       * ========================================================================= */
+      function renderApp() {
+        if (!state.user) {
+          renderLogin();
+          return;
+        }
+
+        const app = document.getElementById('app');
+        const navItems = [
+          { id: 'home', label: 'Overview', icon: ICONS.home },
+          { id: 'tasks', label: 'Work Orders', icon: ICONS.tasks, count: state.tasks.filter(t => t.status !== 'approved').length },
+          { id: 'applications', label: 'Applications', icon: ICONS.applications, count: state.applications.filter(a => a.status === 'pending').length },
+          { id: 'notices', label: 'Notices', icon: ICONS.notices },
+          { id: 'tools', label: 'Tools', icon: ICONS.tools },
+          { id: 'resources', label: 'Resources', icon: ICONS.resources }
+        ];
+
+        const sidebarInner = `
+          <div class="flex flex-col h-full p-4">
+            <div class="flex items-center gap-3 px-2 py-2 mb-6">
+              ${esrcLogoSvg('w-9 h-9 shrink-0 shadow-sm rounded-xl')}
+              <div class="min-w-0">
+                <div class="text-xs font-bold tracking-tight text-slate-900 dark:text-white truncate">ESRC DIU</div>
+                <div class="text-[10px] text-slate-400 truncate">Officers Portal</div>
+              </div>
+            </div>
+
+            <nav class="space-y-1 flex-1">
+              ${navItems.map(item => `
+                <button data-nav="${item.id}" class="nav-btn w-full flex items-center justify-between gap-2.5 px-3 py-2.5 rounded-xl text-xs font-semibold transition ${
+                  state.view === item.id
+                    ? 'bg-blue-600 text-white shadow-sm'
+                    : 'text-slate-600 dark:text-slate-300 hover:bg-black/[0.05] dark:hover:bg-white/[0.06]'
+                }">
+                  <span class="flex items-center gap-2.5">${item.icon}<span>${item.label}</span></span>
+                  ${item.count ? `<span class="text-[10px] px-1.5 py-0.5 rounded-full ${state.view === item.id ? 'bg-white/20 text-white' : 'bg-blue-500/10 text-blue-600 dark:text-blue-400'}">${item.count}</span>` : ''}
+                </button>
+              `).join('')}
+            </nav>
+
+            <!-- Active User Identity Card -->
+            <div class="mt-4 pt-4 border-t border-black/[0.06] dark:border-white/[0.07]">
+              <div class="p-3 rounded-2xl bg-black/[0.03] dark:bg-white/[0.04] border border-black/[0.05] dark:border-white/[0.06]">
+                <div class="flex items-center gap-2.5">
+                  <span class="w-8 h-8 rounded-xl bg-gradient-to-br ${state.user.accent || 'from-blue-600 to-indigo-600'} text-white text-xs font-bold flex items-center justify-center shrink-0">${escapeHtml(state.user.avatar)}</span>
+                  <div class="min-w-0 flex-1">
+                    <div class="text-xs font-semibold text-slate-900 dark:text-white truncate">${escapeHtml(state.user.name)}</div>
+                    <div class="text-[10px] text-slate-400 truncate">${escapeHtml(state.user.code)} · ${isAdmin() ? 'Admin' : 'Officer'}</div>
+                  </div>
+                </div>
+                <div class="mt-3 grid grid-cols-2 gap-1.5">
+                  <button type="button" class="btn-passkey inline-flex items-center justify-center gap-1 py-2 rounded-xl text-[10px] font-semibold text-slate-700 dark:text-slate-200 bg-black/[0.05] dark:bg-white/[0.07] hover:bg-black/10 dark:hover:bg-white/10 transition">
+                    ${ICONS.key}<span>Passkey</span>
+                  </button>
+                  <button type="button" class="btn-logout inline-flex items-center justify-center gap-1 py-2 rounded-xl text-[10px] font-semibold text-red-600 dark:text-red-400 bg-red-500/10 hover:bg-red-500/15 transition">
+                    ${ICONS.logout}<span>Sign Out</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `;
+
+        const viewContent =
+          state.view === 'tasks' ? renderTasksView()
+          : state.view === 'applications' ? renderApplicationsView()
+          : state.view === 'notices' ? renderNoticesView()
+          : state.view === 'tools' ? renderToolsView()
+          : state.view === 'resources' ? renderResourcesView()
+          : renderHomeView();
+
+        const cloudSynced = state.cloudStatus === 'synced' && state.authCloudStatus === 'synced';
+        const cloudSetup = state.cloudStatus === 'setup-needed' || state.authCloudStatus === 'setup-needed';
+
+        app.innerHTML = `
+          <div class="min-h-screen flex">
+            <!-- Desktop Sidebar -->
+            <aside class="hidden lg:block w-64 shrink-0 sticky top-0 h-screen hig-glass bg-white/75 dark:bg-[#11151E]/80 border-r border-black/[0.07] dark:border-white/[0.07]">
+              ${sidebarInner}
+            </aside>
+
+            <!-- Mobile Drawer -->
+            ${state.mobileMenu ? `
+              <div id="mob-backdrop" class="lg:hidden fixed inset-0 z-40 bg-slate-950/60 backdrop-blur-sm">
+                <aside class="w-72 max-w-[82vw] h-full hig-glass bg-white/95 dark:bg-[#11151E]/95 border-r border-black/10 dark:border-white/10">
+                  ${sidebarInner}
+                </aside>
+              </div>
+            ` : ''}
+
+            <!-- Main Column -->
+            <div class="flex-1 flex flex-col min-w-0">
+              <header class="sticky top-0 z-30 hig-glass bg-white/75 dark:bg-[#11151E]/80 border-b border-black/[0.07] dark:border-white/[0.07] px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between gap-3">
+                <div class="flex items-center gap-3 min-w-0">
+                  <button id="btn-menu" class="lg:hidden p-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/10 transition" aria-label="Menu">${ICONS.menu}</button>
+                  <div class="min-w-0">
+                    <div class="text-xs font-bold uppercase tracking-widest text-slate-900 dark:text-white truncate">${escapeHtml(navItems.find(n => n.id === state.view)?.label || 'Overview')}</div>
+                  </div>
+                </div>
+                <div class="flex items-center gap-2">
+                  <button id="btn-cloud-sync" type="button" class="inline-flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1.5 rounded-full border transition ${
+                    cloudSynced
+                      ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-700 dark:text-emerald-300 hover:bg-emerald-500/20'
+                      : cloudSetup
+                      ? 'bg-amber-500/10 border-amber-500/25 text-amber-700 dark:text-amber-300 hover:bg-amber-500/20'
+                      : 'bg-black/5 dark:bg-white/5 border-black/10 dark:border-white/10 text-slate-500 dark:text-slate-400'
+                  }">
+                    <span class="w-2 h-2 rounded-full ${cloudSynced ? 'bg-emerald-500' : cloudSetup ? 'bg-amber-500 animate-pulse' : 'bg-slate-400'}"></span>
+                    <span class="hidden sm:inline">${cloudSynced ? 'SUPABASE LIVE' : cloudSetup ? 'SETUP DB SQL' : 'SYNC CLOUD'}</span>
+                  </button>
+                  <button id="btn-theme" class="p-2 rounded-xl border border-black/10 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/10 transition" title="Toggle Appearance">
+                    ${document.documentElement.classList.contains('dark') ? ICONS.sun : ICONS.moon}
+                  </button>
+                </div>
+              </header>
+
+              <main class="flex-1 p-4 sm:p-6 lg:p-8 pb-24 lg:pb-8 max-w-7xl w-full mx-auto">
+                ${viewContent}
+              </main>
+
+              <footer class="px-4 sm:px-6 lg:px-8 py-4 pb-20 lg:pb-4 border-t border-black/[0.06] dark:border-white/[0.06] text-[11px] text-slate-400 flex flex-wrap items-center justify-between gap-2">
+                <span>Embedded System Research Center · Daffodil International University</span>
+                <span>Supabase Auth · HIG · Roboto Mono</span>
+              </footer>
+
+              <!-- Mobile Bottom Quick Nav -->
+              <nav class="lg:hidden fixed bottom-0 inset-x-0 z-30 hig-glass bg-white/90 dark:bg-[#11151E]/90 border-t border-black/10 dark:border-white/10 px-2 py-1.5 grid grid-cols-4 gap-1">
+                ${[
+                  { id: 'home', label: 'Home', icon: ICONS.home },
+                  { id: 'tasks', label: 'Orders', icon: ICONS.tasks },
+                  { id: 'applications', label: 'Apps', icon: ICONS.applications },
+                  { id: 'resources', label: 'Files', icon: ICONS.resources }
+                ].map(m => `
+                  <button data-nav="${m.id}" class="nav-btn flex flex-col items-center justify-center py-1.5 rounded-xl text-[10px] font-semibold transition ${
+                    state.view === m.id
+                      ? 'text-blue-600 dark:text-blue-400 bg-blue-500/10'
+                      : 'text-slate-500 dark:text-slate-400'
+                  }">
+                    ${m.icon}
+                    <span class="mt-0.5">${m.label}</span>
+                  </button>
+                `).join('')}
+              </nav>
+            </div>
+          </div>
+        `;
+
+        // Navigation & Shell Bindings
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+          btn.onclick = () => {
+            state.view = btn.getAttribute('data-nav');
+            state.mobileMenu = false;
+            renderApp();
+          };
+        });
+        const btnMenu = document.getElementById('btn-menu');
+        if (btnMenu) btnMenu.onclick = () => { state.mobileMenu = !state.mobileMenu; renderApp(); };
+        const mobBg = document.getElementById('mob-backdrop');
+        if (mobBg) mobBg.onclick = (e) => { if (e.target.id === 'mob-backdrop') { state.mobileMenu = false; renderApp(); } };
+
+        document.getElementById('btn-theme').onclick = () => { toggleTheme(); renderApp(); };
+        document.getElementById('btn-cloud-sync').onclick = () => {
+          if (state.cloudStatus === 'setup-needed' || state.authCloudStatus === 'setup-needed') openSupabaseSetupModal();
+          else syncPullFromSupabase(false);
+        };
+
+        document.querySelectorAll('.btn-passkey').forEach(b => {
+          b.onclick = () => { state.mobileMenu = false; openChangePasskeyModal(); };
+        });
+        document.querySelectorAll('.btn-logout').forEach(b => {
+          b.onclick = () => {
+            state.user = null;
+            state.mobileMenu = false;
+            try { sessionStorage.removeItem(STORAGE_KEYS.SESSION); } catch (e) {}
+            showToast('Signed out safely', 'info');
+            renderLogin();
+          };
+        });
+
+        // Overview actions
+        const btnManageAccess = document.getElementById('btn-manage-access');
+        if (btnManageAccess) btnManageAccess.onclick = openManageAccessModal;
+        const homeNewTask = document.getElementById('home-new-task');
+        if (homeNewTask) homeNewTask.onclick = openTaskModal;
+        const homeNewApp = document.getElementById('home-new-app');
+        if (homeNewApp) homeNewApp.onclick = openApplicationModal;
+
+        // Copy buttons
+        document.querySelectorAll('.copy-btn').forEach(b => {
+          b.onclick = () => copyToClipboard(b.getAttribute('data-copy'));
+        });
+
+        // Notices actions
+        const btnNewNotice = document.getElementById('btn-new-notice');
+        if (btnNewNotice) btnNewNotice.onclick = openNoticeModal;
+        document.querySelectorAll('.del-notice-btn').forEach(b => {
+          b.onclick = () => {
+            const id = b.getAttribute('data-del-notice');
+            openConfirmModal('Remove Notice', 'Are you sure you want to delete this notice?', async () => {
+              await deleteRecordFromSupabase('notices', id);
+              showToast('Notice removed', 'info');
+              renderApp();
+            });
+          };
+        });
+
+        // Work Orders & Tasks actions
+        const btnNewTask = document.getElementById('btn-new-task');
+        if (btnNewTask) btnNewTask.onclick = openTaskModal;
+        const taskSearch = document.getElementById('task-search');
+        if (taskSearch) {
+          taskSearch.oninput = (e) => {
+            state.taskQuery = e.target.value;
+            renderApp();
+            const again = document.getElementById('task-search');
+            if (again) { again.focus(); again.setSelectionRange(again.value.length, again.value.length); }
+          };
+        }
+        document.querySelectorAll('.tf-btn').forEach(b => {
+          b.onclick = () => { state.taskFilter = b.getAttribute('data-tf'); renderApp(); };
+        });
+        document.querySelectorAll('.print-task-btn').forEach(b => {
+          b.onclick = () => {
+            const t = state.tasks.find(x => x.id === b.getAttribute('data-print-task'));
+            if (t) openA4PreviewModal(t.orderNo || 'Work Order', buildA4WorkOrderHtml(t));
+          };
+        });
+        document.querySelectorAll('.submit-task-btn').forEach(b => {
+          b.onclick = () => {
+            const t = state.tasks.find(x => x.id === b.getAttribute('data-submit-task'));
+            if (t) openSubmitTaskModal(t);
+          };
+        });
+        document.querySelectorAll('.review-task-btn').forEach(b => {
+          b.onclick = () => {
+            const t = state.tasks.find(x => x.id === b.getAttribute('data-review-task'));
+            if (t) openReviewTaskModal(t);
+          };
+        });
+        document.querySelectorAll('.del-task-btn').forEach(b => {
+          b.onclick = () => {
+            const id = b.getAttribute('data-del-task');
+            openConfirmModal('Delete Work Order', 'This will permanently remove the work order from Supabase.', async () => {
+              await deleteRecordFromSupabase('tasks', id);
+              showToast('Work Order deleted', 'info');
+              renderApp();
+            });
+          };
+        });
+
+        // Applications actions
+        const btnNewApp = document.getElementById('btn-new-app');
+        if (btnNewApp) btnNewApp.onclick = openApplicationModal;
+        const appSearch = document.getElementById('app-search');
+        if (appSearch) {
+          appSearch.oninput = (e) => {
+            state.appQuery = e.target.value;
+            renderApp();
+            const again = document.getElementById('app-search');
+            if (again) { again.focus(); again.setSelectionRange(again.value.length, again.value.length); }
+          };
+        }
+        document.querySelectorAll('.af-btn').forEach(b => {
+          b.onclick = () => { state.appFilter = b.getAttribute('data-af'); renderApp(); };
+        });
+        document.querySelectorAll('.at-btn').forEach(b => {
+          b.onclick = () => { state.appTypeFilter = b.getAttribute('data-at'); renderApp(); };
+        });
+        document.querySelectorAll('.print-app-btn').forEach(b => {
+          b.onclick = () => {
+            const a = state.applications.find(x => x.id === b.getAttribute('data-print-app'));
+            if (a) openA4PreviewModal(a.refNo || 'Application', buildA4ApplicationHtml(a));
+          };
+        });
+        document.querySelectorAll('.review-app-btn').forEach(b => {
+          b.onclick = () => {
+            const a = state.applications.find(x => x.id === b.getAttribute('data-review-app'));
+            if (a) openReviewAppModal(a);
+          };
+        });
+        document.querySelectorAll('.del-app-btn').forEach(b => {
+          b.onclick = () => {
+            const id = b.getAttribute('data-del-app');
+            openConfirmModal('Delete Application', 'This will permanently remove the application from Supabase.', async () => {
+              await deleteRecordFromSupabase('applications', id);
+              showToast('Application deleted', 'info');
+              renderApp();
+            });
+          };
+        });
+
+        // Resources actions
+        const btnNewRes = document.getElementById('btn-new-res');
+        if (btnNewRes) btnNewRes.onclick = openResourceModal;
+        const resSearch = document.getElementById('res-search');
+        if (resSearch) {
+          resSearch.oninput = (e) => {
+            state.query = e.target.value;
+            renderApp();
+            const again = document.getElementById('res-search');
+            if (again) { again.focus(); again.setSelectionRange(again.value.length, again.value.length); }
+          };
+        }
+        document.querySelectorAll('.cat-btn').forEach(b => {
+          b.onclick = () => { state.cat = b.getAttribute('data-cat'); renderApp(); };
+        });
+        document.querySelectorAll('.del-res-btn').forEach(b => {
+          b.onclick = () => {
+            const id = b.getAttribute('data-del-res');
+            openConfirmModal('Remove Resource', 'Remove this link from the shared dashboard?', async () => {
+              await deleteRecordFromSupabase('resources', id);
+              showToast('Resource removed', 'info');
+              renderApp();
+            });
+          };
+        });
+      }
+
+      /* =========================================================================
+       * 13. BOOTSTRAP
+       * ========================================================================= */
+      function restoreSession() {
+        try {
+          const raw = sessionStorage.getItem(STORAGE_KEYS.SESSION);
+          if (!raw) return;
+          const parsed = JSON.parse(raw);
+          if (parsed && parsed.id) {
+            const found = state.users.find(u => u.id === parsed.id && u.active !== false);
+            if (found) {
+              state.user = Object.assign({}, found, { title: found.title || found.wing });
+            }
+          }
+        } catch (e) {}
+      }
+
+      function boot() {
+        initTheme();
+        restoreSession();
+        if (state.user) renderApp();
+        else renderLogin();
+        syncPullFromSupabase(true);
+        startSupabaseAutoSync();
+      }
+
+      if (document.readyState === 'loading') {
+        window.addEventListener('DOMContentLoaded', boot);
+      } else {
+        boot();
+      }
+    })();
+  </script>
+</body>
+</html>
